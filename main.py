@@ -401,7 +401,7 @@ right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 pose1 = Pose()
 pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
 hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
-pose1.orientation.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
+pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
 
 right_pnp.move_to_start(right_pnp.ik_request(pose1))
 
