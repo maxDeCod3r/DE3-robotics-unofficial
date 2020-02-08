@@ -342,86 +342,52 @@ def load_objects():
     # Load Table SDFs
     with open ("models/L3-table/model.sdf", "r") as table_file:table_xml=table_file.read().replace('\n', '')
     with open ("models/brick/model.sdf", "r") as brick_file:brick_xml=brick_file.read().replace('\n', '')
-
     # Spawn Table SDF
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
-
     spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
     delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
-
     table_pose = Pose()
     table_pose.position = Point(x=table['x'], y=table['y'], z=table['z'])
     tqo = quaternion_from_euler(table['roll'], table['pitch'], table['yaw'])
     table_pose.orientation = Quaternion(tqo[0], tqo[1], tqo[2], tqo[3])
     table_reference_frame="world"
     spawn_sdf(table['id'], table_xml, "/", table_pose, table_reference_frame)
-
     brick_ents = []
-
-    for brick in bricks:
-        ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
-        brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
-        brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
-        bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
-        brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-        brick_reference_frame=brick['rframe']
-        brick_id = brick['id']
-        brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
-
-
-
-
-
-
-
-
-class debug_functions():
-    with open ("models/brick/model.sdf", "r") as brick_file:brick_xml=brick_file.read().replace('\n', '')
-
-    def t():
-        delete_model(table['id'])
-        tableLoader()
-
-    def tableLoader():
-        with open ("models/L3-table/model.sdf", "r") as table_file:table_xml=table_file.read().replace('\n', '')
-        table_pose = Pose()
-        table_pose.position = Point(x=table['x'], y=table['y'], z=table['z'])
-        tqo = quaternion_from_euler(table['roll'], table['pitch'], table['yaw'])
-        table_pose.orientation = Quaternion(tqo[0], tqo[1], tqo[2], tqo[3])
-        table_reference_frame="world"
-        spawn_sdf(table['id'], table_xml, "/", table_pose, table_reference_frame)
-
-    def make(num = 0, arr = bricks_i):
-        if num == 0: num = len(arr)
-        for ix in range(0, num):#brick in arr:
-            brick = arr[ix]
-            ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
-            brick_pose = Pose()
-            brick_pose.position.x = brick['x']
-            brick_pose.position.y = brick['y']
-            brick_pose.position.z = brick['z']
-            bqo = quaternion_from_euler(ber[0], ber[1], ber[2])
-            brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-            brick_reference_frame=brick['rframe']
-            brick_id = brick['id']
-            brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
-
-    def remove(arr2 = bricks_i):
-        for i in arr2:
-            delete_model(i['id'])
-
-
-    def x_place_bricks():
-        rospy.wait_for_service('/gazebo/spawn_sdf_model')
-        spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
-        delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
-        with open ("models/brick/model.sdf", "r") as brick_file:brick_xml=brick_file.read().replace('\n', '')
-        for brick in bricks:
+    for ar in [bricks_start, bricks_end]:
+        for brick in ar:
             ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
             brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
             brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
             bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
             brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-            spawn_sdf(brick['id'], brick_xml, "/", brick_pose, brick['rframe'])
+            brick_reference_frame=brick['rframe']
+            brick_id = brick['id']
+            brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+
+
+
+
+rospy.init_node("ik_pick_and_place_demo")
+
+hover_distance = 0.1 # meters
+# Starting Pose for left arm
+left_pose = Pose()
+left_pose.position.x = 0.579679836383
+left_pose.position.y = 0.283311769707
+left_pose.position.z = 0.213676720426
+left_pose.orientation.x = -0.0249590815779
+left_pose.orientation.y = 0.999649402929
+left_pose.orientation.z = 0.00737916180073
+left_pose.orientation.w = 0.00486450832011
+
+# Starting Pose for right arm
+right_pose = Pose()
+right_pose.position.x = 0.579679836383
+right_pose.position.y = -0.283311769707
+right_pose.position.z = 0.213676720426
+right_pose.orientation.x = -0.0249590815779
+right_pose.orientation.y = 0.999649402929
+right_pose.orientation.z = -0.00737916180073
+right_pose.orientation.w = 0.00486450832011
 
 
