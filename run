@@ -1,6 +1,8 @@
 #/bin/bash
 cd RoboticSandbox
 git pull
+mv main.py ../
+cd ../
 python main.py
-cd -
+mv main.py RoboticSandbox/
 echo Done
