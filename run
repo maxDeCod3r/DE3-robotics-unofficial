@@ -1,6 +1,6 @@
 #/bin/bash
 cd RoboticSandbox
 git pull
-python RoboticSandbox/main.py
+python main.py
 cd -
 echo Done
