@@ -390,4 +390,10 @@ right_pose.orientation.y = 0.999649402929
 right_pose.orientation.z = -0.00737916180073
 right_pose.orientation.w = 0.00486450832011
 
+left_pnp = PickAndPlace('left', hover_distance)
+right_pnp = PickAndPlace('right', hover_distance)
+
+# Go to initial position
+left_pnp.move_to_start(left_pnp.ik_request(left_pose))
+right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
