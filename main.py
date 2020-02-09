@@ -123,7 +123,7 @@ bricks_end =[{
 bricks_start =[{
     'id':'ia1',
     'rframe':'t1',
-    'x':-0.519,
+    'x':-0.509,
     'y':0.134,
     'z':0.770,
     'roll':radians(90),
