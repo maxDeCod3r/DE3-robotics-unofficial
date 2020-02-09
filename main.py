@@ -274,7 +274,7 @@ class PickAndPlace(object):
 
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
-            self._limb.set_joint_position_speed(_speed)
+            self._limb.set_joint_position_speed(self._speed)
             self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
             self._limb.set_joint_position_speed(0.3)
         else:
