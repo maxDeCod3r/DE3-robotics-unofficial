@@ -5,7 +5,7 @@ from gazebo_msgs.msg import LinkStates
 def callback(data):
 	# Get index
 	baxter_base_idx = data.name.index("baxter::base")
-	brick_idx = data.name.index("Brick::Brick")
+	brick_idx = data.name.index("t1::Table")
 	# Get baxter_base pose and Brick pose w.r.t. gazebo world
 	baxter_base_pose = data.pose[baxter_base_idx]
 	brick_pose = data.pose[brick_idx]
@@ -23,8 +23,7 @@ def callback(data):
 
 
 def gazebo_link_subscriber():
-	rospy.init_node('gazebo_link_subscriber')
-	rospy.Subscriber("/gazebo/link_states", LinkStates, callback)
+	rospy.init_node('gazebo_link_subscriber')rospy.Subscriber("/gazebo/link_states", LinkStates, callback)
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()
 
