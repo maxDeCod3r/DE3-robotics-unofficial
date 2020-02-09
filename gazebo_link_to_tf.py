@@ -23,7 +23,8 @@ def callback(data):
 
 
 def gazebo_link_subscriber():
-	rospy.init_node('gazebo_link_subscriber')rospy.Subscriber("/gazebo/link_states", LinkStates, callback)
+	rospy.init_node('gazebo_link_subscriber')
+	rospy.Subscriber("/gazebo/link_states", LinkStates, callback)
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()
 
