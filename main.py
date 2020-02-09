@@ -213,7 +213,9 @@ bricks_start =[{
 
 
 class PickAndPlace(object):
-    def __init__(self, limb, hover_distance = 0.10, verbose=True):
+    def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.9, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
+        self._speed = speed
+        self._accuracy = accuracy
         self._limb_name = limb # string
         self._hover_distance = hover_distance # in meters
         self._verbose = verbose # bool
@@ -272,7 +274,9 @@ class PickAndPlace(object):
 
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
-            self._limb.move_to_joint_positions(joint_angles)
+            self._limb.set_joint_position_speed(_speed)
+            self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
+            self._limb.set_joint_position_speed(0.3)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
@@ -337,6 +341,12 @@ class PickAndPlace(object):
         self._retract()
 
 
+def cleanup():
+    delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
+    for group in [[table], bricks_start, bricks_end]:
+        for obj in group:
+            delete_model(obj['id'])
+
 
 def load_objects():
     # Load Table SDFs
@@ -369,6 +379,8 @@ def load_objects():
 
 rospy.init_node("ik_pick_and_place_demo")
 
+cleanup()
+
 hover_distance = 0.1 # meters
 # Starting Pose for left arm
 left_pose = Pose()
@@ -397,13 +409,14 @@ right_pnp = PickAndPlace('right', hover_distance)
 left_pnp.move_to_start(left_pnp.ik_request(left_pose))
 right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
+load_objects()
 
-pose1 = Pose()
-pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
-hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
-pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
+# pose1 = Pose()
+# pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
+# hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
+# pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
 
-right_pnp.move_to_start(right_pnp.ik_request(pose1))
+# right_pnp.move_to_start(right_pnp.ik_request(pose1))
 
 
 
