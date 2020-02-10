@@ -29,7 +29,10 @@ class tf_service():
 			br.sendTransform((object_pose.position.x, object_pose.position.y, object_pose.position.z),
 				(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
 				rospy.Time.now(), object_name,'gazebo_world')
-			print(br)
+
+			print((object_pose.position.x, object_pose.position.y, object_pose.position.z),
+				(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
+				rospy.Time.now(), object_name,'gazebo_world')
 
 
 	def gazebo_link_subscriber(self):
