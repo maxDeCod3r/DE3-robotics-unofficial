@@ -359,7 +359,7 @@ def tf_service(init=True):
         tf_service_thread.start()
     else:
         print('Killing tf service thread')
-        tf_service_thread.kill()
+        tf_service_thread.terminate()
 
 
 
