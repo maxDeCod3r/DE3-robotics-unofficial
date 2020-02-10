@@ -17,11 +17,10 @@ class tf_service():
 						'id1::Brick',
 						'ie1::Brick']
 
-
-
 	def _callback(self, data):
 		# Get index
 		for object_name in self._nodes:
+			print(object_name)
 			object_idx = data.name.index(object_name)
 			# Get baxter_base pose and object pose w.r.t. gazebo world
 			object_pose = data.pose[object_idx]
