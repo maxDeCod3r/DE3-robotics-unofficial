@@ -464,7 +464,7 @@ tf_service(init=True)
 
 print('Done with task, enter x to kill tf service')
 while running:
-    a = input()
+    a = raw_input()
     if a == 'x':
         print("x has been caught, killing tf service")
         running = False
