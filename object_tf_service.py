@@ -7,15 +7,15 @@ class tf_service():
 	def __init__(self):
 		self._nodes = ['baxter::base',
 						't1::Table',
-						'ia1::Brick',
-						'ia2::Brick',
-						'ia3::Brick',
-						'ib1::Brick',
-						'ib2::Brick',
-						'ic1::Brick',
-						'ic2::Brick',
-						'id1::Brick',
-						'ie1::Brick']
+						'ia1::Brick']
+						# 'ia2::Brick',
+						# 'ia3::Brick',
+						# 'ib1::Brick',
+						# 'ib2::Brick',
+						# 'ic1::Brick',
+						# 'ic2::Brick',
+						# 'id1::Brick',
+						# 'ie1::Brick']
 
 	def _callback(self, data):
 		# Get index
