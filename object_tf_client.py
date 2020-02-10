@@ -19,6 +19,8 @@ def tf_lookup(object_name):
 			continue
 
 		object_angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1] , rot[2], rot[3]])
+		print(object_angles)
+		return
 		object_angles[0] += radians(90)
 		target_quat = tf.transformations.quaternion_from_euler(object_angles[0], object_angles[1], object_angles[2])
 		target_pose = Pose()
