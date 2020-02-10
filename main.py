@@ -22,6 +22,8 @@ import threading
 import object_tf_service as ots
 import time
 
+running = True
+
 table = {
     'id':'t1',
     'rframe':'world',
@@ -461,11 +463,13 @@ tf_service(init=True)
 
 
 print('Done with task, enter x to kill tf service')
-while True:
-    a = raw_input()
-    if a == 'x' or x == 'X':
+while running:
+    a = input()
+    if a == 'x':
         print("x has been caught, killing tf service")
+        running = False
         tf_service(init=False)
+
 
 print("Done, exiting")
 exit(0)
