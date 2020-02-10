@@ -44,6 +44,7 @@ class tf_service():
 
 
 	def gazebo_link_subscriber(self):
+		global a
 		# rospy.init_node('gazebo_link_subscriber')
 		rospy.Subscriber("/gazebo/link_states", LinkStates, self._callback)
 		a+=1
