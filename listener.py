@@ -16,8 +16,7 @@ if __name__ == '__main__':
 
 		Translation = [trans[0] , trans[1] , trans[2]]
 		Quaternion = [rot[0] , rot[1] , rot[2], rot[3]]
-		Angles = tf.transformations.euler_from_quaternion([rot.x , rot.y ,
-		rot.z, rot.w])
+		Angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1] , rot[2], rot[3]])
 		print("Translation: ", Translation) 
 		print("Quaternion: ", Quaternion)
 		print("Angles: ", Angles)
