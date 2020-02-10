@@ -27,7 +27,7 @@ class tf_service():
 			print(SIGKILL)
 			if SIGKILL:
 				print('MURDARING')
-				exit(0)
+				return
 			if object_name == 'baxter::base':
 				spawn_name = 'base'
 			else:
