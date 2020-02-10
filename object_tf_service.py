@@ -6,8 +6,8 @@ from gazebo_msgs.msg import LinkStates
 class tf_service():
 	def __init__(self):
 		self._nodes = ['baxter::base',
-						't1::Table',
-						'ia1::Brick']
+						't1::Table']
+						# 'ia1::Brick']
 						# 'ia2::Brick',
 						# 'ia3::Brick',
 						# 'ib1::Brick',
