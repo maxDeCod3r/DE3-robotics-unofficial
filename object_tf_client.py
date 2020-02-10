@@ -10,7 +10,7 @@ def tf_lookup(object_name):
 
 	while not rospy.is_shutdown() and do_try:
 		try:
-			(trans,rot) = listener.lookupTransform(object_name, 'base', rospy.Time(0))
+			(trans,rot) = listener.lookupTransform('base', object_name, rospy.Time(0))
 			do_try = False
 		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
 			print('Failed to get frame data, retrying...')
