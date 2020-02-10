@@ -5,7 +5,8 @@ from gazebo_msgs.msg import LinkStates
 
 class tf_service():
 	def __init__(self):
-		self._nodes = ['t1::Table',
+		self._nodes = ['baxter::base',
+						't1::Table',
 						'ia1::Brick',
 						'ia2::Brick',
 						'ia3::Brick',
@@ -20,17 +21,15 @@ class tf_service():
 
 	def _callback(self, data):
 		# Get index
-		baxter_base_idx = data.name.index("baxter::base")
-		object_idx = data.name.index("t1::Table")
-		# Get baxter_base pose and object pose w.r.t. gazebo world
-		baxter_base_pose = data.pose[baxter_base_idx]
-		object_pose = data.pose[object_idx]
-		# Broadcast base and object poses w.r.t. the gazebo world into tf tree
-		br = tf.TransformBroadcaster()
-		br.sendTransform((baxter_base_pose.position.x, baxter_base_pose.position.y, baxter_base_pose.position.z),
-			(baxter_base_pose.orientation.x, baxter_base_pose.orientation.y, baxter_base_pose.orientation.z,
-			baxter_base_pose.orientation.w), rospy.Time.now(),
-			"object", "gazebo_world")
+		for object_name in self._nodes:
+			object_idx = data.name.index(object_name)
+			# Get baxter_base pose and object pose w.r.t. gazebo world
+			object_pose = data.pose[object_idx]
+			# Broadcast base and object poses w.r.t. the gazebo world into tf tree
+			br = tf.TransformBroadcaster()
+			br.sendTransform((object_pose.position.x, object_pose.position.y, object_pose.position.z),
+				(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
+				rospy.Time.now(), object_name,'gazebo_world')
 
 
 	def gazebo_link_subscriber(self):
