@@ -1,21 +1,29 @@
 #/bin/bash
+echo "Entering git directory..."
 cd RoboticSandbox
-echo 1
+echo "Pulling from git..."
 git pull
-echo 2
+echo "Moving main script..."
 mv main.py ../
-echo 3
+echo "Moving supporting files..."
 mv object_tf_service.py ../
 mv object_tf_client.py ../
-echo 4
+mv bricks_etc.py ../
+echo "Exiting git directory"
 cd ../
-echo 5
+echo "Deleting precompiled caches"
 rm object_tf_service.pyc
 rm object_tf_client.pyc
-echo 6
+rm bricks_etc.pyc
+echo "Executing main script..."
 python main.py
-echo 7
+echo "Cleaning up..."
+rm object_tf_service.pyc
+rm object_tf_client.pyc
+rm bricks_etc.pyc
+echo "Recovering file hierarchy..."
 mv main.py RoboticSandbox/
 mv object_tf_client.py RoboticSandbox/
 mv object_tf_service.py RoboticSandbox/
-echo Done
+mv bricks_etc.py RoboticSandbox/
+echo "Done!"

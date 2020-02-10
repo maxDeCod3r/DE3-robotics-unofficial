@@ -2,24 +2,14 @@
 import rospy
 import tf
 from gazebo_msgs.msg import LinkStates
-
+import bricks_etc as bet
 global SIGKILL # Horrible hack
 SIGKILL = False
 
 
 class tf_service():
 	def __init__(self):
-		self._nodes = ['baxter::base',
-						't1::Table',
-						'a1::Brick',
-						'a2::Brick',
-						'a3::Brick',
-						'b1::Brick',
-						'b2::Brick',
-						'c1::Brick',
-						'c2::Brick',
-						'd1::Brick',
-						'e1::Brick']
+		self._nodes = bet.getNodes()
 
 	def _callback(self, data):
 		# Get index
