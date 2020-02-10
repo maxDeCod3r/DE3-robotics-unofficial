@@ -2,7 +2,7 @@
 cd RoboticSandbox
 git pull
 mv main.py ../
-mv object_tf_service ../
+mv object_tf_service.py ../
 cd ../
 python main.py
 mv main.py RoboticSandbox/
