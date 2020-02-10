@@ -10,7 +10,7 @@ table = {
     'pitch':0,
     'yaw':radians(90)
     }
-
+#####THIS DOES NOT CURRENTLY WORK
 bricks_end =[{
     'id':'ea1',
     'rframe':'t1',
@@ -110,14 +110,14 @@ bricks_start =[{
     'z':0.770,
     'roll':0,
     'pitch':0,
-    'yaw':radians(90)
+    'yaw':radians(-90)
     },
     {
     'id':'a2',
     'rframe':'a1',
     'x':0,
-    'y':0,
-    'z':0.192,
+    'y':0.192,
+    'z':0,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -126,8 +126,8 @@ bricks_start =[{
     'id':'a3',
     'rframe':'a1',
     'x':0,
-    'y':0,
-    'z':0.384,
+    'y':0.384,
+    'z':0,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -136,8 +136,8 @@ bricks_start =[{
     'id':'b1',
     'rframe':'a1',
     'x':0,
-    'y':0.087,
-    'z':0,
+    'y':0,
+    'z':0.087,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -146,8 +146,8 @@ bricks_start =[{
     'id':'b2',
     'rframe':'a1',
     'x':0,
-    'y':0.087,
-    'z':0.192,
+    'y':0.192,
+    'z':0.087,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -156,8 +156,8 @@ bricks_start =[{
     'id':'c1',
     'rframe':'a1',
     'x':0,
-    'y':0.087,
-    'z':0.384,
+    'y':0.384,
+    'z':0.087,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -166,8 +166,8 @@ bricks_start =[{
     'id':'c2',
     'rframe':'a1',
     'x':0,
-    'y':0.175,
-    'z':0,
+    'y':0,
+    'z':0.175,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -176,23 +176,22 @@ bricks_start =[{
     'id':'d1',
     'rframe':'a1',
     'x':0,
-    'y':0.175,
-    'z':0.192,
+    'y':0.192,
+    'z':0.175,
+    'roll':0,
+    'pitch':0,
+    'yaw':0
+    },
+    {
+    'id':'e1',
+    'rframe':'a1',
+    'x':0,
+    'y':0.384,
+    'z':0.175,
     'roll':0,
     'pitch':0,
     'yaw':0
     }]
-    # ,
-    # {
-    # 'id':'e1',
-    # 'rframe':'a1',
-    # 'x':0,
-    # 'y':0.175,
-    # 'z':0.384,
-    # 'roll':0,
-    # 'pitch':0,
-    # 'yaw':0
-    # }]
 
 def getBuildable():
     return bricks_start
