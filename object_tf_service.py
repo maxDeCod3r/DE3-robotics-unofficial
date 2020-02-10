@@ -45,7 +45,7 @@ class tf_service():
 				rospy.Time.now(), spawn_name,'gazebo_world')
 
 	def _kill(self):
-		rospy.signal_shutdown('User_requested')
+		rospy.signal_shutdown('User_requested') #SURPRISINGLY DIFFICULT
 
 	def gazebo_link_subscriber(self):
 		global a
