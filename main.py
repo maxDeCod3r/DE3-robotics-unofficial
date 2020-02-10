@@ -41,7 +41,7 @@ bricks_end =[{
     },
     {
     'id':'ea2',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0,
     'y':0,
     'z':-0.186,
@@ -51,7 +51,7 @@ bricks_end =[{
     },
     {
     'id':'ea3',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0,
     'y':0,
     'z':-0.372,
@@ -61,7 +61,7 @@ bricks_end =[{
     },
     {
     'id':'eb1',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.127,
     'y':0,
     'z':-0.085,
@@ -71,7 +71,7 @@ bricks_end =[{
     },
     {
     'id':'eb2',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.127,
     'y':0,
     'z':-0.287,
@@ -81,7 +81,7 @@ bricks_end =[{
     },
     {
     'id':'ec1',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.254,
     'y':0,
     'z':-0.093,
@@ -91,7 +91,7 @@ bricks_end =[{
     },
     {
     'id':'ec2',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.254,
     'y':0,
     'z':-0.287,
@@ -101,7 +101,7 @@ bricks_end =[{
     },
     {
     'id':'ed1',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.381,
     'y':0,
     'z':-0.186,
@@ -111,7 +111,7 @@ bricks_end =[{
     },
     {
     'id':'ee1',
-    'rframe':'a1',
+    'rframe':'ea1',
     'x':0.508,
     'y':0,
     'z':-0.186,
@@ -132,7 +132,7 @@ bricks_start =[{
     },
     {
     'id':'a2',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0,
     'z':0.192,
@@ -142,7 +142,7 @@ bricks_start =[{
     },
     {
     'id':'a3',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0,
     'z':0.384,
@@ -152,7 +152,7 @@ bricks_start =[{
     },
     {
     'id':'b1',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.087,
     'z':0,
@@ -162,7 +162,7 @@ bricks_start =[{
     },
     {
     'id':'b2',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.087,
     'z':0.192,
@@ -172,7 +172,7 @@ bricks_start =[{
     },
     {
     'id':'c1',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.087,
     'z':0.384,
@@ -182,7 +182,7 @@ bricks_start =[{
     },
     {
     'id':'c2',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.175,
     'z':0,
@@ -192,7 +192,7 @@ bricks_start =[{
     },
     {
     'id':'d1',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.175,
     'z':0.192,
@@ -202,7 +202,7 @@ bricks_start =[{
     },
     {
     'id':'e1',
-    'rframe':'ia1',
+    'rframe':'a1',
     'x':0,
     'y':0.175,
     'z':0.384,
