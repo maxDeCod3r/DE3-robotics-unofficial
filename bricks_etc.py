@@ -110,7 +110,7 @@ bricks_start =[{
     'z':0.770,
     'roll':0,
     'pitch':0,
-    'yaw':radians(-90)
+    'yaw':radians(90)
     },
     {
     'id':'a2',
