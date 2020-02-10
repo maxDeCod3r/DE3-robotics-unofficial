@@ -206,17 +206,18 @@ bricks_start =[{
     'roll':0,
     'pitch':0,
     'yaw':0
-    },
-    {
-    'id':'e1',
-    'rframe':'a1',
-    'x':0,
-    'y':0.175,
-    'z':0.384,
-    'roll':0,
-    'pitch':0,
-    'yaw':0
     }]
+    # ,
+    # {
+    # 'id':'e1',
+    # 'rframe':'a1',
+    # 'x':0,
+    # 'y':0.175,
+    # 'z':0.384,
+    # 'roll':0,
+    # 'pitch':0,
+    # 'yaw':0
+    # }]
 
 
 class PickAndPlace(object):
