@@ -352,6 +352,7 @@ def _tf_service_initializer():
 
 
 def tf_service(init=True):
+    global tf_service_thread
     if init:
         print('Starting tf service thread')
         tf_service_thread = threading.Thread(target=_tf_service_initializer)
