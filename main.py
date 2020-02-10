@@ -363,15 +363,16 @@ def load_objects():
     table_reference_frame="world"
     spawn_sdf(table['id'], table_xml, "/", table_pose, table_reference_frame)
     brick_ents = []
-    for brick in bricks_start:
-        ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
-        brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
-        brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
-        bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
-        brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-        brick_reference_frame=brick['rframe']
-        brick_id = brick['id']
-        brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+    for x in [bricks_start, bricks_end]:
+        for brick in x:
+            ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
+            brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
+            brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
+            bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
+            brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
+            brick_reference_frame=brick['rframe']
+            brick_id = brick['id']
+            brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
 
 
 
