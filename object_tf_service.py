@@ -6,7 +6,6 @@ from gazebo_msgs.msg import LinkStates
 global SIGKILL # Horrible hack
 SIGKILL = False
 
-a = 0
 
 class tf_service():
 	def __init__(self):
@@ -48,10 +47,8 @@ class tf_service():
 		rospy.signal_shutdown('User_requested') #SURPRISINGLY DIFFICULT
 
 	def gazebo_link_subscriber(self):
-		global a
 		# rospy.init_node('gazebo_link_subscriber')
 		rospy.Subscriber("/gazebo/link_states", LinkStates, self._callback)
-		a+=1
 		# spin() simply keeps python from exiting until this node is stopped
 		rospy.spin()
 

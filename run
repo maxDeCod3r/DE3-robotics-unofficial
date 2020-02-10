@@ -9,9 +9,12 @@ mv object_tf_service.py ../
 echo 4
 cd ../
 echo 5
-python main.py
+rm object_tf_service.pyc
 echo 6
-mv main.py RoboticSandbox/
+python main.py
 echo 7
+mv main.py RoboticSandbox/
+echo 8
 mv object_tf_service.py RoboticSandbox/
+echo 9
 echo Done
