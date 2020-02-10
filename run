@@ -1,9 +1,17 @@
 #/bin/bash
 cd RoboticSandbox
+echo 1
 git pull
+echo 2
 mv main.py ../
+echo 3
 mv object_tf_service.py ../
+echo 4
 cd ../
+echo 5
 python main.py
+echo 6
 mv main.py RoboticSandbox/
+echo 7
+mv object_tf_service.py RoboticSandbox/
 echo Done

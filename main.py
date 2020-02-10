@@ -459,13 +459,13 @@ tf_service(init=True)
 # right_pnp.move_to_start(right_pnp.ik_request(pose1))
 
 
-try:
-    print('Done with task, enter x to kill tf service')
-    while True:
-        a = raw_input()
-        if a == 'x' or x == 'X':
-            print("x has been caught, killing tf service")
-            tf_service(init=False)
+
+print('Done with task, enter x to kill tf service')
+while True:
+    a = raw_input()
+    if a == 'x' or x == 'X':
+        print("x has been caught, killing tf service")
+        tf_service(init=False)
 
 print("Done, exiting")
 exit(0)
