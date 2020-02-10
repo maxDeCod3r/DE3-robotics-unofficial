@@ -28,4 +28,5 @@ def tf_lookup(object_name):
 		return target_pose
 
 if __name__ == "__main__":
-	tf_lookup('c1')
+	rospy.init_node('example_tf_listener')
+	print(tf_lookup('c1'))
