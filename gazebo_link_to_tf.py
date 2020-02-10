@@ -6,19 +6,6 @@ def callback(data):
 	# Get index
 	baxter_base_idx = data.name.index("baxter::base")
 	object_idx = data.name.index("t1::Table")
-	print('########################################')
-	print()
-	print()
-	print()
-	print()
-	print()
-	print(object_idx)
-	print()
-	print()
-	print()
-	print()
-	print()
-	print('########################################')
 	# Get baxter_base pose and object pose w.r.t. gazebo world
 	baxter_base_pose = data.pose[baxter_base_idx]
 	object_pose = data.pose[object_idx]
