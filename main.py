@@ -20,6 +20,7 @@ from tf.transformations import quaternion_from_euler
 
 import threading
 import object_tf_service as ots
+import object_tf_client as otc
 import time
 
 running = True
@@ -440,16 +441,8 @@ tf_service(init=True)
 
 
 
-# left_test = Pose()
-# left_test.position.x = -0.162
-# left_test.position.y = 0.437
-# left_test.position.z = -0.106
-# left_test.orientation.x = -0.713
-# left_test.orientation.y = -0.016
-# left_test.orientation.z = 0.023
-# left_test.orientation.w = 0.701
-
-# left_pnp.pick(left_test)
+left_test = otc('c3')
+left_pnp.pick(left_test)
 
 ####################################HACKING END
 
