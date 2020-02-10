@@ -24,7 +24,10 @@ class tf_service():
 		# Get index
 		for object_name in self._nodes:
 			'''HORRIBLE HACK BEGIN'''
-			if SIGKILL: exit(0)
+			print(SIGKILL)
+			if SIGKILL:
+				print('MURDARING')
+				exit(0)
 			if object_name == 'baxter::base':
 				spawn_name = 'base'
 			else:
@@ -52,6 +55,3 @@ def init():
 	x = tf_service()
 	x.gazebo_link_subscriber()
 
-def deinit():
-	global SIGKILL
-	SIGKILL = True
