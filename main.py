@@ -55,7 +55,7 @@ class PickAndPlace(object):
             start_angles = dict(zip(self._joint_names, [0]*7))
         self._guarded_move_to_joint_position(start_angles)
         self.gripper_open()
-        rospy.sleep(1.0)
+        rospy.sleep(0.2)
         print("Running. Ctrl-c to quit")
 
     def ik_request(self, pose):
@@ -100,11 +100,11 @@ class PickAndPlace(object):
 
     def gripper_open(self):
         self._gripper.open()
-        rospy.sleep(1.0)
+        rospy.sleep(0.2)
 
     def gripper_close(self):
         self._gripper.close()
-        rospy.sleep(1.0)
+        rospy.sleep(0.2)
 
     def _approach(self, pose):
         approach = copy.deepcopy(pose)
@@ -251,8 +251,13 @@ if __name__ == "__main__":
 
 
 
-    left_test = otc.tf_lookup('a3')
-    left_pnp.pick(left_test)
+    left_pick = otc.tf_lookup('a3')
+    left_pnp.pick(left_pick)
+
+    left_place_pre = otc.tf_lookup('t1')
+    print()
+    print(left_place_pre)
+    print()
 
     ####################################HACKING END
 
