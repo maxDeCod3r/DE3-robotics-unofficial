@@ -3,6 +3,7 @@ import rospy
 import tf
 import time
 from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
+from math import radians
 
 def tf_lookup(object_name):
 	do_try = True
@@ -17,14 +18,18 @@ def tf_lookup(object_name):
 			time.sleep(0.1)
 			continue
 
+		object_angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1] , rot[2], rot[3]])
+		object_angles[0] += radians(90)
+		target_quat = tf.transformations.quaternion_from_euler(object_angles[0], object_angles[1], object_angles[2])
 		target_pose = Pose()
 		target_pose.position.x = trans[0]
 		target_pose.position.y = trans[1]
 		target_pose.position.z = trans[2]
-		target_pose.orientation.x = rot[0]
-		target_pose.orientation.y = rot[1]
-		target_pose.orientation.z = rot[2]
-		target_pose.orientation.w = rot[3]
+		target_pose.orientation.x = target_quat[0]
+		target_pose.orientation.y = target_quat[1]
+		target_pose.orientation.z = target_quat[2]
+		target_pose.orientation.w = target_quat[3]
+
 		return target_pose
 
 if __name__ == "__main__":
