@@ -30,7 +30,7 @@ table = {
     }
 
 bricks_end =[{
-    'id':'a1',
+    'id':'ea1',
     'rframe':'t1',
     'x':0.46,
     'y':-0.19,
@@ -40,7 +40,7 @@ bricks_end =[{
     'yaw':radians(90)
     },
     {
-    'id':'a2',
+    'id':'ea2',
     'rframe':'a1',
     'x':0,
     'y':0,
@@ -50,7 +50,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'a3',
+    'id':'ea3',
     'rframe':'a1',
     'x':0,
     'y':0,
@@ -60,7 +60,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'b1',
+    'id':'eb1',
     'rframe':'a1',
     'x':0.127,
     'y':0,
@@ -70,7 +70,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'b2',
+    'id':'eb2',
     'rframe':'a1',
     'x':0.127,
     'y':0,
@@ -80,7 +80,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'c1',
+    'id':'ec1',
     'rframe':'a1',
     'x':0.254,
     'y':0,
@@ -90,7 +90,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'c2',
+    'id':'ec2',
     'rframe':'a1',
     'x':0.254,
     'y':0,
@@ -100,7 +100,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'d1',
+    'id':'ed1',
     'rframe':'a1',
     'x':0.381,
     'y':0,
@@ -110,7 +110,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'e1',
+    'id':'ee1',
     'rframe':'a1',
     'x':0.508,
     'y':0,
@@ -121,7 +121,7 @@ bricks_end =[{
     }]
 
 bricks_start =[{
-    'id':'ia1',
+    'id':'a1',
     'rframe':'t1',
     'x':-0.419,
     'y':0.134,
@@ -131,7 +131,7 @@ bricks_start =[{
     'yaw':radians(90)
     },
     {
-    'id':'ia2',
+    'id':'a2',
     'rframe':'ia1',
     'x':0,
     'y':0,
@@ -141,7 +141,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ia3',
+    'id':'a3',
     'rframe':'ia1',
     'x':0,
     'y':0,
@@ -151,7 +151,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ib1',
+    'id':'b1',
     'rframe':'ia1',
     'x':0,
     'y':0.087,
@@ -161,7 +161,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ib2',
+    'id':'b2',
     'rframe':'ia1',
     'x':0,
     'y':0.087,
@@ -171,7 +171,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ic1',
+    'id':'c1',
     'rframe':'ia1',
     'x':0,
     'y':0.087,
@@ -181,7 +181,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ic2',
+    'id':'c2',
     'rframe':'ia1',
     'x':0,
     'y':0.175,
@@ -191,7 +191,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'id1',
+    'id':'d1',
     'rframe':'ia1',
     'x':0,
     'y':0.175,
@@ -201,7 +201,7 @@ bricks_start =[{
     'yaw':0
     },
     {
-    'id':'ie1',
+    'id':'e1',
     'rframe':'ia1',
     'x':0,
     'y':0.175,
@@ -363,16 +363,15 @@ def load_objects():
     table_reference_frame="world"
     spawn_sdf(table['id'], table_xml, "/", table_pose, table_reference_frame)
     brick_ents = []
-    for ar in [bricks_start, bricks_end]:
-        for brick in ar:
-            ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
-            brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
-            brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
-            bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
-            brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-            brick_reference_frame=brick['rframe']
-            brick_id = brick['id']
-            brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+    for brick in bricks_start:
+        ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
+        brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
+        brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
+        bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
+        brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
+        brick_reference_frame=brick['rframe']
+        brick_id = brick['id']
+        brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
 
 
 

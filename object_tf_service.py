@@ -6,20 +6,27 @@ from gazebo_msgs.msg import LinkStates
 class tf_service():
 	def __init__(self):
 		self._nodes = ['baxter::base',
-						't1::Table']
-						# 'ia1::Brick']
-						# 'ia2::Brick',
-						# 'ia3::Brick',
-						# 'ib1::Brick',
-						# 'ib2::Brick',
-						# 'ic1::Brick',
-						# 'ic2::Brick',
-						# 'id1::Brick',
-						# 'ie1::Brick']
+						't1::Table',
+						'a1::Brick',
+						'a2::Brick',
+						'a3::Brick',
+						'b1::Brick',
+						'b2::Brick',
+						'c1::Brick',
+						'c2::Brick',
+						'd1::Brick',
+						'e1::Brick']
 
 	def _callback(self, data):
 		# Get index
 		for object_name in self._nodes:
+			'''HORRIBLE HACK BEGIN'''
+			if object_name == 'baxter::base':
+				spawn_name = 'base'
+			else:
+				spawn_name = object_name[:2]
+
+			'''HORRIBLE HACK END'''
 			# print(object_name)
 			object_idx = data.name.index(object_name)
 			# Get baxter_base pose and object pose w.r.t. gazebo world
@@ -28,11 +35,7 @@ class tf_service():
 			br = tf.TransformBroadcaster()
 			br.sendTransform((object_pose.position.x, object_pose.position.y, object_pose.position.z),
 				(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
-				rospy.Time.now(), object_name,'gazebo_world')
-
-			# print((object_pose.position.x, object_pose.position.y, object_pose.position.z),
-			# 	(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
-			# 	rospy.Time.now(), object_name,'gazebo_world')
+				rospy.Time.now(), spawn_name,'gazebo_world')
 
 
 	def gazebo_link_subscriber(self):
