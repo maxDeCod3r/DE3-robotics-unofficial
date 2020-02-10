@@ -30,12 +30,7 @@ class tf_service():
 		br.sendTransform((baxter_base_pose.position.x, baxter_base_pose.position.y, baxter_base_pose.position.z),
 			(baxter_base_pose.orientation.x, baxter_base_pose.orientation.y, baxter_base_pose.orientation.z,
 			baxter_base_pose.orientation.w), rospy.Time.now(),
-			"base", "gazebo_world")
-		# Broadcast base and object poses w.r.t. the gazebo world into tf tree
-		br2 = tf.TransformBroadcaster()
-		br2.sendTransform((object_pose.position.x, object_pose.position.y, object_pose.position.z),
-			(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
-			rospy.Time.now(), "object","gazebo_world")
+			"object", "gazebo_world")
 
 
 	def gazebo_link_subscriber(self):
