@@ -18,6 +18,8 @@ import baxter_interface
 
 from tf.transformations import quaternion_from_euler
 
+import threading
+
 table = {
     'id':'t1',
     'rframe':'world',
@@ -341,6 +343,21 @@ class PickAndPlace(object):
         self._retract()
 
 
+def _tf_service_initializer():
+    import object_tf_service as ots
+    tf_service = ots.init()
+
+
+
+def tf_service(init=True):
+    if init:
+        tf_service_thread = threading.Thread(target=_tf_service_initializer)
+        tf_service_thread.start()
+    else:
+        tf_service_thread.kill()
+
+
+
 def cleanup():
     delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
     for group in [[table], bricks_start, bricks_end]:
@@ -363,21 +380,20 @@ def load_objects():
     table_reference_frame="world"
     spawn_sdf(table['id'], table_xml, "/", table_pose, table_reference_frame)
     brick_ents = []
-    for x in [bricks_start, bricks_end]:
-        for brick in x:
-            ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
-            brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
-            brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
-            bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
-            brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
-            brick_reference_frame=brick['rframe']
-            brick_id = brick['id']
-            brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+    for brick in bricks_start:
+        ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
+        brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
+        brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
+        bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
+        brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
+        brick_reference_frame=brick['rframe']
+        brick_id = brick['id']
+        brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+
+#TODO: delete this line
 
 
-
-
-rospy.init_node("ik_pick_and_place_demo")
+rospy.init_node("ik_pick_and_place_demo") #What is this?
 
 cleanup()
 
@@ -411,6 +427,8 @@ right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
 load_objects()
 
+print("loaded all objects, starting tf service thread")
+tf_service(init=True)
 
 ####################################HACKING BEGIN
 
@@ -435,6 +453,18 @@ load_objects()
 # pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
 
 # right_pnp.move_to_start(right_pnp.ik_request(pose1))
+
+
+try:
+    print('Done with task, waiting to kill tf service')
+    while True:
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    print("KeyboardInterrupt has been caught., killing tf service")
+    tf_service(init=False)
+
+print("Done, exiting")
+exit(0)
 
 
 

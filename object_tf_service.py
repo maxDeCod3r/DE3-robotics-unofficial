@@ -44,6 +44,6 @@ class tf_service():
 		# spin() simply keeps python from exiting until this node is stopped
 		rospy.spin()
 
-x = tf_service()
-
-x.gazebo_link_subscriber()
+def init():
+	x = tf_service()
+	x.gazebo_link_subscriber()
