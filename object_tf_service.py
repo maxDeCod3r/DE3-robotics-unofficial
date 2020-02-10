@@ -24,6 +24,8 @@ class tf_service():
 
 	def _callback(self, data):
 		# Get index
+		if SIGKILL:
+			self._kill()
 		for object_name in self._nodes:
 			'''HORRIBLE HACK BEGIN'''
 			if object_name == 'baxter::base':
@@ -42,6 +44,8 @@ class tf_service():
 				(object_pose.orientation.x, object_pose.orientation.y, object_pose.orientation.z, object_pose.orientation.w),
 				rospy.Time.now(), spawn_name,'gazebo_world')
 
+	def _kill(self):
+		rospy.signal_shutdown('User_requested')
 
 	def gazebo_link_subscriber(self):
 		global a
@@ -55,4 +59,3 @@ class tf_service():
 def init():
 	x = tf_service()
 	x.gazebo_link_subscriber()
-
