@@ -353,9 +353,11 @@ def _tf_service_initializer():
 
 def tf_service(init=True):
     if init:
+        print('Starting tf service thread')
         tf_service_thread = threading.Thread(target=_tf_service_initializer)
         tf_service_thread.start()
     else:
+        print('Killing tf service thread')
         tf_service_thread.kill()
 
 
@@ -458,12 +460,12 @@ tf_service(init=True)
 
 
 try:
-    print('Done with task, waiting to kill tf service')
+    print('Done with task, enter x to kill tf service')
     while True:
-        time.sleep(0.1)
-except KeyboardInterrupt:
-    print("KeyboardInterrupt has been caught., killing tf service")
-    tf_service(init=False)
+        a = raw_input()
+        if a == 'x' or x == 'X':
+            print("x has been caught, killing tf service")
+            tf_service(init=False)
 
 print("Done, exiting")
 exit(0)
