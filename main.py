@@ -378,7 +378,7 @@ def load_objects():
 
 rospy.init_node("ik_pick_and_place_demo")
 
-cleanup()
+# cleanup()
 
 hover_distance = 0.1 # meters
 # Starting Pose for left arm
@@ -408,10 +408,12 @@ right_pnp = PickAndPlace('right', hover_distance)
 left_pnp.move_to_start(left_pnp.ik_request(left_pose))
 right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
-load_objects()
+# load_objects()
 
 
 ####################################HACKING BEGIN
+
+
 
 left_test = Pose()
 left_test.position.x = -0.162
