@@ -251,7 +251,7 @@ if __name__ == "__main__":
 
 
 
-    left_test = otc.tf_lookup('c1')
+    left_test = otc.tf_lookup('a3')
     left_pnp.pick(left_test)
 
     ####################################HACKING END
