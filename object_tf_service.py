@@ -52,7 +52,6 @@ class tf_service():
 		# rospy.init_node('gazebo_link_subscriber')
 		rospy.Subscriber("/gazebo/link_states", LinkStates, self._callback)
 		a+=1
-		print('this shit on? ', str(a))
 		# spin() simply keeps python from exiting until this node is stopped
 		rospy.spin()
 
