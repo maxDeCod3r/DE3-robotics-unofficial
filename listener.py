@@ -11,7 +11,8 @@ if __name__ == '__main__':
 	while not rospy.is_shutdown():
 		try:
 			(trans,rot) = listener.lookupTransform('left_gripper', 'base', rospy.Time(0))
-		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+		# except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+		except:
 			continue
 		Translation = [trans.x , trans.y , trans.z]
 		Quaternion = [rot.x , rot.y , rot.z, rot.w]
