@@ -410,6 +410,22 @@ right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
 load_objects()
 
+
+####################################HACKING BEGIN
+
+left_test = Pose()
+left_test.position.x = -0.162
+left_test.position.y = 0.437
+left_test.position.z = -0.106
+left_test.orientation.x = -0.713
+left_test.orientation.y = -0.016
+left_test.orientation.z = 0.023
+left_test.orientation.w = 0.701
+
+left_pnp.pick(left_test)
+
+####################################HACKING END
+
 # pose1 = Pose()
 # pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
 # hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
