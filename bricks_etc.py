@@ -10,7 +10,7 @@ table = {
     'pitch':0,
     'yaw':radians(90)
     }
-#####THIS DOES NOT CURRENTLY WORK
+
 bricks_end =[{
     'id':'ea1',
     'rframe':'t1',
@@ -108,9 +108,9 @@ bricks_start =[{
     'x':-0.219,
     'y':0.134,
     'z':0.770,
-    'roll':0,
+    'roll':radians(90),
     'pitch':0,
-    'yaw':radians(-90)
+    'yaw':radians(90)
     },
     {
     'id':'a2',
