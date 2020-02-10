@@ -26,7 +26,7 @@ class tf_service():
 			'''HORRIBLE HACK BEGIN'''
 			if SIGKILL:
 				print('MURDARING')
-				return
+				underined_var_a = undefined_var_b
 			if object_name == 'baxter::base':
 				spawn_name = 'base'
 			else:
