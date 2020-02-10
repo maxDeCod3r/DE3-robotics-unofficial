@@ -39,7 +39,7 @@ class tf_service():
 
 
 	def gazebo_link_subscriber(self):
-		rospy.init_node('gazebo_link_subscriber')
+		# rospy.init_node('gazebo_link_subscriber')
 		rospy.Subscriber("/gazebo/link_states", LinkStates, self._callback)
 		# spin() simply keeps python from exiting until this node is stopped
 		rospy.spin()
