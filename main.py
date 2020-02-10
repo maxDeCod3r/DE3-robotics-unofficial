@@ -441,7 +441,7 @@ tf_service(init=True)
 
 
 
-left_test = otc('c3')
+left_test = otc.tf_lookup('c1')
 left_pnp.pick(left_test)
 
 ####################################HACKING END
