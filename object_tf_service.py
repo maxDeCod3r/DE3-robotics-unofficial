@@ -24,7 +24,6 @@ class tf_service():
 		# Get index
 		for object_name in self._nodes:
 			'''HORRIBLE HACK BEGIN'''
-			print(SIGKILL)
 			if SIGKILL:
 				print('MURDARING')
 				return
