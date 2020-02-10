@@ -11,7 +11,7 @@ echo 4
 cd ../
 echo 5
 rm object_tf_service.pyc
-rm object_tf_client.py
+rm object_tf_client.pyc
 echo 6
 python main.py
 echo 7
