@@ -6,6 +6,8 @@ from gazebo_msgs.msg import LinkStates
 global SIGKILL # Horrible hack
 SIGKILL = False
 
+a = 0
+
 class tf_service():
 	def __init__(self):
 		self._nodes = ['baxter::base',
@@ -24,9 +26,6 @@ class tf_service():
 		# Get index
 		for object_name in self._nodes:
 			'''HORRIBLE HACK BEGIN'''
-			if SIGKILL:
-				print('MURDARING')
-				underined_var_a = undefined_var_b
 			if object_name == 'baxter::base':
 				spawn_name = 'base'
 			else:
@@ -47,6 +46,8 @@ class tf_service():
 	def gazebo_link_subscriber(self):
 		# rospy.init_node('gazebo_link_subscriber')
 		rospy.Subscriber("/gazebo/link_states", LinkStates, self._callback)
+		a+=1
+		print('this shit on? ', str(a))
 		# spin() simply keeps python from exiting until this node is stopped
 		rospy.spin()
 
