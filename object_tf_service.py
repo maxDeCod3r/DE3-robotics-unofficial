@@ -3,6 +3,9 @@ import rospy
 import tf
 from gazebo_msgs.msg import LinkStates
 
+global SIGKILL # Horrible hack
+SIGKILL = False
+
 class tf_service():
 	def __init__(self):
 		self._nodes = ['baxter::base',
@@ -21,6 +24,7 @@ class tf_service():
 		# Get index
 		for object_name in self._nodes:
 			'''HORRIBLE HACK BEGIN'''
+			if SIGKILL: exit(0)
 			if object_name == 'baxter::base':
 				spawn_name = 'base'
 			else:
@@ -47,3 +51,7 @@ class tf_service():
 def init():
 	x = tf_service()
 	x.gazebo_link_subscriber()
+
+def deinit():
+	global SIGKILL
+	SIGKILL = True

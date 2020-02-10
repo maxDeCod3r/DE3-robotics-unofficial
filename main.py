@@ -19,7 +19,7 @@ import baxter_interface
 from tf.transformations import quaternion_from_euler
 
 import threading
-
+import object_tf_service as ots
 import time
 
 table = {
@@ -346,7 +346,6 @@ class PickAndPlace(object):
 
 
 def _tf_service_initializer():
-    import object_tf_service as ots
     tf_service = ots.init()
 
 
@@ -359,7 +358,7 @@ def tf_service(init=True):
         tf_service_thread.start()
     else:
         print('Killing tf service thread')
-        tf_service_thread.terminate()
+        ots.SIGKILL = True
 
 
 
