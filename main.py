@@ -209,73 +209,73 @@ def load_objects():
 
 #TODO: delete this line
 
+if __name__ == "__main__":
+    rospy.init_node("ik_pick_and_place_demo") #What is this?
 
-rospy.init_node("ik_pick_and_place_demo") #What is this?
+    cleanup()
 
-cleanup()
+    hover_distance = 0.1 # meters
+    # Starting Pose for left arm
+    left_pose = Pose()
+    left_pose.position.x = 0.579679836383
+    left_pose.position.y = 0.283311769707
+    left_pose.position.z = 0.213676720426
+    left_pose.orientation.x = -0.0249590815779
+    left_pose.orientation.y = 0.999649402929
+    left_pose.orientation.z = 0.00737916180073
+    left_pose.orientation.w = 0.00486450832011
 
-hover_distance = 0.1 # meters
-# Starting Pose for left arm
-left_pose = Pose()
-left_pose.position.x = 0.579679836383
-left_pose.position.y = 0.283311769707
-left_pose.position.z = 0.213676720426
-left_pose.orientation.x = -0.0249590815779
-left_pose.orientation.y = 0.999649402929
-left_pose.orientation.z = 0.00737916180073
-left_pose.orientation.w = 0.00486450832011
+    # Starting Pose for right arm
+    right_pose = Pose()
+    right_pose.position.x = 0.579679836383
+    right_pose.position.y = -0.283311769707
+    right_pose.position.z = 0.213676720426
+    right_pose.orientation.x = -0.0249590815779
+    right_pose.orientation.y = 0.999649402929
+    right_pose.orientation.z = -0.00737916180073
+    right_pose.orientation.w = 0.00486450832011
 
-# Starting Pose for right arm
-right_pose = Pose()
-right_pose.position.x = 0.579679836383
-right_pose.position.y = -0.283311769707
-right_pose.position.z = 0.213676720426
-right_pose.orientation.x = -0.0249590815779
-right_pose.orientation.y = 0.999649402929
-right_pose.orientation.z = -0.00737916180073
-right_pose.orientation.w = 0.00486450832011
+    left_pnp = PickAndPlace('left', hover_distance)
+    right_pnp = PickAndPlace('right', hover_distance)
 
-left_pnp = PickAndPlace('left', hover_distance)
-right_pnp = PickAndPlace('right', hover_distance)
+    # Go to initial position
+    left_pnp.move_to_start(left_pnp.ik_request(left_pose))
+    right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
-# Go to initial position
-left_pnp.move_to_start(left_pnp.ik_request(left_pose))
-right_pnp.move_to_start(right_pnp.ik_request(right_pose))
+    load_objects()
 
-load_objects()
+    print("loaded all objects, starting tf service thread")
+    tf_service(init=True)
 
-print("loaded all objects, starting tf service thread")
-tf_service(init=True)
-
-####################################HACKING BEGIN
-
-
-
-left_test = otc.tf_lookup('c1')
-left_pnp.pick(left_test)
-
-####################################HACKING END
-
-# pose1 = Pose()
-# pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
-# hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
-# pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
-
-# right_pnp.move_to_start(right_pnp.ik_request(pose1))
+    ####################################HACKING BEGIN
 
 
 
-print('Done with task, enter x to kill tf service')
-while running:
-    a = raw_input()
-    if a == 'x':
-        print("x has been caught, killing tf service")
-        running = False
-        tf_service(init=False)
+    left_test = otc.tf_lookup('c1')
+    left_pnp.pick(left_test)
+
+    ####################################HACKING END
+
+    # pose1 = Pose()
+    # pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
+    # hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
+    # pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
+
+    # right_pnp.move_to_start(right_pnp.ik_request(pose1))
 
 
-print("Done, exiting")
-exit(0)
+
+    print('Done with task, enter x to kill tf service')
+    while running:
+        a = raw_input()
+        if a == 'x':
+            print("x has been caught, killing tf service")
+            running = False
+            tf_service(init=False)
+
+
+    print("Done, exiting")
+    exit(0)
 
 
 
