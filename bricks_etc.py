@@ -11,7 +11,7 @@ table = {
     'yaw':radians(90)
     }
 
-bricks_end =[{
+bricks_end =[{ #DO NOT USE THIS
     'id':'ea1',
     'rframe':'t1',
     'x':0.46,
@@ -105,10 +105,11 @@ bricks_end =[{
 target_positions = [{
     'num':1,
     'rframe':'t1',
-    'x':0.46,
+    # 'x':0.46,
+    'x':0.2,
     # 'y':-0.19,
     'y':0.2,
-    'z':0.822,
+    'z':0.9,
     'roll':0,
     # 'pitch':-1.570796,
     'pitch':0,
