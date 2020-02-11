@@ -226,80 +226,74 @@ if __name__ == "__main__":
 
     cleanup()
 
-    hover_distance = 0.1 # meters
-    # Starting Pose for left arm
-    left_pose = Pose()
-    left_pose.position.x = 0.579679836383
-    left_pose.position.y = 0.283311769707
-    left_pose.position.z = 0.213676720426
-    left_pose.orientation.x = -0.0249590815779
-    left_pose.orientation.y = 0.999649402929
-    left_pose.orientation.z = 0.00737916180073
-    left_pose.orientation.w = 0.00486450832011
+    # hover_distance = 0.1 # meters
+    # # Starting Pose for left arm
+    # left_pose = Pose()
+    # left_pose.position.x = 0.579679836383
+    # left_pose.position.y = 0.283311769707
+    # left_pose.position.z = 0.213676720426
+    # left_pose.orientation.x = -0.0249590815779
+    # left_pose.orientation.y = 0.999649402929
+    # left_pose.orientation.z = 0.00737916180073
+    # left_pose.orientation.w = 0.00486450832011
 
-    # Starting Pose for right arm
-    right_pose = Pose()
-    right_pose.position.x = 0.579679836383
-    right_pose.position.y = -0.283311769707
-    right_pose.position.z = 0.213676720426
-    right_pose.orientation.x = -0.0249590815779
-    right_pose.orientation.y = 0.999649402929
-    right_pose.orientation.z = -0.00737916180073
-    right_pose.orientation.w = 0.00486450832011
+    # # Starting Pose for right arm
+    # right_pose = Pose()
+    # right_pose.position.x = 0.579679836383
+    # right_pose.position.y = -0.283311769707
+    # right_pose.position.z = 0.213676720426
+    # right_pose.orientation.x = -0.0249590815779
+    # right_pose.orientation.y = 0.999649402929
+    # right_pose.orientation.z = -0.00737916180073
+    # right_pose.orientation.w = 0.00486450832011
 
-    left_pnp = PickAndPlace('left', hover_distance)
-    right_pnp = PickAndPlace('right', hover_distance)
+    # left_pnp = PickAndPlace('left', hover_distance)
+    # right_pnp = PickAndPlace('right', hover_distance)
 
-    # Go to initial position
-    left_pnp.move_to_start(left_pnp.ik_request(left_pose))
-    right_pnp.move_to_start(right_pnp.ik_request(right_pose))
+    # # Go to initial position
+    # left_pnp.move_to_start(left_pnp.ik_request(left_pose))
+    # right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
     load_objects()
 
-    print("loaded all objects, starting tf service thread")
-    tf_service(init=True)
+    # print("loaded all objects, starting tf service thread")
+    # tf_service(init=True)
 
     ####################################HACKING BEGIN
 
 
 
-    left_pick = otc.tf_lookup('a3')
-    left_pnp.pick(left_pick)
+    # left_pick = otc.tf_lookup('a3')
+    # left_pnp.pick(left_pick)
 
-    left_place_pre = otc.tf_lookup('t1')
+    # left_place_pre = otc.tf_lookup('t1')
 
-    xpos = built_bricks[0]
-    zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
+    # xpos = built_bricks[0]
+    # zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
 
-    left_place_pos = Pose()
-    left_place_pos.position.x = left_place_pre.position.x + xpos['x']
-    left_place_pos.position.y = left_place_pre.position.y + xpos['y']
-    left_place_pos.position.z = left_place_pre.position.z + xpos['z']
-    left_place_pos.orientation.x = left_place_pre.orientation.x + zqtr[0]
-    left_place_pos.orientation.y = left_place_pre.orientation.y + zqtr[1]
-    left_place_pos.orientation.z = left_place_pre.orientation.z + zqtr[2]
-    left_place_pos.orientation.w = left_place_pre.orientation.w + zqtr[3]
+    # left_place_pos = Pose()
+    # left_place_pos.position.x = left_place_pre.position.x + xpos['x']
+    # left_place_pos.position.y = left_place_pre.position.y + xpos['y']
+    # left_place_pos.position.z = left_place_pre.position.z + xpos['z']
+    # left_place_pos.orientation.x = left_place_pre.orientation.x + zqtr[0]
+    # left_place_pos.orientation.y = left_place_pre.orientation.y + zqtr[1]
+    # left_place_pos.orientation.z = left_place_pre.orientation.z + zqtr[2]
+    # left_place_pos.orientation.w = left_place_pre.orientation.w + zqtr[3]
 
-    left_pnp.place(left_place_pos)
+    # left_pnp.place(left_place_pos)
+
+
+
 
     ####################################HACKING END
 
-    # pose1 = Pose()
-    # pose1.position = Point(x=bricks_start[0]['x'], y=bricks_start[0]['y'], z=bricks_start[0]['z'])
-    # hqo = quaternion_from_euler(bricks_start[0]['roll'], bricks_start[0]['pitch'], bricks_start[0]['yaw'])
-    # pose1.orientation = Quaternion(hqo[0], hqo[1], hqo[2], hqo[3])
-
-    # right_pnp.move_to_start(right_pnp.ik_request(pose1))
-
-
-
-    print('Done with task, enter x to kill tf service')
-    while running:
-        a = raw_input()
-        if a == 'x':
-            print("x has been caught, killing tf service")
-            running = False
-            tf_service(init=False)
+    # print('Done with task, enter x to kill tf service')
+    # while running:
+    #     a = raw_input()
+    #     if a == 'x':
+    #         print("x has been caught, killing tf service")
+    #         running = False
+    #         tf_service(init=False)
 
 
     print("Done, exiting")
