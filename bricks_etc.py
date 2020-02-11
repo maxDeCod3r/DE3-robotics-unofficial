@@ -14,7 +14,7 @@ table = {
 bricks_end =[{
     'id':'f1',
     'rframe':'t1',
-    'x':0.46,
+    'x':0.26,
     'y':-0.19,
     'z':0.822,
     'roll':0,
@@ -200,7 +200,7 @@ target_positions = [{
 bricks_start =[{
     'id':'a1',
     'rframe':'t1',
-    'x':-0.219,
+    'x':-0.419,
     'y':0.134,
     'z':0.770,
     'roll':radians(90),
