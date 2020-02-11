@@ -1,4 +1,5 @@
 #/bin/bash
+clear
 echo "Entering git directory..."
 cd RoboticSandbox
 echo "Pulling from git..."
