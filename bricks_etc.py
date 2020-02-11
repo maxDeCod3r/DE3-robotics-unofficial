@@ -23,7 +23,7 @@ bricks_end =[{
     },
     {
     'id':'f2',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':0,
     'y':0,
     'z':0.186,
@@ -33,7 +33,7 @@ bricks_end =[{
     },
     {
     'id':'f3',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':0,
     'y':0,
     'z':0.372,
@@ -43,7 +43,7 @@ bricks_end =[{
     },
     {
     'id':'g1',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.127,
     'y':0,
     'z':0.085,
@@ -53,7 +53,7 @@ bricks_end =[{
     },
     {
     'id':'g2',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.127,
     'y':0,
     'z':0.287,
@@ -63,7 +63,7 @@ bricks_end =[{
     },
     {
     'id':'h1',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.254,
     'y':0,
     'z':0.093,
@@ -73,7 +73,7 @@ bricks_end =[{
     },
     {
     'id':'h2',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.254,
     'y':0,
     'z':0.287,
@@ -83,7 +83,7 @@ bricks_end =[{
     },
     {
     'id':'i1',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.381,
     'y':0,
     'z':0.186,
@@ -93,7 +93,7 @@ bricks_end =[{
     },
     {
     'id':'j1',
-    'rframe':'ea1',
+    'rframe':'f1',
     'x':-0.508,
     'y':0,
     'z':0.186,
