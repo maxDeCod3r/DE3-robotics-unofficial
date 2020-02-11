@@ -264,10 +264,10 @@ if __name__ == "__main__":
     left_place_pos.position.x = left_place_pre.position.x + xpos['z']
     left_place_pos.position.y = left_place_pre.position.y + xpos['x']
     left_place_pos.position.z = left_place_pre.position.z + xpos['y']
-    left_place_pos.orientation.x = left_place_pre.orientation.x + zqtr[0]
-    left_place_pos.orientation.y = left_place_pre.orientation.y + zqtr[1]
-    left_place_pos.orientation.z = left_place_pre.orientation.z + zqtr[2]
-    left_place_pos.orientation.w = left_place_pre.orientation.w + zqtr[3]
+    left_place_pos.orientation.x = left_place_pre.orientation.x# + zqtr[0]
+    left_place_pos.orientation.y = left_place_pre.orientation.y# + zqtr[1]
+    left_place_pos.orientation.z = left_place_pre.orientation.z# + zqtr[2]
+    left_place_pos.orientation.w = left_place_pre.orientation.w# + zqtr[3]
 
     left_pnp.place(left_place_pos)
 
