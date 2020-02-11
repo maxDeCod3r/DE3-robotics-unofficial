@@ -301,3 +301,6 @@ def getNodes():
         nodes.append(node_name)
     return nodes
 
+def getTargets():
+    return target_positions
+

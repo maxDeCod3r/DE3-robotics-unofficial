@@ -28,6 +28,7 @@ running = True
 
 bricks = bet.getBuildable()
 table = bet.getTable()
+brick_targets = bet.getTargets()
 
 
 class PickAndPlace(object):
@@ -255,9 +256,20 @@ if __name__ == "__main__":
     left_pnp.pick(left_pick)
 
     left_place_pre = otc.tf_lookup('t1')
-    print()
-    print(left_place_pre)
-    print()
+
+    xpos = brick_targets[0]
+    zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
+
+    left_place_pos = Pose()
+    left_place_pos.position.x = left_place_pre.position.x + xpos['x']
+    left_place_pos.position.y = left_place_pre.position.y + xpos['y']
+    left_place_pos.position.z = left_place_pre.position.z + xpos['z']
+    left_place_pos.orientation.x = left_place_pre.orientation.x + zqtr[0]
+    left_place_pos.orientation.y = left_place_pre.orientation.y + zqtr[1]
+    left_place_pos.orientation.z = left_place_pre.orientation.z + zqtr[2]
+    left_place_pos.orientation.w = left_place_pre.orientation.w + zqtr[3]
+
+    left_pnp.place(left_place_pos)
 
     ####################################HACKING END
 
