@@ -297,6 +297,9 @@ def getAll():
 def getTable():
     return table
 
+def getTargets():
+    return bricks_end
+
 def getNodes():
     nodes = ['baxter::base', 't1::Table']
     for obj in bricks_start:
@@ -305,6 +308,6 @@ def getNodes():
         nodes.append(node_name)
     return nodes
 
-def getTargets():
+def getDirections():
     return target_positions
 
