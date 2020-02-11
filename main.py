@@ -28,7 +28,9 @@ running = True
 
 bricks = bet.getBuildable()
 table = bet.getTable()
-brick_targets = bet.getTargets()
+brick_targets = bet.getDirections()
+built_bricks = bet.getTargets()
+
 
 
 class PickAndPlace(object):
@@ -164,7 +166,6 @@ def _tf_service_initializer():
     tf_service = ots.init()
 
 
-
 def tf_service(init=True):
     global tf_service_thread
     if init:
@@ -174,7 +175,6 @@ def tf_service(init=True):
     else:
         print('Killing tf service thread')
         ots.SIGKILL = True
-
 
 
 def cleanup():
@@ -187,6 +187,7 @@ def load_objects():
     # Load Table SDFs
     with open ("models/L3-table/model.sdf", "r") as table_file:table_xml=table_file.read().replace('\n', '')
     with open ("models/brick/model.sdf", "r") as brick_file:brick_xml=brick_file.read().replace('\n', '')
+    with open ("models/empty/model.sdf", "r") as empty_file:empty_xml=empty_file.read().replace('\n', '')
     # Spawn Table SDF
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
@@ -207,6 +208,16 @@ def load_objects():
         brick_reference_frame=brick['rframe']
         brick_id = brick['id']
         brick_ents.append(spawn_sdf(brick_id, brick_xml, "/", brick_pose, brick_reference_frame))
+    
+    for brick in built_bricks:
+        ber = [brick['roll'], brick['pitch'], brick['yaw']] #brick_euler_rotation
+        brick_pose = Pose(position=Point(x=brick['x'], y=brick['y'], z=brick['z']))
+        brick_pose.position = Point(x=brick['x'], y=brick['y'], z=brick['z'])
+        bqo = quaternion_from_euler(brick['roll'], brick['pitch'], brick['yaw'])
+        brick_pose.orientation = Quaternion(bqo[0], bqo[1], bqo[2], bqo[3])
+        brick_reference_frame=brick['rframe']
+        brick_id = brick['id']
+        brick_ents.append(spawn_sdf(brick_id, empty_xml, "/", brick_pose, brick_reference_frame))
 
 #TODO: delete this line
 

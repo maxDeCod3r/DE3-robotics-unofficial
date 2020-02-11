@@ -11,7 +11,7 @@ table = {
     'yaw':radians(90)
     }
 
-bricks_end =[{ #DO NOT USE THIS
+bricks_end =[{
     'id':'ea1',
     'rframe':'t1',
     'x':0.46,
