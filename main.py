@@ -266,7 +266,7 @@ if __name__ == "__main__":
     left_pick = otc.tf_lookup('a3')
     left_pnp.pick(left_pick)
 
-    left_place_pos = otc.tf_lookup('g2')
+    left_place_pos = otc.tf_lookup('h2')
 
     # xpos = built_bricks[0]
     # zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
