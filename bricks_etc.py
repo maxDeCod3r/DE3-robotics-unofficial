@@ -110,8 +110,10 @@ target_positions = [{
     'y':0.2,
     'z':0.822,
     'roll':0,
-    'pitch':1.570796,
-    'yaw':radians(90)
+    # 'pitch':-1.570796,
+    'pitch':0,
+    # 'yaw':radians(90)
+    'yaw':0
     },
     {
     'num':2,
