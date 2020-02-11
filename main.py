@@ -268,7 +268,7 @@ if __name__ == "__main__":
 
     left_place_pre = otc.tf_lookup('t1')
 
-    xpos = brick_targets[0]
+    xpos = built_bricks[0]
     zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
 
     left_place_pos = Pose()
