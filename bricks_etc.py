@@ -12,7 +12,7 @@ table = {
     }
 
 bricks_end =[{
-    'id':'ea1',
+    'id':'f1',
     'rframe':'t1',
     'x':0.46,
     'y':-0.19,
@@ -22,7 +22,7 @@ bricks_end =[{
     'yaw':radians(90)
     },
     {
-    'id':'ea2',
+    'id':'f2',
     'rframe':'ea1',
     'x':0,
     'y':0,
@@ -32,7 +32,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'ea3',
+    'id':'f3',
     'rframe':'ea1',
     'x':0,
     'y':0,
@@ -42,7 +42,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'eb1',
+    'id':'g1',
     'rframe':'ea1',
     'x':-0.127,
     'y':0,
@@ -52,7 +52,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'eb2',
+    'id':'g2',
     'rframe':'ea1',
     'x':-0.127,
     'y':0,
@@ -62,7 +62,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'ec1',
+    'id':'h1',
     'rframe':'ea1',
     'x':-0.254,
     'y':0,
@@ -72,7 +72,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'ec2',
+    'id':'h2',
     'rframe':'ea1',
     'x':-0.254,
     'y':0,
@@ -82,7 +82,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'ed1',
+    'id':'i1',
     'rframe':'ea1',
     'x':-0.381,
     'y':0,
@@ -92,7 +92,7 @@ bricks_end =[{
     'yaw':0
     },
     {
-    'id':'ee1',
+    'id':'j1',
     'rframe':'ea1',
     'x':-0.508,
     'y':0,
