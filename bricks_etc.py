@@ -26,7 +26,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':0,
     'y':0,
-    'z':-0.186,
+    'z':0.186,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -36,7 +36,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':0,
     'y':0,
-    'z':-0.372,
+    'z':0.372,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -46,7 +46,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.127,
     'y':0,
-    'z':-0.085,
+    'z':0.085,
     'roll':0,
     'pitch':1.57,
     'yaw':0
@@ -56,7 +56,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.127,
     'y':0,
-    'z':-0.287,
+    'z':0.287,
     'roll':0,
     'pitch':1.57,
     'yaw':0
@@ -66,7 +66,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.254,
     'y':0,
-    'z':-0.093,
+    'z':0.093,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -76,7 +76,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.254,
     'y':0,
-    'z':-0.287,
+    'z':0.287,
     'roll':0,
     'pitch':0,
     'yaw':0
@@ -86,7 +86,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.381,
     'y':0,
-    'z':-0.186,
+    'z':0.186,
     'roll':0,
     'pitch':1.57,
     'yaw':0
@@ -96,7 +96,7 @@ bricks_end =[{
     'rframe':'ea1',
     'x':-0.508,
     'y':0,
-    'z':-0.186,
+    'z':0.186,
     'roll':0,
     'pitch':0,
     'yaw':0
