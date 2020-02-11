@@ -264,7 +264,7 @@ if __name__ == "__main__":
 
 
     left_pick = otc.tf_lookup('a3')
-    left_pick.position.x -= 0.05
+    left_pick.position.x -= 0.0
     left_pnp.pick(left_pick)
 
     left_place_pos = otc.tf_lookup('h2')
