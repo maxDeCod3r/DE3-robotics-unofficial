@@ -17,8 +17,8 @@ bricks_end =[{
     'x':0.46,
     'y':-0.19,
     'z':0.822,
-    'roll':radians(-90),
-    'pitch':radians(-90),
+    'roll':,
+    'pitch':radians(90),
     'yaw':0
     },
     {
