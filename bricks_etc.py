@@ -197,7 +197,7 @@ target_positions = [{
     'yaw':0
     }]
 
-bricks_start =[{
+bricks_start_v1 =[{
     'id':'a1',
     'rframe':'t1',
     'x':-0.419,
@@ -288,11 +288,22 @@ bricks_start =[{
     # 'yaw':0
     # }]
 
+bricks_start_v2 =[{
+    'id':'a1',
+    'rframe':'t1',
+    'x':-0.219,
+    'y':0.134,
+    'z':0.770,
+    'roll':0,
+    'pitch':0,
+    'yaw':radians(90)
+    }]
+
 def getBuildable():
-    return bricks_start
+    return bricks_start_v2
 
 def getAll():
-    return bricks_start+bricks_end+[table]
+    return bricks_start_v2+bricks_end+[table]
 
 def getTable():
     return table
@@ -302,7 +313,7 @@ def getTargets():
 
 def getNodes():
     nodes = ['baxter::base', 't1::Table']
-    for obj in bricks_start + bricks_end:
+    for obj in bricks_start_v2 + bricks_end:
         name = obj['id']
         node_name = name+'::Brick'
         nodes.append(node_name)
