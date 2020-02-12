@@ -281,7 +281,7 @@ if __name__ == "__main__":
     left_pnp.pick(left_pick)
 
 
-    left_place = otc.tf_lookup('h2')
+    left_place = otc.tf_lookup('f2')
 
     left_place_engles = euler_from_quaternion([left_place.orientation.x , left_place.orientation.y , left_place.orientation.z, left_place.orientation.w])
     xangle = left_place_engles[2] + radians(90)

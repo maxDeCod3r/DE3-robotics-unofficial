@@ -291,7 +291,7 @@ bricks_start_v1 =[{
 bricks_start_v2 =[{
     'id':'a1',
     'rframe':'t1',
-    'x':-0.219,
+    'x':-0.119,
     'y':0.134,
     'z':0.820,
     'roll':radians(90),
