@@ -265,10 +265,10 @@ if __name__ == "__main__":
 
     left_pick = otc.tf_lookup('a1')
 
-    left_pick_angles = tf.transformations.euler_from_quaternion([left_pick.orientation.x , left_pick.orientation.y , left_pick.orientation.z, left_pick.orientation.w])
+    left_pick_angles = euler_from_quaternion([left_pick.orientation.x , left_pick.orientation.y , left_pick.orientation.z, left_pick.orientation.w])
     xangle = left_pick_angles[2] + radians(90)
     left_pick_angles = (xangle, left_pick_angles[1], left_pick_angles[2])
-    left_pick_proc = tf.transformations.quaternion_from_euler(left_pick_angles[0], left_pick_angles[1], left_pick_angles[2])
+    target_quat = quaternion_from_euler(left_pick_angles[0], left_pick_angles[1], left_pick_angles[2])
     left_pick_proc = Pose()
     left_pick_proc.position.x = left_pick.position.x - 0.05 
     left_pick_proc.position.y = left_pick.position.y
@@ -280,20 +280,21 @@ if __name__ == "__main__":
 
     left_pnp.pick(left_pick)
 
-    left_place_pos = otc.tf_lookup('h2')
 
+    left_place = otc.tf_lookup('h2')
 
-    # xpos = built_bricks[0]
-    # zqtr = quaternion_from_euler(xpos['roll'], xpos['pitch'], xpos['yaw'])
-
-    # left_place_pos = Pose()
-    # left_place_pos.position.x = left_place_pre.position.x + xpos['x']
-    # left_place_pos.position.y = left_place_pre.position.y + xpos['y']
-    # left_place_pos.position.z = left_place_pre.position.z + xpos['z']
-    # left_place_pos.orientation.x = left_place_pre.orientation.x + zqtr[0]
-    # left_place_pos.orientation.y = left_place_pre.orientation.y + zqtr[1]
-    # left_place_pos.orientation.z = left_place_pre.orientation.z + zqtr[2]
-    # left_place_pos.orientation.w = left_place_pre.orientation.w + zqtr[3]
+    left_place_engles = euler_from_quaternion([left_place.orientation.x , left_place.orientation.y , left_place.orientation.z, left_place.orientation.w])
+    xangle = left_place_engles[2] + radians(90)
+    left_place_engles = (xangle, left_place_engles[1], left_place_engles[2])
+    target_quat = quaternion_from_euler(left_place_engles[0], left_place_engles[1], left_pick_angles[2])
+    left_place_pos = Pose()
+    left_place_pos.position.x = left_place.position.x - 0.05 
+    left_place_pos.position.y = left_place.position.y
+    left_place_pos.position.z = left_place.position.z
+    left_place_pos.orientation.x = target_quat[0]
+    left_place_pos.orientation.y = target_quat[1]
+    left_place_pos.orientation.z = target_quat[2]
+    left_place_pos.orientation.w = target_quat[3]
 
     left_pnp.place(left_place_pos)
 
