@@ -266,9 +266,9 @@ if __name__ == "__main__":
     left_pick = otc.tf_lookup('a1')
 
     left_pick_angles = euler_from_quaternion([left_pick.orientation.x , left_pick.orientation.y , left_pick.orientation.z, left_pick.orientation.w])
-    xangle = left_pick_angles[0]# + radians(-90)
+    xangle = left_pick_angles[0] + radians(-90)
     xangle1 = left_pick_angles[1] + radians(-90)
-    xangle2 = left_pick_angles[2]# + radians(-180)
+    xangle2 = left_pick_angles[2] + radians(-180)
     left_pick_angles = (xangle, left_pick_angles[1], left_pick_angles[2])
     target_quat = quaternion_from_euler(left_pick_angles[0], left_pick_angles[1], left_pick_angles[2])
     left_pick_proc = Pose()
@@ -280,7 +280,7 @@ if __name__ == "__main__":
     left_pick_proc.orientation.z = target_quat[2]
     left_pick_proc.orientation.w = target_quat[3]
 
-    left_pnp.pick(left_pick)
+    left_pnp.pick(left_pick_proc)
 
 
     left_place = otc.tf_lookup('f2')
