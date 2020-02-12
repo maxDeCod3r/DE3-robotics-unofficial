@@ -16,7 +16,7 @@ from baxter_core_msgs.srv import (SolvePositionIK, SolvePositionIKRequest)
 
 import baxter_interface
 
-from tf.transformations import quaternion_from_euler
+from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 import threading
 import object_tf_service as ots
@@ -264,7 +264,20 @@ if __name__ == "__main__":
 
 
     left_pick = otc.tf_lookup('a1')
-    left_pick.position.x -= 0.05
+
+    left_pick_angles = tf.transformations.euler_from_quaternion([left_pick.orientation.x , left_pick.orientation.y , left_pick.orientation.z, left_pick.orientation.w])
+    xangle = left_pick_angles[2] + radians(90)
+    left_pick_angles = (xangle, left_pick_angles[1], left_pick_angles[2])
+    left_pick_proc = tf.transformations.quaternion_from_euler(left_pick_angles[0], left_pick_angles[1], left_pick_angles[2])
+    left_pick_proc = Pose()
+    left_pick_proc.position.x = left_pick.position.x - 0.05 
+    left_pick_proc.position.y = left_pick.position.y
+    left_pick_proc.position.z = left_pick.position.z
+    left_pick_proc.orientation.x = target_quat[0]
+    left_pick_proc.orientation.y = target_quat[1]
+    left_pick_proc.orientation.z = target_quat[2]
+    left_pick_proc.orientation.w = target_quat[3]
+
     left_pnp.pick(left_pick)
 
     left_place_pos = otc.tf_lookup('h2')
