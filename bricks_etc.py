@@ -303,7 +303,7 @@ def getBuildable():
     return bricks_start_v2
 
 def getAll():
-    return bricks_start_v2+bricks_end+[table]
+    return bricks_start_v2+bricks_start_v1+bricks_end+[table]
 
 def getTable():
     return table
