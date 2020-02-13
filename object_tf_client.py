@@ -18,8 +18,8 @@ def tf_lookup(object_name):
 			time.sleep(0.1)
 			continue
 
-		object_angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1], rot[2], rot[3]])
-		xangle = object_angles[0] + radians(90)# + radians(200.569)
+		object_angles = tf.transformations.euler_from_quaternion([rot[3] , rot[0], rot[1], rot[2]], axes='sxyz')
+		xangle = object_angles[0]# + radians(200.569)
 		xangle1 = object_angles[1]# + radians(90)
 		xangle2 = object_angles[2]# + radians(-200.569)
 		object_angles = (xangle, xangle1, xangle2)
@@ -48,9 +48,9 @@ if __name__ == "__main__":
 #      
 #      TARGET TOP PICKING EULER ANGLES
 #      LAYING MODIFIERS:
-#      Pitch(0): +90 deg.
-#      Roll(1):    0 deg.
-#      Yaw(2):     0 deg.
+#      Pitch(0):   ? deg.
+#      Roll(1):    ? deg.
+#      Yaw(2):     ? deg.
 #      
 #      FINAL VALUES:
 #      Pitch(0): +180 deg.
