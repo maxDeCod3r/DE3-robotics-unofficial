@@ -265,6 +265,7 @@ if __name__ == "__main__":
         otc.tf_lookup('a3')
         print()
         print()
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     for i in range(0, 5):
         print()
         otc.tf_lookup('f2')
