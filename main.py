@@ -262,7 +262,7 @@ if __name__ == "__main__":
     ###################################HACKING BEGIN
     for i in range(0, 5):
         print()
-        otc.tf_lookup('a1')
+        otc.tf_lookup('a3')
         print()
         print()
     for i in range(0, 5):

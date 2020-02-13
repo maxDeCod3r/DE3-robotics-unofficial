@@ -311,7 +311,7 @@ bricks_start_v2 =[{
     # }
     ]
 
-supervar = bricks_start_v2
+supervar = bricks_start_v1
 
 def getBuildable():
     return supervar
