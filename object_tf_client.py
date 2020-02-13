@@ -4,6 +4,7 @@ import tf
 import time
 from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
 from math import radians
+from numpy import matmul
 
 def tf_lookup(object_name):
 	do_try = True
@@ -25,15 +26,9 @@ def tf_lookup(object_name):
 		print('@@@@@@@@@@@@@@@@')
 		print(object_angles)
 		print('@@@@@@@@@@@@@@@@')
-		# xangle = object_angles[0]# + radians(360)
-		# xangle1 = object_angles[1]# + radians(90)
-		# xangle2 = object_angles[2]# + radians(-106)
-		# print("Angles:")
-		# print(xangle)
-		# print(xangle1)
-		# print(xangle2)
-		# print()
-		target_quat = tf.transformations.quaternion_from_matrix(object_angles)
+		Re = euler_matrix(radians(180), radians(0), radians(-270), 'rxyz')
+		updated_angles = matmul(Re, object_angles)
+		target_quat = tf.transformations.quaternion_from_matrix(updated_angles)
 		target_pose = Pose()
 		target_pose.position.x = trans[0]
 		target_pose.position.y = trans[1]
