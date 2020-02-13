@@ -251,8 +251,8 @@ if __name__ == "__main__":
     right_pnp = PickAndPlace('right', hover_distance)
 
     # Go to initial position
-    left_pnp.move_to_start(left_pnp.ik_request(left_pose))
-    right_pnp.move_to_start(right_pnp.ik_request(right_pose))
+    # left_pnp.move_to_start(left_pnp.ik_request(left_pose))
+    # right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
     load_objects()
 
