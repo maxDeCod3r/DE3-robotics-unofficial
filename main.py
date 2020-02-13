@@ -247,12 +247,12 @@ if __name__ == "__main__":
     right_pose.orientation.z = -0.000
     right_pose.orientation.w = 0.004
 
-    left_pnp = PickAndPlace('left', hover_distance)
-    right_pnp = PickAndPlace('right', hover_distance)
+    # left_pnp = PickAndPlace('left', hover_distance)
+    # right_pnp = PickAndPlace('right', hover_distance)
 
-    # Go to initial position
-    left_pnp.move_to_start(left_pnp.ik_request(left_pose))
-    right_pnp.move_to_start(right_pnp.ik_request(right_pose))
+    # # Go to initial position
+    # left_pnp.move_to_start(left_pnp.ik_request(left_pose))
+    # right_pnp.move_to_start(right_pnp.ik_request(right_pose))
 
     load_objects()
 
@@ -260,25 +260,25 @@ if __name__ == "__main__":
     tf_service(init=True)
 
     ###################################HACKING BEGIN
-    # for i in range(0, 5):
-    #     print()
-    #     otc.tf_lookup('a1')
-    #     print()
-    #     print()
-    # for i in range(0, 5):
-    #     print()
-    #     otc.tf_lookup('f2')
-    #     print()
-    #     print()
+    for i in range(0, 5):
+        print()
+        otc.tf_lookup('a1')
+        print()
+        print()
+    for i in range(0, 5):
+        print()
+        otc.tf_lookup('f2')
+        print()
+        print()
 
-    left_pick = otc.tf_lookup('a1')
-    left_pick.position.z+=0.05
-    left_pnp.pick(left_pick)
+    # left_pick = otc.tf_lookup('a1')
+    # left_pick.position.z+=0.05
+    # left_pnp.pick(left_pick)
 
 
-    left_place = otc.tf_lookup('f2')
-    left_place.position.z+=0.05
-    left_pnp.place(left_place)
+    # left_place = otc.tf_lookup('f2')
+    # left_place.position.z+=0.05
+    # left_pnp.place(left_place)
 
 
 
