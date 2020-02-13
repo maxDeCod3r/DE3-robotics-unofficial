@@ -292,23 +292,23 @@ bricks_start_v1 =[{
 bricks_start_v2 =[{
     'id':'a1',
     'rframe':'t1',
-    'x':-0.219,
+    'x':-0.119,
     'y':0.134,
     'z':0.821,
     'roll':radians(0),
     'pitch':radians(90),
     'yaw':radians(90)
-    },
-    {
-    'id':'a2',
-    'rframe':'a1',
-    'x':0,
-    'y':-0.15,
-    'z':0,
-    'roll':0,
-    'pitch':0,
-    'yaw':0
-    }
+    }#,
+    # {
+    # 'id':'a2',
+    # 'rframe':'a1',
+    # 'x':0,
+    # 'y':-0.15,
+    # 'z':0,
+    # 'roll':0,
+    # 'pitch':0,
+    # 'yaw':0
+    # }
     ]
 
 supervar = bricks_start_v2
