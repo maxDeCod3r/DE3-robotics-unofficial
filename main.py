@@ -276,7 +276,7 @@ if __name__ == "__main__":
     left_pnp.pick(left_pick)
 
 
-    left_place = otc.tf_lookup('f3')
+    left_place = otc.tf_lookup('f2')
     left_place.position.z+=0.05
     left_pnp.place(left_place)
 
