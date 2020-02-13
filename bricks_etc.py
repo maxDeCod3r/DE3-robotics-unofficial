@@ -294,9 +294,9 @@ bricks_start_v2 =[{
     'x':-0.119,
     'y':0.134,
     'z':0.821,
-    'roll':radians(90),
+    'roll':radians(0),
     'pitch':radians(90),
-    'yaw':0
+    'yaw':radians(90)
     }]
 
 def getBuildable():
