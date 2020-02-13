@@ -19,9 +19,9 @@ def tf_lookup(object_name):
 			continue
 
 		object_angles = tf.transformations.euler_from_quaternion([rot[3] , rot[0], rot[1], rot[2]], axes='sxyz')
-		xangle = object_angles[0]#+radians(90)# + radians(77.878)
-		xangle1 = object_angles[1]# - radians(90)
-		xangle2 = object_angles[2]# - radians(22.231)
+		xangle = object_angles[0] + radians(159.431)# + radians(77.878)
+		xangle1 = object_angles[1] + radians(90)
+		xangle2 = object_angles[2] + radians(-200.569)
 		object_angles = (xangle, xangle1, xangle2)
 		print("Angles:")
 		print(xangle)
@@ -58,9 +58,9 @@ if __name__ == "__main__":
 #      Yaw(2):   -180 deg.
 #      
 #      INITIAL STANDING VALUES
-#      0.211     12.112 + 77.878
-#      1.57      90.000 - 90.000
-#      -2.75   -157.769 - 22.231
+#      0.211    -20.569 + 159.431
+#      1.57     -90.000 +  90.000
+#      -2.75     20.569 - 200.569
 #      
 #      
 #      
