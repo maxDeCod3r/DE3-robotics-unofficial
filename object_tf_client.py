@@ -23,6 +23,11 @@ def tf_lookup(object_name):
 		xangle1 = object_angles[1]# + radians(-90)
 		xangle2 = object_angles[2]# + radians(-180)
 		object_angles = (xangle, xangle1, xangle2)
+		print("Angles:")
+		print(xangle)
+		print(xangle1)
+		print(xangle2)
+		print()
 		target_quat = tf.transformations.quaternion_from_euler(xangle, xangle1, xangle2)
 		target_pose = Pose()
 		target_pose.position.x = trans[0]
