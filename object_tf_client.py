@@ -40,6 +40,9 @@ def tf_lookup(object_name):
 		target_pose.orientation.y = target_quat[1]
 		target_pose.orientation.z = target_quat[2]
 		target_pose.orientation.w = target_quat[3]
+		print('#############')
+		print(target_pose.orientation)
+		print('#############')
 
 		return target_pose
 
