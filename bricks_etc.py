@@ -293,7 +293,7 @@ bricks_start_v2 =[{
     'rframe':'t1',
     'x':-0.119,
     'y':0.134,
-    'z':0.830,
+    'z':0.821,
     'roll':radians(90),
     'pitch':radians(90),
     'yaw':0
