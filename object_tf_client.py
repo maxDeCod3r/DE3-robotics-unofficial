@@ -19,7 +19,7 @@ def tf_lookup(object_name):
 			continue
 
 		object_angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1] , rot[2], rot[3]])
-		xangle = object_angles[0] + radians(90)
+		xangle = object_angles[0]# + radians(90)
 		xangle1 = object_angles[1]# + radians(-90)
 		xangle2 = object_angles[2]# + radians(-180)
 		object_angles = (xangle, xangle1, xangle2)
@@ -43,3 +43,23 @@ def tf_lookup(object_name):
 if __name__ == "__main__":
 	rospy.init_node('example_tf_listener')
 	print(tf_lookup('c1'))
+
+
+#      
+#      TARGET TOP PICKING EULER ANGLES
+#      MODIFIERS:
+#      Pitch(0): +90 deg.
+#      Roll(1):    0 deg.
+#      Yaw(2):     0 deg.
+#      
+#      FINAL VALUES:
+#      Pitch(0): +180 deg.
+#      Roll(1):     0 deg.
+#      Yaw(2):   -180 deg.
+#      
+#      
+#      
+#      
+#      
+#      
+#      

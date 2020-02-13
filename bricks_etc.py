@@ -313,7 +313,7 @@ def getTargets():
 
 def getNodes():
     nodes = ['baxter::base', 't1::Table']
-    for obj in bricks_start_v1 + bricks_end:
+    for obj in bricks_start_v2 + bricks_end:
         name = obj['id']
         node_name = name+'::Brick'
         nodes.append(node_name)
