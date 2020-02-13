@@ -260,17 +260,22 @@ if __name__ == "__main__":
     tf_service(init=True)
 
     ###################################HACKING BEGIN
-
-
-
-    left_pick = otc.tf_lookup('a3')
+    for i in range(0, 5):
+        print()
+        otc.tf_lookup('a1')
+        print()
+        print()
+        otc.tf_lookup('f2')
+        print()
+        print()
+    # left_pick = otc.tf_lookup('a1')
     # left_pick.position.z+=0.5
-    left_pnp.pick(left_pick)
+    # left_pnp.pick(left_pick)
 
 
-    left_place = otc.tf_lookup('f2')
+    # left_place = otc.tf_lookup('f2')
     # left_pick.position.z+=0.5
-    left_pnp.place(left_place)
+    # left_pnp.place(left_place)
 
 
 
