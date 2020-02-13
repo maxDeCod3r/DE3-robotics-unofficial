@@ -10,13 +10,13 @@ def tf_lookup(object_name):
 	listener = tf.TransformListener()
 
 	while not rospy.is_shutdown() and do_try:
-		# try:
-		(trans,rot) = listener.lookupTransform('base', object_name, rospy.Time(0))
-			# do_try = False
-		# except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-		# 	print('Failed to get frame data, retrying...')
-		# 	time.sleep(0.1)
-		# 	continue
+		try:
+			(trans,rot) = listener.lookupTransform('base', object_name, rospy.Time(0))
+			do_try = False
+		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+			print('Failed to get frame data, retrying...')
+			time.sleep(0.1)
+			continue
 
 		object_angles = tf.transformations.euler_from_quaternion([rot[3] , rot[0], rot[1], rot[2]], axes='sxyz')
 		xangle = object_angles[0] + radians(196)

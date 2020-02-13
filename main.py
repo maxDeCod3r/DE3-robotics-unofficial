@@ -256,8 +256,8 @@ if __name__ == "__main__":
 
     load_objects()
 
-    # print("loaded all objects, starting tf service thread")
-    # tf_service(init=True)
+    print("loaded all objects, starting tf service thread")
+    tf_service(init=True)
 
     ###################################HACKING BEGIN
     # for i in range(0, 5):
