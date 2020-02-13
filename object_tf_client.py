@@ -21,7 +21,7 @@ def tf_lookup(object_name):
 		print('@@@@@@@@@@@@@@@@')
 		print(rot)
 		print('@@@@@@@@@@@@@@@@')
-		object_angles = tf.transformations.matrix_from_quaternion([rot[0] , rot[1], rot[2], rot[3]])
+		object_angles = tf.transformations.quaternion_matrix([rot[0] , rot[1], rot[2], rot[3]])
 		print('@@@@@@@@@@@@@@@@')
 		print(object_angles)
 		print('@@@@@@@@@@@@@@@@')
