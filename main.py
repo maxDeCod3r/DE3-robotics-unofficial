@@ -229,23 +229,23 @@ if __name__ == "__main__":
     hover_distance = 0.1 # meters
     # Starting Pose for left arm
     left_pose = Pose()
-    left_pose.position.x = 0.579679836383
-    left_pose.position.y = 0.283311769707
-    left_pose.position.z = 0.213676720426
-    left_pose.orientation.x = -0.0249590815779
-    left_pose.orientation.y = 0.999649402929
-    left_pose.orientation.z = 0.00737916180073
-    left_pose.orientation.w = 0.00486450832011
+    left_pose.position.x = 0.579
+    left_pose.position.y = 0.283
+    left_pose.position.z = 0.273
+    left_pose.orientation.x = -0.024
+    left_pose.orientation.y = 0.999
+    left_pose.orientation.z = 0.007
+    left_pose.orientation.w = 0.004
 
     # Starting Pose for right arm
     right_pose = Pose()
-    right_pose.position.x = 0.579679836383
-    right_pose.position.y = -0.283311769707
-    right_pose.position.z = 0.213676720426
-    right_pose.orientation.x = -0.0249590815779
-    right_pose.orientation.y = 0.999649402929
-    right_pose.orientation.z = -0.00737916180073
-    right_pose.orientation.w = 0.00486450832011
+    right_pose.position.x = 0.579
+    right_pose.position.y = -0.283
+    right_pose.position.z = 0.273
+    right_pose.orientation.x = -0.024
+    right_pose.orientation.y = 0.999
+    right_pose.orientation.z = -0.000
+    right_pose.orientation.w = 0.004
 
     # left_pnp = PickAndPlace('left', hover_distance)
     # right_pnp = PickAndPlace('right', hover_distance)
