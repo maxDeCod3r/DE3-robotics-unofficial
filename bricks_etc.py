@@ -4,7 +4,7 @@ from math import radians
 table = {
     'id':'t1',
     'rframe':'world',
-    'x':0.85,
+    'x':0.55,
     'y':0.20,
     'z':0,
     'roll':0,
