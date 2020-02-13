@@ -15,12 +15,12 @@ table = {
 bricks_end =[{
     'id':'f1',
     'rframe':'t1',
-    'x':0.06,
-    'y':-0.24,
+    'x':0.0,
+    'y':0.0,
     'z':0.822,
     'roll':0,
     'pitch':radians(90),
-    'yaw':radians(90)
+    'yaw':0
     },
     {
     'id':'f2',
