@@ -265,12 +265,12 @@ if __name__ == "__main__":
 
     left_pick = otc.tf_lookup('a1')
 
-    left_pnp.pick(left_pick_proc)
+    left_pnp.pick(left_pick)
 
 
     left_place = otc.tf_lookup('f2')
 
-    left_pnp.place(left_place_pos)
+    left_pnp.place(left_place)
 
 
 
