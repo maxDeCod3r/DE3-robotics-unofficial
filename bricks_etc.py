@@ -1,5 +1,6 @@
 from math import radians
 
+
 table = {
     'id':'t1',
     'rframe':'world',
@@ -291,16 +292,30 @@ bricks_start_v1 =[{
 bricks_start_v2 =[{
     'id':'a1',
     'rframe':'t1',
-    'x':-0.119,
+    'x':-0.319,
     'y':0.134,
     'z':0.821,
     'roll':radians(0),
     'pitch':radians(90),
     'yaw':radians(90)
-    }]
+    },
+    {
+    'id':'a2',
+    'rframe':'ta1',
+    'x':0,
+    'y':-0.15,
+    'z':0,
+    'roll':0,
+    'pitch':0,
+    'yaw':0
+    }
+
+    ]
+
+supervar = bricks_start_v1
 
 def getBuildable():
-    return bricks_start_v2
+    return supervar
 
 def getAll():
     return bricks_start_v2+bricks_start_v1+bricks_end+[table]
@@ -313,7 +328,7 @@ def getTargets():
 
 def getNodes():
     nodes = ['baxter::base', 't1::Table']
-    for obj in bricks_start_v2 + bricks_end:
+    for obj in supervar + bricks_end:
         name = obj['id']
         node_name = name+'::Brick'
         nodes.append(node_name)
