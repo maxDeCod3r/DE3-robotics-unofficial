@@ -26,7 +26,7 @@ def tf_lookup(object_name):
 		print('@@@@@@@@@@@@@@@@')
 		print(object_angles)
 		print('@@@@@@@@@@@@@@@@')
-		Re = euler_matrix(radians(180), radians(0), radians(-270), 'rxyz')
+		Re = tf.transformations.euler_matrix(radians(180), radians(0), radians(-270), 'rxyz')
 		updated_angles = matmul(Re, object_angles)
 		target_quat = tf.transformations.quaternion_from_matrix(updated_angles)
 		target_pose = Pose()
