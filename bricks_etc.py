@@ -16,7 +16,7 @@ bricks_end =[{
     'id':'f1',
     'rframe':'t1',
     'x':0.06,
-    'y':-0.19,
+    'y':-0.24,
     'z':0.822,
     'roll':0,
     'pitch':radians(90),
@@ -292,7 +292,7 @@ bricks_start_v1 =[{
 bricks_start_v2 =[{
     'id':'a1',
     'rframe':'t1',
-    'x':-0.119,
+    'x':-0.159,
     'y':0.134,
     'z':0.821,
     'roll':radians(0),
