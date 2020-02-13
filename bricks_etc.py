@@ -301,7 +301,7 @@ bricks_start_v2 =[{
     },
     {
     'id':'a2',
-    'rframe':'ta1',
+    'rframe':'a1',
     'x':0,
     'y':-0.15,
     'z':0,
