@@ -23,7 +23,7 @@ def tf_lookup(object_name):
 		print('@@@@@@@@@@@@@@@@')
 		object_angles = tf.transformations.euler_from_quaternion([rot[0] , rot[1], rot[2], rot[3]])
 		xangle = object_angles[0]# + radians(196)
-		xangle1 = object_angles[1]# + radians(90)
+		xangle1 = object_angles[1] + radians(90)
 		xangle2 = object_angles[2]# + radians(-106)
 		object_angles = (xangle, xangle1, xangle2)
 		print("Angles:")
