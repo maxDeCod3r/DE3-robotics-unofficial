@@ -1,4 +1,29 @@
+from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
+# ##DELETE THIS
+# class Position():
+# 	def __init__(self):
+# 		self.x = 0
+# 		self.y = 0
+# 		self.z = 0
 
+# class Orientation():
+# 	def __init__(self):
+# 		self.x = 0
+# 		self.y = 0
+# 		self.z = 0
+# 		self.w = 0
+
+# class EAngle():
+# 	def __init__(self):
+# 		self.roll = 0
+# 		self.pitch = 0
+# 		self.yaw = 0
+
+# class Pose():
+# 	def __init__(self):
+# 		self.position = Position()
+# 		self.orientation = Orientation()
+# ##DELETE THIS
 
 startv = Pose()
 startv.position.x = 0.474
