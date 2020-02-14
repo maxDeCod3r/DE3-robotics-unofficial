@@ -150,7 +150,7 @@ class PickAndPlace(object):
 print(brickstuff[1]['pose'].position.x)
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
-
+hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
 print(brickstuff[0]['pose'])
