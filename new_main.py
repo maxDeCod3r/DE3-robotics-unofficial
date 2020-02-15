@@ -206,14 +206,15 @@ rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
 cleanup()
 
-tuck_arms.init_arms()
+# tuck_arms.init_arms()
 
 hover_distance = 0.2 
-left_pnp = PickAndPlace('left', hover_distance)
+# left_pnp = PickAndPlace('left', hover_distance)
 
 ## TODO: MAKE hover_distance higher for place part or solve IK collision error
 
 spawn_v_brick()
+exit(0)
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[2]['pose'])
 exit(0)
