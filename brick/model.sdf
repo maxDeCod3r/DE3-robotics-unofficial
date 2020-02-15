@@ -7,12 +7,12 @@
         <pose frame=''> 0 0 0.0 -0 0</pose>
         <mass>0.1</mass>
         <inertia>
-          <ixx>0</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0</iyy>
-          <iyz>0</iyz>
-          <izz>0</izz>
+          <ixx>0.7</ixx>
+          <ixy>0.7</ixy>
+          <ixz>0.7</ixz>
+          <iyy>0.7</iyy>
+          <iyz>0.7</iyz>
+          <izz>0.7</izz>
         </inertia>
       </inertial>
       <collision name='Brick_collision'>
