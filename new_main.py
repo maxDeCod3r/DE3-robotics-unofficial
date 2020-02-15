@@ -150,7 +150,7 @@ class PickAndPlace(object):
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
-with open ("models/brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
+with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
 
 rospy.wait_for_service('/gazebo/spawn_sdf_model')
 spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
