@@ -24,7 +24,7 @@ def etq(roll, pitch, yaw):
 def q_extrapolator(obj):
 	return obj.orientation.x, obj.orientation.y, obj.orientation.z, obj.orientation.w
 
-print(etq(1.570733, 1.570733, 1.570733))
+print(etq(1.570733, 1.570733, 3.14))
 
 exit(0)
 
