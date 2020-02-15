@@ -189,6 +189,7 @@ class Tuck(object):
                 # rospy.loginfo("Tucking: One or more arms not Tucked.")
                 any_flipped = not all(self._arm_state['flipped'].values())
                 if any_flipped:
+                    pass
                     # rospy.loginfo(
                     #     "Moving to neutral start position with collision %s.",
                     #     "on" if any_flipped else "off")
@@ -270,4 +271,4 @@ def init_arms():
     tucker = Tuck(tuck)
     rospy.on_shutdown(tucker.clean_shutdown)
     tucker.supervised_tuck()
-    
+
