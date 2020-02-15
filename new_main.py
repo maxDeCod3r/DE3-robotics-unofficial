@@ -21,7 +21,7 @@ import tuck_arms
 brickstuff = tps.brick_directions_notf
 
 class PickAndPlace(object):
-    def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.9, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
+    def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
         self._speed = speed
         self._accuracy = accuracy
         self._limb_name = limb # string
@@ -208,9 +208,10 @@ cleanup()
 
 tuck_arms.init_arms()
 
-hover_distance = 0.2
-left_pnp = PickAndPlace('left', hover_distance, speed=0.3)
+hover_distance = 0.2 
+left_pnp = PickAndPlace('left', hover_distance)
 
+## TODO: MAKE hover_distance higher for place part or solve IK collision error
 
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
