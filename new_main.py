@@ -62,7 +62,7 @@ class PickAndPlace(object):
         limb_joints = {}
         if (resp_seeds[0] != resp.RESULT_INVALID):
             print()
-            print(ikreq.SEED_USER)
+            print(resp_seeds)
             print()
             seed_str = {
                         ikreq.SEED_USER: 'User Provided Seed',
