@@ -61,9 +61,9 @@ class PickAndPlace(object):
         resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
         limb_joints = {}
         if (resp_seeds[0] != resp.RESULT_INVALID):
-        	print()
-        	print(ikreq.SEED_USER)
-        	print()
+            print()
+            print(ikreq.SEED_USER)
+            print()
             seed_str = {
                         ikreq.SEED_USER: 'User Provided Seed',
                         ikreq.SEED_CURRENT: 'Current Joint Angles',
