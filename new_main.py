@@ -133,10 +133,10 @@ class PickAndPlace(object):
         self._servo_to_pose(pose)
         print('Ready to grip')
         # close gripper
-        self.gripper_close()
+        # //self.gripper_close()
         print('grip')
         # retract to clear object
-        self._retract()
+        # //self._retract()
 
     def place(self, pose):
         # servo above pose
@@ -186,9 +186,9 @@ hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
 
-spawn_brick(vertical=True)
+# spawn_brick(vertical=True)
 left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[2]['pose'])
+# left_pnp.place(brickstuff[2]['pose'])
 # spawn_brick(vertical=True)
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[3]['pose'])
@@ -196,7 +196,7 @@ left_pnp.place(brickstuff[2]['pose'])
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[4]['pose'])
 # spawn_brick(vertical=False)
-left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.pick(brickstuff[1]['pose'])
 # left_pnp.place(brickstuff[5]['pose'])
 # spawn_brick(vertical=False)
 # left_pnp.pick(brickstuff[1]['pose'])
