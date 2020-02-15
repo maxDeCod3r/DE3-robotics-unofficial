@@ -7,10 +7,10 @@
         <pose frame=''> 0 0 0.0 -0 0</pose>
         <mass>0.1</mass>
         <inertia>
-          <ixx>0.0017</ixx>
+          <ixx>0</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.0017</iyy>
+          <iyy>0</iyy>
           <iyz>0</iyz>
           <izz>0</izz>
         </inertia>
@@ -25,8 +25,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>100</mu>
-              <mu2>50</mu2>
+              <mu>200</mu>
+              <mu2>100</mu2>
               <fdir1>0 0 1</fdir1>
               <slip1>0.0</slip1>
               <slip2>0.0</slip2>
