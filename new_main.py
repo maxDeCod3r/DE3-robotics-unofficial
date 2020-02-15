@@ -212,6 +212,8 @@ tuck_arms.init_arms()
 hover_distance = 0.2 
 left_pnp = PickAndPlace('left', hover_distance)
 
+left_pnp.gripper_open()
+
 ## TODO: MAKE hover_distance higher for place part or solve IK collision error
 
 spawn_v_brick()
