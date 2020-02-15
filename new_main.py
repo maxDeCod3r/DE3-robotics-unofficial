@@ -161,8 +161,8 @@ def cleanup():
     for obj in brick_ids:
         delete_model(obj)
 
-
-LET THE SHITSTORM BEGIN
+cleanup()
+# LET THE SHITSTORM BEGIN
 import numpy as np
 import time
 
