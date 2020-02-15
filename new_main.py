@@ -209,7 +209,7 @@ cleanup()
 tuck_arms.init_arms()
 
 hover_distance = 0.2
-left_pnp = PickAndPlace('left', hover_distance., speed=0.3)
+left_pnp = PickAndPlace('left', hover_distance, speed=0.3)
 
 
 spawn_v_brick()
