@@ -176,7 +176,7 @@ def etq(roll, pitch, yaw):
 
 def spawn_v_brick():
 	brick_pose = Pose()
-	brick_pose.position.x = 0.480
+	brick_pose.position.x = 0.475
 	brick_pose.position.y = 0.759
 	brick_pose.position.z = 0.818
 	QUATS = etq(0, 1.57, 1.57)
