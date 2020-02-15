@@ -82,7 +82,7 @@ class PickAndPlace(object):
 
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
-            self._limb.set_joint_position_speed(0.2)
+            self._limb.set_joint_position_speed(1.5)
             self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
