@@ -24,6 +24,10 @@ def etq(roll, pitch, yaw):
 def q_extrapolator(obj):
 	return obj.orientation.x, obj.orientation.y, obj.orientation.z, obj.orientation.w
 
+print(etq(-0.2347, 1.5707, -0.2347))
+
+exit(0)
+
 ##DELETE THIS
 class Position():
 	def __init__(self):

@@ -16,6 +16,8 @@ import baxter_interface
 
 import target_poses as tps
 
+import tuck_arms
+
 brickstuff = tps.brick_directions_notf
 
 class PickAndPlace(object):
@@ -146,28 +148,67 @@ class PickAndPlace(object):
         # retract to clear object
         self._retract()
 
+brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
-print(brickstuff[1]['pose'].position.x)
+with open ("models/brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
+
+rospy.wait_for_service('/gazebo/spawn_sdf_model')
+spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
+delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
+
+def cleanup():
+    for obj in brick_ids:
+        delete_model(obj)
+
+def spawn_brick(vertical=True):
+	brick_pose = Pose()
+	if vertical:
+		brick_pose.position.x = 0.4896
+		brick_pose.position.y = 0.7067
+		brick_pose.position.z = 0.8576
+		brick_pose.orientation.x = 0
+		brick_pose.orientation.y = 0.707
+		brick_pose.orientation.z = 0
+		brick_pose.orientation.w = 0.707
+	else:
+		pass
+
+	brick_reference_frame = 'world'
+	brick_id = brick_ids.pop()
+	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
+
+
+tuck_arms.init_arms()
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
+
+spawn_brick(vertical=True)
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[2]['pose'])
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[3]['pose'])
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[4]['pose'])
+# spawn_brick(vertical=True)
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[3]['pose'])
+# spawn_brick(vertical=True)
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[4]['pose'])
+# spawn_brick(vertical=False)
 left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[5]['pose'])
-left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[6]['pose'])
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[7]['pose'])
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[8]['pose'])
-left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[9]['pose'])
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[10]['pose'])
+# left_pnp.place(brickstuff[5]['pose'])
+# spawn_brick(vertical=False)
+# left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.place(brickstuff[6]['pose'])
+# spawn_brick(vertical=True)
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[7]['pose'])
+# spawn_brick(vertical=True)
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[8]['pose'])
+# spawn_brick(vertical=False)
+# left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.place(brickstuff[9]['pose'])
+# spawn_brick(vertical=True)
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[10]['pose'])

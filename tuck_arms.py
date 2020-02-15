@@ -136,7 +136,7 @@ class Tuck(object):
         at_goal = lambda: (abs(head.pan()) <=
                         baxter_interface.settings.HEAD_PAN_ANGLE_TOLERANCE)
 
-        rospy.loginfo("Moving head to neutral position")
+        # rospy.loginfo("Moving head to neutral position")
         while not at_goal() and not rospy.is_shutdown():
             if start_disabled:
                 [pub.publish(Empty()) for pub in self._disable_pub.values()]
@@ -182,16 +182,16 @@ class Tuck(object):
             # If arms are already tucked, report this to user and exit.
             if all(self._arm_state['tuck'][limb] == 'tuck'
                    for limb in self._limbs):
-                rospy.loginfo("Tucking: Arms already in 'Tucked' position.")
+                # rospy.loginfo("Tucking: Arms already in 'Tucked' position.")
                 self._done = True
                 return
             else:
-                rospy.loginfo("Tucking: One or more arms not Tucked.")
+                # rospy.loginfo("Tucking: One or more arms not Tucked.")
                 any_flipped = not all(self._arm_state['flipped'].values())
                 if any_flipped:
-                    rospy.loginfo(
-                        "Moving to neutral start position with collision %s.",
-                        "on" if any_flipped else "off")
+                    # rospy.loginfo(
+                    #     "Moving to neutral start position with collision %s.",
+                    #     "on" if any_flipped else "off")
                 # Move to neutral pose before tucking arms to avoid damage
                 self._check_arm_state()
                 actions = dict()
@@ -203,7 +203,7 @@ class Tuck(object):
                 self._move_to(actions, disabled)
 
                 # Disable collision and Tuck Arms
-                rospy.loginfo("Tucking: Tucking with collision avoidance off.")
+                # rospy.loginfo("Tucking: Tucking with collision avoidance off.")
                 actions = {'left': 'tuck', 'right': 'tuck'}
                 disabled = {'left': True, 'right': True}
                 self._move_to(actions, disabled)
@@ -214,8 +214,8 @@ class Tuck(object):
         else:
             # If arms are tucked disable collision and untuck arms
             if any(self._arm_state['flipped'].values()):
-                rospy.loginfo("Untucking: One or more arms Tucked;"
-                              " Disabling Collision Avoidance and untucking.")
+                # rospy.loginfo("Untucking: One or more arms Tucked;"
+                #               " Disabling Collision Avoidance and untucking.")
                 self._check_arm_state()
                 suppress = deepcopy(self._arm_state['flipped'])
                 actions = {'left': 'untuck', 'right': 'untuck'}
@@ -224,8 +224,8 @@ class Tuck(object):
                 return
             # If arms already untucked, move to neutral location
             else:
-                rospy.loginfo("Untucking: Arms already Untucked;"
-                              " Moving to neutral position.")
+                # rospy.loginfo("Untucking: Arms already Untucked;"
+                #               " Moving to neutral position.")
                 self._check_arm_state()
                 suppress = deepcopy(self._arm_state['flipped'])
                 actions = {'left': 'untuck', 'right': 'untuck'}
@@ -264,3 +264,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def init_arms():
+    tuck = False
+    tucker = Tuck(tuck)
+    rospy.on_shutdown(tucker.clean_shutdown)
+    tucker.supervised_tuck()
+    
