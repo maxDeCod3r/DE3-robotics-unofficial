@@ -160,25 +160,29 @@ def cleanup():
     for obj in brick_ids:
         delete_model(obj)
 
-def spawn_brick(vertical=True):
+def spawn_v_brick():
 	brick_pose = Pose()
 	if vertical:
-		brick_pose.position.x = 0.485
-		brick_pose.position.y = 0.709
-		brick_pose.position.z = 0.818
-		brick_pose.orientation.x = -0.5
-		brick_pose.orientation.y = 0.5
-		brick_pose.orientation.z = 0.5
-		brick_pose.orientation.w = 0.5
-	else:
-		brick_pose.position.x = 0.4664
-		brick_pose.position.y = 0.8069
-		brick_pose.position.z = 0.7533
-		brick_pose.orientation.x = 0
-		brick_pose.orientation.y = 0
-		brick_pose.orientation.z = 0.707
-		brick_pose.orientation.w = 0.707
+	brick_pose.position.x = 0.485
+	brick_pose.position.y = 0.709
+	brick_pose.position.z = 0.818
+	brick_pose.orientation.x = -0.5
+	brick_pose.orientation.y = 0.5
+	brick_pose.orientation.z = 0.5
+	brick_pose.orientation.w = 0.5
+	brick_reference_frame = 'world'
+	brick_id = brick_ids.pop()
+	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
+def spawn_h_brick():
+	brick_pose = Pose()
+	brick_pose.position.x = 0.4664
+	brick_pose.position.y = 0.8069
+	brick_pose.position.z = 0.7533
+	brick_pose.orientation.x = 0
+	brick_pose.orientation.y = 0
+	brick_pose.orientation.z = 0.707
+	brick_pose.orientation.w = 0.707
 	brick_reference_frame = 'world'
 	brick_id = brick_ids.pop()
 	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
@@ -194,30 +198,30 @@ hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
 
-spawn_brick(vertical=True)
+spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[2]['pose'])
-spawn_brick(vertical=True)
+spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[3]['pose'])
-spawn_brick(vertical=True)
+spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[4]['pose'])
-spawn_brick(vertical=False)
+spawn_h_brick()
 left_pnp.pick(brickstuff[1]['pose'])
 left_pnp.place(brickstuff[5]['pose'])
-# spawn_brick(vertical=False)
+# spawn_h_brick()
 # left_pnp.pick(brickstuff[1]['pose'])
 # left_pnp.place(brickstuff[6]['pose'])
-# spawn_brick(vertical=True)
+# spawn_v_brick()
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[7]['pose'])
-# spawn_brick(vertical=True)
+# spawn_v_brick()
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[8]['pose'])
-# spawn_brick(vertical=False)
+# spawn_h_brick()
 # left_pnp.pick(brickstuff[1]['pose'])
 # left_pnp.place(brickstuff[9]['pose'])
-# spawn_brick(vertical=True)
+# spawn_v_brick()
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[10]['pose'])
