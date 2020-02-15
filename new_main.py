@@ -166,10 +166,10 @@ def spawn_brick(vertical=True):
 		brick_pose.position.x = 0.485
 		brick_pose.position.y = 0.709
 		brick_pose.position.z = 0.818
-		brick_pose.orientation.x = -0.5
-		brick_pose.orientation.y = -0.5
-		brick_pose.orientation.z = 0.5
-		brick_pose.orientation.w = -0.5
+		brick_pose.orientation.x = 0.5
+		brick_pose.orientation.y = 0.5
+		brick_pose.orientation.z = -0.5
+		brick_pose.orientation.w = 0.5
 	else:
 		brick_pose.position.x = 0.4664
 		brick_pose.position.y = 0.8069
