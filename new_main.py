@@ -165,15 +165,15 @@ def spawn_brick(vertical=True):
 	if vertical:
 		brick_pose.position.x = 0.4788
 		brick_pose.position.y = 0.7106
-		brick_pose.position.z = 0.821
+		brick_pose.position.z = xx
 		brick_pose.orientation.x = 0
 		brick_pose.orientation.y = 0.707
 		brick_pose.orientation.z = 0
 		brick_pose.orientation.w = 0.707
 	else:
-		brick_pose.position.x = 0.4847
-		brick_pose.position.y = 0.7127
-		brick_pose.position.z = 0.9
+		brick_pose.position.x = 0.4664
+		brick_pose.position.y = 0.8069
+		brick_pose.position.z = 0.7533
 		brick_pose.orientation.x = 0
 		brick_pose.orientation.y = 0.707
 		brick_pose.orientation.z = 0
@@ -186,6 +186,8 @@ def spawn_brick(vertical=True):
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
+cleanup()
+
 tuck_arms.init_arms()
 
 hover_distance = 0.2
@@ -193,7 +195,7 @@ left_pnp = PickAndPlace('left', hover_distance)
 
 
 # spawn_brick(vertical=True)
-# left_pnp.pick(brickstuff[0]['pose'])
+left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[2]['pose'])
 # spawn_brick(vertical=True)
 # left_pnp.pick(brickstuff[0]['pose'])
@@ -202,7 +204,7 @@ left_pnp = PickAndPlace('left', hover_distance)
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[4]['pose'])
 # spawn_brick(vertical=False)
-left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.pick(brickstuff[1]['pose'])
 # left_pnp.place(brickstuff[5]['pose'])
 # spawn_brick(vertical=False)
 # left_pnp.pick(brickstuff[1]['pose'])
