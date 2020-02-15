@@ -22,7 +22,7 @@ brickstuff = tps.brick_directions_notf
 
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
-        # self._accuracy = accuracy
+        self._accuracy = accuracy
         self._limb_name = limb # string
         self._hover_distance = hover_distance # in meters
         self._verbose = verbose # bool
