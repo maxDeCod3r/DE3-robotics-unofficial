@@ -22,8 +22,7 @@ brickstuff = tps.brick_directions_notf
 
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
-        self._speed = 0.2
-        self._accuracy = accuracy
+        # self._accuracy = accuracy
         self._limb_name = limb # string
         self._hover_distance = hover_distance # in meters
         self._verbose = verbose # bool
@@ -82,8 +81,8 @@ class PickAndPlace(object):
 
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
-            self._limb.set_joint_position_speed(1.5)
-            self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
+            # self._limb.set_joint_position_speed(1.5)
+            self._limb.move_to_joint_positions(joint_angles)#, timeout=20.0, threshold=self._accuracy)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
@@ -215,7 +214,6 @@ left_pnp = PickAndPlace('left', hover_distance)
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[2]['pose'])
-exit(0)
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[3]['pose'])
