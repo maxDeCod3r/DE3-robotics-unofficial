@@ -178,9 +178,10 @@ def spawn_brick(vertical=True):
 	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
 
+rospy.init_node("I_still_have_some_hope")  # Am I wrong??
+
 tuck_arms.init_arms()
 
-rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
