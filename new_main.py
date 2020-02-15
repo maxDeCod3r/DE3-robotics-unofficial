@@ -133,10 +133,10 @@ class PickAndPlace(object):
         self._servo_to_pose(pose)
         print('Ready to grip')
         # close gripper
-        # //self.gripper_close()
+        self.gripper_close()
         print('grip')
         # retract to clear object
-        # //self._retract()
+        self._retract()
 
     def place(self, pose):
         # servo above pose
@@ -163,20 +163,20 @@ def cleanup():
 def spawn_brick(vertical=True):
 	brick_pose = Pose()
 	if vertical:
-		brick_pose.position.x = 0.4788
-		brick_pose.position.y = 0.7106
-		brick_pose.position.z = xx
-		brick_pose.orientation.x = 0
-		brick_pose.orientation.y = 0.707
-		brick_pose.orientation.z = 0
-		brick_pose.orientation.w = 0.707
+		brick_pose.position.x = 0.485
+		brick_pose.position.y = 0.709
+		brick_pose.position.z = 0.818
+		brick_pose.orientation.x = -0.5
+		brick_pose.orientation.y = -0.5
+		brick_pose.orientation.z = 0.5
+		brick_pose.orientation.w = -0.5
 	else:
 		brick_pose.position.x = 0.4664
 		brick_pose.position.y = 0.8069
 		brick_pose.position.z = 0.7533
 		brick_pose.orientation.x = 0
-		brick_pose.orientation.y = 0.707
-		brick_pose.orientation.z = 0
+		brick_pose.orientation.y = 0
+		brick_pose.orientation.z = 0.707
 		brick_pose.orientation.w = 0.707
 
 	brick_reference_frame = 'world'
@@ -194,10 +194,10 @@ hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
 
-# spawn_brick(vertical=True)
+spawn_brick(vertical=True)
 left_pnp.pick(brickstuff[0]['pose'])
-# left_pnp.place(brickstuff[2]['pose'])
-# spawn_brick(vertical=True)
+left_pnp.place(brickstuff[2]['pose'])
+spawn_brick(vertical=True)
 # left_pnp.pick(brickstuff[0]['pose'])
 # left_pnp.place(brickstuff[3]['pose'])
 # spawn_brick(vertical=True)
