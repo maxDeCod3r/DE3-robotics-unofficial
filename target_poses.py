@@ -28,7 +28,7 @@ from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
 startv = Pose()
 startv.position.x = 0.474
 startv.position.y = 0.708
-startv.position.z = 0.254
+startv.position.z = 0.204
 startv.orientation.x = -0.7071067811865476
 startv.orientation.y = -0.7071067811865475
 startv.orientation.z = 4.329780281177466e-17
