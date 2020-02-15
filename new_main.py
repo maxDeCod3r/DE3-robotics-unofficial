@@ -143,9 +143,9 @@ class PickAndPlace(object):
         # servo to pose
         self._servo_to_pose(pose)
         # open the gripper
-        # self.gripper_open()
+        self.gripper_open()
         # retract to clear object
-        # self._retract()
+        self._retract()
 
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
