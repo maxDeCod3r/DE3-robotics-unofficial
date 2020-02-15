@@ -56,8 +56,8 @@ brick2 = Pose()
 brick2.position.x = 0.615
 brick2.position.y = 0.346
 brick2.position.z = -0.125
-brick2.orientation.x = -0.7071067811865476
-brick2.orientation.y = -0.7071067811865475
+brick2.orientation.x = 0.7071067811865476
+brick2.orientation.y = 0.7071067811865475
 brick2.orientation.z = 4.329780281177466e-17
 brick2.orientation.w = 4.329780281177467e-17
 
