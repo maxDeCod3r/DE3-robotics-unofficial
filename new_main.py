@@ -165,8 +165,8 @@ def spawn_v_brick():
 	brick_pose.position.x = 0.485
 	brick_pose.position.y = 0.709
 	brick_pose.position.z = 0.818
-	brick_pose.orientation.x = 0.707
-	brick_pose.orientation.y = 0
+	brick_pose.orientation.x = 0
+	brick_pose.orientation.y = 0.707
 	brick_pose.orientation.z = 0
 	brick_pose.orientation.w = 0.707
 	brick_reference_frame = 'world'
