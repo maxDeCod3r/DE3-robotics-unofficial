@@ -162,35 +162,36 @@ def cleanup():
         delete_model(obj)
 
 
-#LET THE SHITSTORM BEGIN
-# import numpy as np
-# import time
+LET THE SHITSTORM BEGIN
+import numpy as np
+import time
 
-# rospy.init_node("THIS_IS_A_FUCKING_DISASTER")  # Am I wrong??
+rospy.init_node("THIS_IS_A_FUCKING_DISASTER")  # Am I wrong??
 
-# def etq(roll, pitch, yaw):
-#         qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
-#         qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
-#         qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
-#         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
-#         return [qx, qy, qz, qw]
-# POSSIBLES = [(0, 0, 0), (1.57, 0, 0), (0, 1.57, 0), (0, 0, 1.57), (1.57, 1.57, 0), (0, 1.57, 1.57), (1.57, 1.57, 1.57)]
-# brick_pose = Pose()
-# brick_pose.position.x = 0.485
-# brick_pose.position.y = 0.709
-# brick_pose.position.z = 0.818
-# brick_reference_frame = 'world'
+def etq(roll, pitch, yaw):
+        qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+        qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
+        qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
+        qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
+        return [qx, qy, qz, qw]
+POSSIBLES = [(0, 0, 0), (1.57, 0, 0), (0, 1.57, 0), (0, 0, 1.57), (1.57, 1.57, 0), (0, 1.57, 1.57), (1.57, 1.57, 1.57)]
+brick_pose = Pose()
+brick_pose.position.x = 0.485
+brick_pose.position.y = 0.709
+brick_pose.position.z = 0.818
+brick_reference_frame = 'world'
 
-# for x in POSSIBLES:
-# 	QUATS = etq(*x)
-# 	brick_pose.orientation.x = QUATS[0]
-# 	brick_pose.orientation.y = QUATS[1]
-# 	brick_pose.orientation.z = QUATS[2]
-# 	brick_pose.orientation.w = QUATS[3]
-# 	brick_id = brick_ids.pop()
-# 	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
-# 	time.sleep(1)
-# exit(0)
+for x in POSSIBLES:
+	print(x)
+	QUATS = etq(*x)
+	brick_pose.orientation.x = QUATS[0]
+	brick_pose.orientation.y = QUATS[1]
+	brick_pose.orientation.z = QUATS[2]
+	brick_pose.orientation.w = QUATS[3]
+	brick_id = brick_ids.pop()
+	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
+	time.sleep(3)
+exit(0)
 
 def spawn_v_brick():
 	brick_pose = Pose()
