@@ -61,9 +61,6 @@ class PickAndPlace(object):
         resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
         limb_joints = {}
         if (resp_seeds[0] != resp.RESULT_INVALID):
-            print()
-            print(resp_seeds)
-            print()
             seed_str = {
                         ikreq.SEED_USER: 'User Provided Seed',
                         ikreq.SEED_CURRENT: 'Current Joint Angles',
@@ -84,8 +81,8 @@ class PickAndPlace(object):
 
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
-            # self._limb.set_joint_position_speed(1.5)
-            self._limb.move_to_joint_positions(joint_angles)#, timeout=20.0, threshold=self._accuracy)
+            self._limb.set_joint_position_speed(0.1)
+            self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
