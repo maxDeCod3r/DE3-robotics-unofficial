@@ -144,9 +144,9 @@ class PickAndPlace(object):
         # servo to pose
         self._servo_to_pose(pose)
         # open the gripper
-        self.gripper_open()
+        # self.gripper_open()
         # retract to clear object
-        self._retract()
+        # self._retract()
 
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
@@ -214,9 +214,9 @@ hover_distance = 0.2
 ## TODO: MAKE hover_distance higher for place part or solve IK collision error
 
 spawn_v_brick()
-exit(0)
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[2]['pose'])
+exit(0)
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
 left_pnp.place(brickstuff[3]['pose'])
