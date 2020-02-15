@@ -163,7 +163,7 @@ def cleanup():
 def spawn_brick(vertical=True):
 	brick_pose = Pose()
 	if vertical:
-		brick_pose.position.x = 0.4896
+		brick_pose.position.x = 0.483
 		brick_pose.position.y = 0.7067
 		brick_pose.position.z = 0.8576
 		brick_pose.orientation.x = 0
