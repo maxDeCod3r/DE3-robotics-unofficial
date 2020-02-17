@@ -146,6 +146,20 @@ class PickAndPlace(object):
         # retract to clear object
         self._retract()
 
+    def cust_place(self, pose):
+        # servo above pose
+        approach = copy.deepcopy(pose)
+        # approach with a pose the hover-distance above the requested pose
+        approach.position.z = approach.position.z + 0.1
+        joint_angles = self.ik_request(approach)
+        self._guarded_move_to_joint_position(joint_angles)
+        # servo to pose
+        self._servo_to_pose(pose)
+        # open the gripper
+        self.gripper_open()
+        # retract to clear object
+        self._retract()
+
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
@@ -251,4 +265,4 @@ left_pnp.place(brickstuff[9]['pose'])
 paused = raw_input('Continue?')
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[10]['pose'])
+left_pnp.cust_place(brickstuff[10]['pose'])
