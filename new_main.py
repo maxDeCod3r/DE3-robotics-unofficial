@@ -99,6 +99,10 @@ class PickAndPlace(object):
         # approach with a pose the hover-distance above the requested pose
         approach.position.z = approach.position.z + self._hover_distance
         joint_angles = self.ik_request(approach)
+        print('---------')
+        print('IK Solution:')
+        print(joint_angles)
+        print('---------')
         self._guarded_move_to_joint_position(joint_angles)
 
     def _retract(self):
