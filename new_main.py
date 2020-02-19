@@ -105,7 +105,7 @@ class PickAndPlace(object):
     def _approach(self, pose):
         approach = copy.deepcopy(pose)
         # approach with a pose the hover-distance above the requested pose
-        approach.position.z = approach.position.z + self._hover_distance
+        approach.position.z = approach.position.z + 0.05# self._hover_distance
         joint_angles = self.ik_request(approach)
         self._guarded_move_to_joint_position(joint_angles)
 
@@ -135,7 +135,6 @@ class PickAndPlace(object):
         # servo above pose
         print('Approaching')
         self._approach(pose)
-        return
         # servo to pose
         self._servo_to_pose(pose)
         print('Ready to grip')
@@ -148,7 +147,6 @@ class PickAndPlace(object):
     def place(self, pose):
         # servo above pose
         self._approach(pose)
-        return
         # servo to pose
         self._servo_to_pose(pose)
         # open the gripper
@@ -169,6 +167,9 @@ class PickAndPlace(object):
         self.gripper_open()
         # retract to clear object
         self._retract()
+
+    def send(self, angles):
+        self._guarded_move_to_joint_position(angles)
 
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
@@ -235,43 +236,59 @@ left_pnp.gripper_open()
 
 ## TODO: MAKE hover_distance higher for place part or solve IK collision error
 
+# spawn_v_brick()
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[2]['pose'])
+# exit(0)
+# tuck_arms.init_arms()
+# paused = raw_input('Continue?')
+# spawn_v_brick()
+# left_pnp.pick(brickstuff[0]['pose'])
+# print('\n \n-----------------------\n \n')
+# left_pnp.place(brickstuff[3]['pose'])
+# exit(1)
+# tuck_arms.init_arms()
+# paused = raw_input('Continue?')
+# spawn_v_brick()
+# # left_pnp.pick(brickstuff[0]['pose'])
 spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-exit()
-left_pnp.place(brickstuff[2]['pose'])
-tuck_arms.init_arms()
-paused = raw_input('Continue?')
-spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[3]['pose'])
-tuck_arms.init_arms()
-paused = raw_input('Continue?')
-spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[4]['pose'])
-tuck_arms.init_arms()
-paused = raw_input('Continue?')
-spawn_h_brick()
-left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[5]['pose'])
-tuck_arms.init_arms()
-paused = raw_input('Continue?')
-spawn_h_brick()
-left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[6]['pose'])
-paused = raw_input('Continue?')
-spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[7]['pose'])
-paused = raw_input('Continue?')
-spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[8]['pose'])
-paused = raw_input('Continue?')
-spawn_h_brick()
-left_pnp.pick(brickstuff[1]['pose'])
-left_pnp.place(brickstuff[9]['pose'])
-paused = raw_input('Continue?')
-spawn_v_brick()
-left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.cust_place(brickstuff[10]['pose'])
+left_pnp.send({'left_w0': 0.309347832698974, 'left_w1': 1.881132793719985, 'left_w2': 2.3018260606950194, 'left_e0': -0.6620952326288202, 'left_e1': 0.8506124094054622, 'left_s0': 0.4467327362087081, 'left_s1': -1.0924293648582206})
+left_pnp.send({'left_w0': 0.32998286773274293, 'left_w1': 1.3930185907441222, 'left_w2': 2.2171019702140753, 'left_e0': -0.6821342836475758, 'left_e1': 1.3311146610544962, 'left_s0': 0.5323550070725158, 'left_s1': -1.0404847669613069})
+left_pnp.gripper_close()
+left_pnp.send({'left_w0': 0.309347832698974, 'left_w1': 1.881132793719985, 'left_w2': 2.3018260606950194, 'left_e0': -0.6620952326288202, 'left_e1': 0.8506124094054622, 'left_s0': 0.4467327362087081, 'left_s1': -1.0924293648582206})
+# left_pnp.place(brickstuff[4]['pose'])
+# tuck_arms.init_arms()
+# exit(0)
+# paused = raw_input('Continue?')
+# spawn_h_brick()
+# left_pnp.send({'left_w0': 0.8139517749899786, 'left_w1': 1.7913332347783784, 'left_w2': 2.140253332470379, 'left_e0': -1.2881506550429311, 'left_e1': 0.9559160919794364, 'left_s0': 0.718405344706577, 'left_s1': -0.7389057972202023})
+# left_pnp.send({'left_w0': 0.9011295809085222, 'left_w1': 1.4021253667832847, 'left_w2': 2.0105076391011076, 'left_e0': -1.171667748823461, 'left_e1': 1.2991409722196496, 'left_s0': 0.7750446847107565, 'left_s1': -0.5757716624754514})
+# left_pnp.gripper_close()
+# left_pnp.send({'left_w0': 0.8139517749899786, 'left_w1': 1.7913332347783784, 'left_w2': 2.140253332470379, 'left_e0': -1.2881506550429311, 'left_e1': 0.9559160919794364, 'left_s0': 0.718405344706577, 'left_s1': -0.7389057972202023})
+# left_pnp.place(brickstuff[5]['pose'])
+# exit(0)
+# tuck_arms.init_arms()
+# paused = raw_input('Continue?')
+# spawn_h_brick()
+# left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.place(brickstuff[6]['pose'])
+# exit(0)
+# paused = raw_input('Continue?')
+# spawn_v_brick()
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[7]['pose'])
+# exit(0)
+# paused = raw_input('Continue?')
+# spawn_v_brick()
+# left_pnp.pick(brickstuff[0]['pose'])
+# left_pnp.place(brickstuff[8]['pose'])
+# exit(0)
+# paused = raw_input('Continue?')
+# spawn_h_brick()
+# left_pnp.pick(brickstuff[1]['pose'])
+# left_pnp.place(brickstuff[9]['pose'])
+# exit(0)
+# paused = raw_input('Continue?')
+# spawn_v_brick()
+# left_pnp.pick(brickstuff[0]['pose'])
+left_pnp.place(brickstuff[10]['pose'])
