@@ -237,6 +237,7 @@ left_pnp.gripper_open()
 
 spawn_v_brick()
 left_pnp.pick(brickstuff[0]['pose'])
+exit()
 left_pnp.place(brickstuff[2]['pose'])
 tuck_arms.init_arms()
 paused = raw_input('Continue?')
