@@ -171,59 +171,77 @@ def H_Routine():
 
 V_Routine()
 left_pnp.send(ta.B_1_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_1_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_1_A)
 
 V_Routine()
 left_pnp.send(ta.B_2_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_2_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_2_A)
 
 V_Routine()
 left_pnp.send(ta.B_3_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_3_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_3_A)
 
 
 H_Routine()
 left_pnp.send(ta.B_4_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_4_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_4_A)
 
 H_Routine()
 left_pnp.send(ta.B_5_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_5_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_5_A)
 
 
 V_Routine()
 left_pnp.send(ta.B_6_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_6_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_6_A)
 
 V_Routine()
 left_pnp.send(ta.B_7_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_7_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_7_A)
 
 
 H_Routine()
 left_pnp.send(ta.B_8_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_8_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_8_A)
 
 
 V_Routine()
 left_pnp.send(ta.B_9_A)
+x = raw_input('Continue?: ')
 left_pnp.send(ta.B_9_P)
+x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_9_A)
 
