@@ -150,8 +150,7 @@ def V_Routine():
 
     left_pnp.send(ta.V_approach)
     x = raw_input('Ready?')
-    if x == 'n':
-        exit(0)
+    if x == 'n':exit(0)
     left_pnp.send(ta.V_pickup)
     left_pnp.gripper_close()
     left_pnp.send(ta.V_approach)
@@ -163,8 +162,7 @@ def H_Routine():
 
     left_pnp.send(ta.H_approach)
     x = raw_input('Ready?')
-    if x == 'n':
-        exit(0)
+    if x == 'n':exit(0)
     left_pnp.send(ta.H_pickup)
     left_pnp.gripper_close()
     left_pnp.send(ta.H_approach)
