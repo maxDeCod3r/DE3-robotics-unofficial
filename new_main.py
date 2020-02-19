@@ -77,6 +77,14 @@ class PickAndPlace(object):
         else:
             rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
             return False
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        print()
+        print()
+        print('Linb Joints:')
+        print(limb_joints)
+        print()
+        print()
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         return limb_joints
 
     def _guarded_move_to_joint_position(self, joint_angles):
@@ -99,10 +107,6 @@ class PickAndPlace(object):
         # approach with a pose the hover-distance above the requested pose
         approach.position.z = approach.position.z + self._hover_distance
         joint_angles = self.ik_request(approach)
-        print('---------')
-        print('IK Solution:')
-        print(joint_angles)
-        print('---------')
         self._guarded_move_to_joint_position(joint_angles)
 
     def _retract(self):
@@ -131,6 +135,7 @@ class PickAndPlace(object):
         # servo above pose
         print('Approaching')
         self._approach(pose)
+        return
         # servo to pose
         self._servo_to_pose(pose)
         print('Ready to grip')
@@ -143,6 +148,7 @@ class PickAndPlace(object):
     def place(self, pose):
         # servo above pose
         self._approach(pose)
+        return
         # servo to pose
         self._servo_to_pose(pose)
         # open the gripper
@@ -177,7 +183,6 @@ def cleanup():
     for obj in brick_ids:
         delete_model(obj)
 
-
 # LET THE SHITSTORM BEGIN
 import numpy as np
 import time
@@ -188,7 +193,6 @@ def etq(roll, pitch, yaw):
         qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         return [qx, qy, qz, qw]
-
 
 def spawn_v_brick():
 	brick_pose = Pose()
