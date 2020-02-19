@@ -86,31 +86,31 @@ def etq(roll, pitch, yaw):
         return [qx, qy, qz, qw]
 
 def spawn_v_brick():
-	brick_pose = Pose()
-	brick_pose.position.x = 0.475
-	brick_pose.position.y = 0.759
-	brick_pose.position.z = 0.818
-	QUATS = etq(0, 1.57, 1.57)
-	brick_pose.orientation.x = QUATS[0]
-	brick_pose.orientation.y = QUATS[1]
-	brick_pose.orientation.z = QUATS[2]
-	brick_pose.orientation.w = QUATS[3]
-	brick_reference_frame = 'world'
-	brick_id = brick_ids.pop()
-	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
+    brick_pose = Pose()
+    brick_pose.position.x = 0.475
+    brick_pose.position.y = 0.759
+    brick_pose.position.z = 0.818
+    QUATS = etq(0, 1.57, 1.57)
+    brick_pose.orientation.x = QUATS[0]
+    brick_pose.orientation.y = QUATS[1]
+    brick_pose.orientation.z = QUATS[2]
+    brick_pose.orientation.w = QUATS[3]
+    brick_reference_frame = 'world'
+    brick_id = brick_ids.pop()
+    spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
 def spawn_h_brick():
-	brick_pose = Pose()
-	brick_pose.position.x = 0.4664
-	brick_pose.position.y = 0.8069
-	brick_pose.position.z = 0.7533
-	brick_pose.orientation.x = 0
-	brick_pose.orientation.y = 0
-	brick_pose.orientation.z = 0.707
-	brick_pose.orientation.w = 0.707
-	brick_reference_frame = 'world'
-	brick_id = brick_ids.pop()
-	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
+    brick_pose = Pose()
+    brick_pose.position.x = 0.4664
+    brick_pose.position.y = 0.8069
+    brick_pose.position.z = 0.7533
+    brick_pose.orientation.x = 0
+    brick_pose.orientation.y = 0
+    brick_pose.orientation.z = 0.707
+    brick_pose.orientation.w = 0.707
+    brick_reference_frame = 'world'
+    brick_id = brick_ids.pop()
+    spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
 def spawn_tables():
     table1 = Pose()
@@ -146,28 +146,28 @@ left_pnp = PickAndPlace('left', hover_distance)
 left_pnp.gripper_open()
 
 def V_Routine():
-	spawn_v_brick()
+    spawn_v_brick()
 
-	left_pnp.send(ta.V_approach)
-	x = raw_input('Ready?')
+    left_pnp.send(ta.V_approach)
+    x = raw_input('Ready?')
     if x == 'n':
         exit(0)
-	left_pnp.send(ta.V_pickup)
-	left_pnp.gripper_close()
-	left_pnp.send(ta.V_approach)
+    left_pnp.send(ta.V_pickup)
+    left_pnp.gripper_close()
+    left_pnp.send(ta.V_approach)
 
 
 
 def H_Routine():
-	spawn_h_brick()
+    spawn_h_brick()
 
-	left_pnp.send(ta.H_approach)
-	x = raw_input('Ready?')
+    left_pnp.send(ta.H_approach)
+    x = raw_input('Ready?')
     if x == 'n':
         exit(0)
-	left_pnp.send(ta.H_pickup)
-	left_pnp.gripper_close()
-	left_pnp.send(ta.H_approach)
+    left_pnp.send(ta.H_pickup)
+    left_pnp.gripper_close()
+    left_pnp.send(ta.H_approach)
 
 
 
