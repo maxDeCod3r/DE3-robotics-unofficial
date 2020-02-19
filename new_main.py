@@ -18,6 +18,8 @@ import target_poses as tps
 
 import tuck_arms
 
+import target_angles as ta
+
 brickstuff = tps.brick_directions_notf
 
 class PickAndPlace(object):
@@ -38,55 +40,6 @@ class PickAndPlace(object):
         print("Enabling robot... ")
         self._rs.enable()
 
-    def move_to_start(self, start_angles=None):
-        print("Moving the {0} arm to start pose...".format(self._limb_name))
-        if not start_angles:
-            start_angles = dict(zip(self._joint_names, [0]*7))
-        self._guarded_move_to_joint_position(start_angles)
-        self.gripper_open()
-        rospy.sleep(0.2)
-        print("Running. Ctrl-c to quit")
-
-    def ik_request(self, pose):
-        hdr = Header(stamp=rospy.Time.now(), frame_id='base')
-        ikreq = SolvePositionIKRequest()
-        ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
-        try:
-            resp = self._iksvc(ikreq)
-        except (rospy.ServiceException, rospy.ROSException), e:
-            rospy.logerr("Service call failed: %s" % (e,))
-            return False
-        # Check if result valid, and type of seed ultimately used to get solution
-        # convert rospy's string representation of uint8[]'s to int's
-        resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
-        limb_joints = {}
-        if (resp_seeds[0] != resp.RESULT_INVALID):
-            seed_str = {
-                        ikreq.SEED_USER: 'User Provided Seed',
-                        ikreq.SEED_CURRENT: 'Current Joint Angles',
-                        ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
-                       }.get(resp_seeds[0], 'None')
-            if self._verbose:
-                print("IK Solution SUCCESS - Valid Joint Solution Found from Seed Type: {0}".format(
-                         (seed_str)))
-            # Format solution into Limb API-compatible dictionary
-            limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
-            if self._verbose:
-                print("IK Joint Solution:\n{0}".format(limb_joints))
-                print("------------------")
-        else:
-            rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
-            return False
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        print()
-        print()
-        print('Linb Joints:')
-        print(limb_joints)
-        print()
-        print()
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        return limb_joints
-
     def _guarded_move_to_joint_position(self, joint_angles):
         if joint_angles:
             self._limb.set_joint_position_speed(0.1)
@@ -101,72 +54,6 @@ class PickAndPlace(object):
     def gripper_close(self):
         self._gripper.close()
         rospy.sleep(0.2)
-
-    def _approach(self, pose):
-        approach = copy.deepcopy(pose)
-        # approach with a pose the hover-distance above the requested pose
-        approach.position.z = approach.position.z + 0.05# self._hover_distance
-        joint_angles = self.ik_request(approach)
-        self._guarded_move_to_joint_position(joint_angles)
-
-    def _retract(self):
-        # retrieve current pose from endpoint
-        current_pose = self._limb.endpoint_pose()
-        ik_pose = Pose()
-        ik_pose.position.x = current_pose['position'].x
-        ik_pose.position.y = current_pose['position'].y
-        ik_pose.position.z = current_pose['position'].z + self._hover_distance
-        ik_pose.orientation.x = current_pose['orientation'].x
-        ik_pose.orientation.y = current_pose['orientation'].y
-        ik_pose.orientation.z = current_pose['orientation'].z
-        ik_pose.orientation.w = current_pose['orientation'].w
-        joint_angles = self.ik_request(ik_pose)
-        # servo up from current pose
-        self._guarded_move_to_joint_position(joint_angles)
-
-    def _servo_to_pose(self, pose):
-        # servo down to release
-        joint_angles = self.ik_request(pose)
-        self._guarded_move_to_joint_position(joint_angles)
-
-    def pick(self, pose):
-        # open the gripper
-        self.gripper_open()
-        # servo above pose
-        print('Approaching')
-        self._approach(pose)
-        # servo to pose
-        self._servo_to_pose(pose)
-        print('Ready to grip')
-        # close gripper
-        self.gripper_close()
-        print('grip')
-        # retract to clear object
-        self._retract()
-
-    def place(self, pose):
-        # servo above pose
-        self._approach(pose)
-        # servo to pose
-        self._servo_to_pose(pose)
-        # open the gripper
-        self.gripper_open()
-        # retract to clear object
-        self._retract()
-
-    def cust_place(self, pose):
-        # servo above pose
-        approach = copy.deepcopy(pose)
-        # approach with a pose the hover-distance above the requested pose
-        approach.position.z = approach.position.z + 0.1
-        joint_angles = self.ik_request(approach)
-        self._guarded_move_to_joint_position(joint_angles)
-        # servo to pose
-        self._servo_to_pose(pose)
-        # open the gripper
-        self.gripper_open()
-        # retract to clear object
-        self._retract()
 
     def send(self, angles):
         self._guarded_move_to_joint_position(angles)
@@ -234,61 +121,85 @@ left_pnp = PickAndPlace('left', hover_distance)
 
 left_pnp.gripper_open()
 
-## TODO: MAKE hover_distance higher for place part or solve IK collision error
+def V_Routine():
 
-# spawn_v_brick()
-# left_pnp.pick(brickstuff[0]['pose'])
-# left_pnp.place(brickstuff[2]['pose'])
-# exit(0)
-# tuck_arms.init_arms()
-# paused = raw_input('Continue?')
-# spawn_v_brick()
-# left_pnp.pick(brickstuff[0]['pose'])
-# print('\n \n-----------------------\n \n')
-# left_pnp.place(brickstuff[3]['pose'])
-# exit(1)
-# tuck_arms.init_arms()
-# paused = raw_input('Continue?')
-# spawn_v_brick()
-# # left_pnp.pick(brickstuff[0]['pose'])
-spawn_v_brick()
-left_pnp.send({'left_w0': 0.309347832698974, 'left_w1': 1.881132793719985, 'left_w2': 2.3018260606950194, 'left_e0': -0.6620952326288202, 'left_e1': 0.8506124094054622, 'left_s0': 0.4467327362087081, 'left_s1': -1.0924293648582206})
-left_pnp.send({'left_w0': 0.32998286773274293, 'left_w1': 1.3930185907441222, 'left_w2': 2.2171019702140753, 'left_e0': -0.6821342836475758, 'left_e1': 1.3311146610544962, 'left_s0': 0.5323550070725158, 'left_s1': -1.0404847669613069})
-left_pnp.gripper_close()
-left_pnp.send({'left_w0': 0.309347832698974, 'left_w1': 1.881132793719985, 'left_w2': 2.3018260606950194, 'left_e0': -0.6620952326288202, 'left_e1': 0.8506124094054622, 'left_s0': 0.4467327362087081, 'left_s1': -1.0924293648582206})
-# left_pnp.place(brickstuff[4]['pose'])
-# tuck_arms.init_arms()
-# exit(0)
-# paused = raw_input('Continue?')
-# spawn_h_brick()
-# left_pnp.send({'left_w0': 0.8139517749899786, 'left_w1': 1.7913332347783784, 'left_w2': 2.140253332470379, 'left_e0': -1.2881506550429311, 'left_e1': 0.9559160919794364, 'left_s0': 0.718405344706577, 'left_s1': -0.7389057972202023})
-# left_pnp.send({'left_w0': 0.9011295809085222, 'left_w1': 1.4021253667832847, 'left_w2': 2.0105076391011076, 'left_e0': -1.171667748823461, 'left_e1': 1.2991409722196496, 'left_s0': 0.7750446847107565, 'left_s1': -0.5757716624754514})
-# left_pnp.gripper_close()
-# left_pnp.send({'left_w0': 0.8139517749899786, 'left_w1': 1.7913332347783784, 'left_w2': 2.140253332470379, 'left_e0': -1.2881506550429311, 'left_e1': 0.9559160919794364, 'left_s0': 0.718405344706577, 'left_s1': -0.7389057972202023})
-# left_pnp.place(brickstuff[5]['pose'])
-# exit(0)
-# tuck_arms.init_arms()
-# paused = raw_input('Continue?')
-# spawn_h_brick()
-# left_pnp.pick(brickstuff[1]['pose'])
-# left_pnp.place(brickstuff[6]['pose'])
-# exit(0)
-# paused = raw_input('Continue?')
-# spawn_v_brick()
-# left_pnp.pick(brickstuff[0]['pose'])
-# left_pnp.place(brickstuff[7]['pose'])
-# exit(0)
-# paused = raw_input('Continue?')
-# spawn_v_brick()
-# left_pnp.pick(brickstuff[0]['pose'])
-# left_pnp.place(brickstuff[8]['pose'])
-# exit(0)
-# paused = raw_input('Continue?')
-# spawn_h_brick()
-# left_pnp.pick(brickstuff[1]['pose'])
-# left_pnp.place(brickstuff[9]['pose'])
-# exit(0)
-# paused = raw_input('Continue?')
-# spawn_v_brick()
-# left_pnp.pick(brickstuff[0]['pose'])
-left_pnp.place(brickstuff[10]['pose'])
+	spawn_v_brick()
+
+	left_pnp.send(ta.V_approach)
+	x = raw_input('Ready?')
+	left_pnp.send(ta.V_pickup)
+	left_pnp.gripper_close()
+	left_pnp.send(ta.V_approach)
+
+
+
+def H_Routine():
+
+	spawn_h_brick()
+
+	left_pnp.send(ta.H_approach)
+	x = raw_input('Ready?')
+	left_pnp.send(ta.H_pickup)
+	left_pnp.gripper_close()
+	left_pnp.send(ta.H_approach)
+
+
+
+V_Routine()
+left_pnp.send(ta.B_1_A)
+left_pnp.send(ta.B_1_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_1_A)
+
+V_Routine()
+left_pnp.send(ta.B_2_A)
+left_pnp.send(ta.B_2_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_2_A)
+
+V_Routine()
+left_pnp.send(ta.B_3_A)
+left_pnp.send(ta.B_3_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_3_A)
+
+
+H_Routine()
+left_pnp.send(ta.B_4_A)
+left_pnp.send(ta.B_4_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_4_A)
+
+H_Routine()
+left_pnp.send(ta.B_5_A)
+left_pnp.send(ta.B_5_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_5_A)
+
+
+V_Routine()
+left_pnp.send(ta.B_6_A)
+left_pnp.send(ta.B_6_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_6_A)
+
+V_Routine()
+left_pnp.send(ta.B_7_A)
+left_pnp.send(ta.B_7_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_7_A)
+
+
+H_Routine()
+left_pnp.send(ta.B_8_A)
+left_pnp.send(ta.B_8_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_8_A)
+
+
+V_Routine()
+left_pnp.send(ta.B_9_A)
+left_pnp.send(ta.B_9_P)
+left_pnp.gripper_open()
+left_pnp.send(ta.B_9_A)
+
