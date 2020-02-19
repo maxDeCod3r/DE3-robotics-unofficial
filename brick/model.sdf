@@ -28,8 +28,8 @@
               <mu>1000000</mu>
               <mu2>100000</mu2>
               <fdir1>0 0 1</fdir1>
-              <slip1>0.7</slip1>
-              <slip2>0.7</slip2>
+              <slip1>1000.7</slip1>
+              <slip2>1000.7</slip2>
             </ode>
           </friction>
           <contact>
