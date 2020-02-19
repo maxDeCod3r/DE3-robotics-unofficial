@@ -204,5 +204,5 @@ left_pnp.gripper_open()
 left_pnp.send(ta.B_9_A)
 
 
-left_pnp.send(H_pickup)
+left_pnp.send(ta.H_pickup)
 
