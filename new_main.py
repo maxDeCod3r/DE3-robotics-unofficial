@@ -62,6 +62,7 @@ class PickAndPlace(object):
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
 with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
+with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
 
 rospy.wait_for_service('/gazebo/spawn_sdf_model')
 spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
@@ -70,6 +71,8 @@ delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
 def cleanup():
     for obj in brick_ids:
         delete_model(obj)
+    delete_model('t1')
+    delete_model('t2')
 
 # LET THE SHITSTORM BEGIN
 import numpy as np
@@ -109,10 +112,31 @@ def spawn_h_brick():
 	brick_id = brick_ids.pop()
 	spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
+def spawn_tables():
+    table1 = Pose()
+    table1.position.x = 1.160
+    table1.position.y = 0.365
+    table1.position.z = -0.359
+    table1.orientation.x = 0
+    table1.orientation.y = 0
+    table1.orientation.z = 0
+    table1.orientation.w = 0
+    table2 = copy.deepcopy(table1)
+    table2.position.x = 0.996
+    table2.position.y = 1.018
+    table2.position.z = -0.003
+    table_reference_frame = 'world'
+    table1_id = 't1'
+    table2_id = 't2'
+    spawn_sdf(table1_id, table_sdf, "/", table1, table_reference_frame)
+    spawn_sdf(table2_id, table_sdf, "/", table2, table_reference_frame)
+
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
 cleanup()
+
+spawn_tables()
 
 tuck_arms.init_arms()
 
@@ -122,11 +146,11 @@ left_pnp = PickAndPlace('left', hover_distance)
 left_pnp.gripper_open()
 
 def V_Routine():
-
 	spawn_v_brick()
 
 	left_pnp.send(ta.V_approach)
 	x = raw_input('Ready?')
+    if x == 'n':exit(0)
 	left_pnp.send(ta.V_pickup)
 	left_pnp.gripper_close()
 	left_pnp.send(ta.V_approach)
@@ -134,11 +158,11 @@ def V_Routine():
 
 
 def H_Routine():
-
 	spawn_h_brick()
 
 	left_pnp.send(ta.H_approach)
 	x = raw_input('Ready?')
+    if x == 'n':exit(0)
 	left_pnp.send(ta.H_pickup)
 	left_pnp.gripper_close()
 	left_pnp.send(ta.H_approach)
