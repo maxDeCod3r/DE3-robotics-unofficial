@@ -146,24 +146,28 @@ left_pnp = PickAndPlace('left', hover_distance)
 left_pnp.gripper_open()
 
 def V_Routine():
-    spawn_v_brick()
+    # spawn_v_brick()
 
     left_pnp.send(ta.V_approach)
     x = raw_input('Ready?')
     if x == 'n':exit(0)
     left_pnp.send(ta.V_pickup)
+    x = raw_input('Close?')
+    if x == 'n':exit(0)
     left_pnp.gripper_close()
     left_pnp.send(ta.V_approach)
 
 
 
 def H_Routine():
-    spawn_h_brick()
+    # spawn_h_brick()
 
     left_pnp.send(ta.H_approach)
     x = raw_input('Ready?')
     if x == 'n':exit(0)
     left_pnp.send(ta.H_pickup)
+    x = raw_input('Close?')
+    if x == 'n':exit(0)
     left_pnp.gripper_close()
     left_pnp.send(ta.H_approach)
 
