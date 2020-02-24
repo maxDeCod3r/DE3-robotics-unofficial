@@ -45,7 +45,7 @@ starth.orientation.w = 4.329780281177467e-17
 
 brick1 = Pose()
 brick1.position.x = 0.615
-brick1.position.y = 0.194
+brick1.position.y = 0.164
 brick1.position.z = -0.131
 brick1.orientation.x = -0.7071067811865476
 brick1.orientation.y = -0.7071067811865475
@@ -63,7 +63,7 @@ brick2.orientation.w = 4.329780281177467e-17
 
 brick3 = Pose()
 brick3.position.x = 0.615
-brick3.position.y = 0.532
+brick3.position.y = 0.552
 brick3.position.z = -0.122
 brick3.orientation.x = -0.7071067811865476
 brick3.orientation.y = -0.7071067811865475
@@ -108,7 +108,7 @@ brick7.orientation.w = 4.329780281177467e-17
 
 brick8 = Pose()
 brick8.position.x = 0.635
-brick8.position.y = 0.334
+brick8.position.y = 0.349
 brick8.position.z = 0.209
 brick8.orientation.x = -0.7071067811865476
 brick8.orientation.y = -0.7071067811865475

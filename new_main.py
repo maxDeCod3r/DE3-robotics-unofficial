@@ -58,46 +58,6 @@ class PickAndPlace(object):
     def send(self, angles):
         self._guarded_move_to_joint_position(angles)
 
-    def ik_request(self, pose):
-        hdr = Header(stamp=rospy.Time.now(), frame_id='base')
-        ikreq = SolvePositionIKRequest()
-        ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
-        try:
-            resp = self._iksvc(ikreq)
-        except (rospy.ServiceException, rospy.ROSException), e:
-            rospy.logerr("Service call failed: %s" % (e,))
-            return False
-        # Check if result valid, and type of seed ultimately used to get solution
-        # convert rospy's string representation of uint8[]'s to int's
-        resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
-        limb_joints = {}
-        if (resp_seeds[0] != resp.RESULT_INVALID):
-            seed_str = {
-                        ikreq.SEED_USER: 'User Provided Seed',
-                        ikreq.SEED_CURRENT: 'Current Joint Angles',
-                        ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
-                       }.get(resp_seeds[0], 'None')
-            if self._verbose:
-                print("IK Solution SUCCESS - Valid Joint Solution Found from Seed Type: {0}".format(
-                         (seed_str)))
-            # Format solution into Limb API-compatible dictionary
-            limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
-            if self._verbose:
-                # print("IK Joint Solution:\n{0}".format(limb_joints))
-                print("------------------")
-        else:
-            rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
-            return False
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        print()
-        print()
-        print('Linb Joints:')
-        print(limb_joints)
-        print()
-        print()
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        return limb_joints
-
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
@@ -208,156 +168,82 @@ def H_Routine():
     left_pnp.send(ta.H_approach)
 
 
+V_Routine()
+left_pnp.send(ta.B_1_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_1_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_1_A)
 
-startv = Pose()
-startv.position.x = 0.474
-startv.position.y = 0.759
-startv.position.z = 0.234
-startv.orientation.x = -0.7071067811865476
-startv.orientation.y = -0.7071067811865475
-startv.orientation.z = 4.329780281177466e-17
-startv.orientation.w = 4.329780281177467e-17
+V_Routine()
+left_pnp.send(ta.B_2_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_2_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_2_A)
 
-
-print('-----START-V-----')
-print(left_pnp.ik_request(startv))
-print()
-print()
-
-starth = Pose()
-starth.position.x = 0.464
-starth.position.y = 0.804
-starth.position.z = 0.126
-starth.orientation.x = 00.7071067811865476
-starth.orientation.y = 0.7071067811865475
-starth.orientation.z = 4.329780281177466e-17
-starth.orientation.w = 4.329780281177467e-17
-
-print('-----START-H-----')
-print(left_pnp.ik_request(starth))
-print()
-print()
-
-brick1 = Pose()
-brick1.position.x = 0.615
-brick1.position.y = 0.164
-brick1.position.z = -0.131
-brick1.orientation.x = -0.7071067811865476
-brick1.orientation.y = -0.7071067811865475
-brick1.orientation.z = 4.329780281177466e-17
-brick1.orientation.w = 4.329780281177467e-17
-
-print('-----BRICK-1-----')
-print(left_pnp.ik_request(brick1))
-print()
-print()
+V_Routine()
+left_pnp.send(ta.B_3_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_3_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_3_A)
 
 
-brick3 = Pose()
-brick3.position.x = 0.615
-brick3.position.y = 0.552
-brick3.position.z = -0.122
-brick3.orientation.x = -0.7071067811865476
-brick3.orientation.y = -0.7071067811865475
-brick3.orientation.z = 4.329780281177466e-17
-brick3.orientation.w = 4.329780281177467e-17
+H_Routine()
+left_pnp.send(ta.B_4_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_4_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_4_A)
 
-print('-----BRICK-3-----')
-print(left_pnp.ik_request(brick3))
-print()
-print()
-
-
-brick8 = Pose()
-brick8.position.x = 0.635
-brick8.position.y = 0.349
-brick8.position.z = 0.209
-brick8.orientation.x = -0.7071067811865476
-brick8.orientation.y = -0.7071067811865475
-brick8.orientation.z = 4.329780281177466e-17
-brick8.orientation.w = 4.329780281177467e-17
-
-print('-----BRICK-8-----')
-print(left_pnp.ik_request(brick8))
-print()
-print()
-
-# V_Routine()
-# left_pnp.send(ta.B_1_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_1_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_1_A)
-
-# V_Routine()
-# left_pnp.send(ta.B_2_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_2_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_2_A)
-
-# V_Routine()
-# left_pnp.send(ta.B_3_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_3_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_3_A)
+H_Routine()
+left_pnp.send(ta.B_5_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_5_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_5_A)
 
 
-# H_Routine()
-# left_pnp.send(ta.B_4_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_4_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_4_A)
+V_Routine()
+left_pnp.send(ta.B_6_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_6_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_6_A)
 
-# H_Routine()
-# left_pnp.send(ta.B_5_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_5_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_5_A)
-
-
-# V_Routine()
-# left_pnp.send(ta.B_6_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_6_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_6_A)
-
-# V_Routine()
-# left_pnp.send(ta.B_7_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_7_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_7_A)
+V_Routine()
+left_pnp.send(ta.B_7_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_7_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_7_A)
 
 
-# H_Routine()
-# left_pnp.send(ta.B_8_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_8_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_8_A)
+H_Routine()
+left_pnp.send(ta.B_8_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_8_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_8_A)
 
 
-# V_Routine()
-# left_pnp.send(ta.B_9_A)
-# x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_9_P)
-# x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_9_A)
+V_Routine()
+left_pnp.send(ta.B_9_A)
+x = raw_input('Continue?: ')
+left_pnp.send(ta.B_9_P)
+x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_9_A)
 
 
-# left_pnp.send(ta.H_pickup)
+left_pnp.send(ta.H_pickup)
 
