@@ -102,15 +102,15 @@ class PickAndPlace(object):
          print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
          return limb_joints
 
+if simulation:
+    brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
-brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
+    with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
+    with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
 
-with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
-with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
-
-rospy.wait_for_service('/gazebo/spawn_sdf_model')
-spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
-delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
+    rospy.wait_for_service('/gazebo/spawn_sdf_model')
+    spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
+    delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
 
 def cleanup():
     for obj in brick_ids:
@@ -202,6 +202,7 @@ def V_Routine():
     x = raw_input('Close?')
     if x == 'n':exit(0)
     left_pnp.gripper_close()
+    time.sleep(0.5)
     left_pnp.send(ta.V_approach)
 
 
@@ -216,6 +217,7 @@ def H_Routine():
     x = raw_input('Close?')
     if x == 'n':exit(0)
     left_pnp.gripper_close()
+    time.sleep(0.5)
     left_pnp.send(ta.H_approach)
 
 
