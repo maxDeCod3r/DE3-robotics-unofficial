@@ -241,10 +241,10 @@ left_pnp.send(ta.B_2_A)
 
 V_Routine()
 
-sendy_c = left_pnp.ik_request(tps.brick3mid)
-left_pnp.send(sendy_c)
+# sendy_c = left_pnp.ik_request(tps.brick3mid)
+# left_pnp.send(sendy_c)
 
-# left_pnp.send(ta.B_3_A)
+left_pnp.send(ta.B_3_A)
 x = raw_input('Continue?: ')
 left_pnp.send(ta.B_3_P)
 x = raw_input('Continue?: ')
