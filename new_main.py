@@ -219,10 +219,9 @@ def H_Routine():
     left_pnp.send(ta.H_approach)
 
 
-V_Routine()
+sendy_i = left_pnp.ik_request(tps.brick9after)
 
-sendy_a = left_pnp.ik_request(tps.brick1mid)
-left_pnp.send(sendy_a)
+V_Routine()
 
 left_pnp.send(ta.B_1_A)
 x = raw_input('Continue?: ')
@@ -233,9 +232,6 @@ left_pnp.send(ta.B_1_A)
 
 V_Routine()
 
-sendy_c = left_pnp.ik_request(tps.brick3mid)
-left_pnp.send(sendy_c)
-
 left_pnp.send(ta.B_2_A)
 x = raw_input('Continue?: ')
 left_pnp.send(ta.B_2_P)
@@ -244,7 +240,11 @@ left_pnp.gripper_open()
 left_pnp.send(ta.B_2_A)
 
 V_Routine()
-left_pnp.send(ta.B_3_A)
+
+sendy_c = left_pnp.ik_request(tps.brick3mid)
+left_pnp.send(sendy_c)
+
+# left_pnp.send(ta.B_3_A)
 x = raw_input('Continue?: ')
 left_pnp.send(ta.B_3_P)
 x = raw_input('Continue?: ')
