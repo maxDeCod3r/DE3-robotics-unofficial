@@ -219,7 +219,7 @@ def H_Routine():
     left_pnp.send(ta.H_approach)
 
 
-left_pnp.send(ta.B_9_Z)
+left_pnp.gripper_open()
 
 V_Routine()
 
