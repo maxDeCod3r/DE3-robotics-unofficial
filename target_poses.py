@@ -54,8 +54,8 @@ brick1.orientation.w = 4.329780281177467e-17
 
 brick1mid = Pose()
 brick1mid.position.x = 0.615
-brick1mid.position.y = 0.164
-brick1mid.position.z = -0.131
+brick1mid.position.y = 0.4
+brick1mid.position.z = 0.1
 brick1mid.orientation.x = -0.7071067811865476
 brick1mid.orientation.y = -0.7071067811865475
 brick1mid.orientation.z = 4.329780281177466e-17
@@ -81,8 +81,8 @@ brick3.orientation.w = 4.329780281177467e-17
 
 brick3mid = Pose()
 brick3mid.position.x = 0.615
-brick3mid.position.y = 0.164
-brick3mid.position.z = -0.131
+brick3mid.position.y = 0.6
+brick3mid.position.z = 0.2
 brick3mid.orientation.x = -0.7071067811865476
 brick3mid.orientation.y = -0.7071067811865475
 brick3mid.orientation.z = 4.329780281177466e-17
@@ -141,6 +141,15 @@ brick9.orientation.x = -0.7071067811865476
 brick9.orientation.y = -0.7071067811865475
 brick9.orientation.z = 4.329780281177466e-17
 brick9.orientation.w = 4.329780281177467e-17
+
+brick9after = Pose()
+brick9after.position.x = 0.635
+brick9after.position.y = 0.349
+brick9after.position.z = 0.436
+brick9after.orientation.x = -0.7071067811865476
+brick9after.orientation.y = -0.7071067811865475
+brick9after.orientation.z = 4.329780281177466e-17
+brick9after.orientation.w = 4.329780281177467e-17
 
 
 brick_directions_notf = [

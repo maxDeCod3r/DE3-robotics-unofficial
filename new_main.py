@@ -22,6 +22,10 @@ import target_angles as ta
 
 brickstuff = tps.brick_directions_notf
 
+global sumulation
+
+simulation = True
+
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
         self._accuracy = accuracy
@@ -58,6 +62,46 @@ class PickAndPlace(object):
     def send(self, angles):
         self._guarded_move_to_joint_position(angles)
 
+    def ik_request(self, pose):
+         hdr = Header(stamp=rospy.Time.now(), frame_id='base')
+         ikreq = SolvePositionIKRequest()
+         ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
+         try:
+             resp = self._iksvc(ikreq)
+         except (rospy.ServiceException, rospy.ROSException), e:
+             rospy.logerr("Service call failed: %s" % (e,))
+             return False
+         # Check if result valid, and type of seed ultimately used to get solution
+         # convert rospy's string representation of uint8[]'s to int's
+         resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
+         limb_joints = {}
+         if (resp_seeds[0] != resp.RESULT_INVALID):
+             seed_str = {
+                         ikreq.SEED_USER: 'User Provided Seed',
+                         ikreq.SEED_CURRENT: 'Current Joint Angles',
+                         ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
+                        }.get(resp_seeds[0], 'None')
+             if self._verbose:
+                 print("IK Solution SUCCESS - Valid Joint Solution Found from Seed Type: {0}".format(
+                          (seed_str)))
+             # Format solution into Limb API-compatible dictionary
+             limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
+             if self._verbose:
+                 # print("IK Joint Solution:\n{0}".format(limb_joints))
+                 print("------------------")
+         else:
+             rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
+             return False
+         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+         print()
+         print()
+         print('Linb Joints:')
+         print(limb_joints)
+         print()
+         print()
+         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+         return limb_joints
+
 
 brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
@@ -84,6 +128,8 @@ def etq(roll, pitch, yaw):
         qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         return [qx, qy, qz, qw]
+#LET THE SHITSTORM END
+
 
 def spawn_v_brick():
     brick_pose = Pose()
@@ -134,9 +180,9 @@ def spawn_tables():
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
-cleanup()
-
-spawn_tables()
+if simulation:
+    cleanup()
+    spawn_tables()
 
 tuck_arms.init_arms()
 
@@ -146,7 +192,8 @@ left_pnp = PickAndPlace('left', hover_distance)
 left_pnp.gripper_open()
 
 def V_Routine():
-    # spawn_v_brick()
+    if simulation:
+        spawn_v_brick()
 
     left_pnp.send(ta.V_approach)
     x = raw_input('Ready?')
@@ -160,8 +207,8 @@ def V_Routine():
 
 
 def H_Routine():
-    # spawn_h_brick()
-
+    if simulation:
+        spawn_h_brick()
     left_pnp.send(ta.H_approach)
     x = raw_input('Ready?')
     if x == 'n':exit(0)
@@ -173,6 +220,10 @@ def H_Routine():
 
 
 V_Routine()
+
+sendy_a = left_pnp.ik_request(tps.brick1mid)
+left_pnp.send(sendy_a)
+
 left_pnp.send(ta.B_1_A)
 x = raw_input('Continue?: ')
 left_pnp.send(ta.B_1_P)
@@ -181,6 +232,10 @@ left_pnp.gripper_open()
 left_pnp.send(ta.B_1_A)
 
 V_Routine()
+
+sendy_c = left_pnp.ik_request(tps.brick3mid)
+left_pnp.send(sendy_c)
+
 left_pnp.send(ta.B_2_A)
 x = raw_input('Continue?: ')
 left_pnp.send(ta.B_2_P)
@@ -246,7 +301,10 @@ x = raw_input('Continue?: ')
 left_pnp.send(ta.B_9_P)
 x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_9_A)
+
+
+sendy_i = left_pnp.ik_request(tps.brick9after)
+left_pnp.send(sendy_i)
 
 
 left_pnp.send(ta.H_pickup)
