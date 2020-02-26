@@ -207,8 +207,6 @@ def V_Routine():
     x = raw_input('Ready?')
     if x == 'n':exit(0)
     left_pnp.send(ta.V_pickup)
-    x = raw_input('Close?')
-    if x == 'n':exit(0)
     left_pnp.gripper_close()
 
     gripper_state = left_pnp.gripperPosition()
@@ -244,14 +242,12 @@ def H_Routine():
     x = raw_input('Ready?')
     if x == 'n':exit(0)
     left_pnp.send(ta.H_pickup)
-    x = raw_input('Close?')
-    if x == 'n':exit(0)
     left_pnp.gripper_close()
 
     gripper_state = left_pnp.gripperPosition()
 
     if gripper_state < 10:
-        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n (C)ontinue, (A)bort, (O)pen gripper\n >_ ')
+        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command == 'C':
             pass
         elif command == 'c':
@@ -272,85 +268,98 @@ left_pnp.gripper_open()
 V_Routine()
 
 left_pnp.send(ta.B_1_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_1_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-
-print('GRIPPA POSITION+++')
-print(left_pnp.gripperPosition())
-print('GRIPPA POSITION+++')
-print()
 
 left_pnp.send(ta.B_1_A)
 
 V_Routine()
 
 left_pnp.send(ta.B_2_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_2_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_2_A)
 
 V_Routine()
 
 left_pnp.send(ta.B_3_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_3_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_3_A)
 
 
 H_Routine()
 left_pnp.send(ta.B_4_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_4_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_4_A)
 
 H_Routine()
 left_pnp.send(ta.B_5_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_5_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_5_A)
 
 
 V_Routine()
 left_pnp.send(ta.B_6_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_6_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_6_A)
 
 V_Routine()
 left_pnp.send(ta.B_7_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_7_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_7_A)
 
 
 H_Routine()
 left_pnp.send(ta.B_8_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_8_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_8_A)
 
 
 V_Routine()
 left_pnp.send(ta.B_9_A)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.send(ta.B_9_P)
-x = raw_input('Continue?: ')
+if debug:
+    x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 left_pnp.send(ta.B_9_Z)
 
