@@ -253,9 +253,9 @@ def H_Routine():
     if gripper_state < 10:
         command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n (C)ontinue, (A)bort, (O)pen gripper\n >_ ')
         if command == 'C':
-            continue
+            pass
         elif command == 'c':
-            continue
+            pass
         elif command == 'O':
             open_and_wait()
         elif command == 'o':
