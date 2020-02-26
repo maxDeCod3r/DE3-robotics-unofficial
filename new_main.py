@@ -211,14 +211,30 @@ def V_Routine():
     if x == 'n':exit(0)
     left_pnp.gripper_close()
 
-    print('GRIPPA POSITION+++')
-    print(left_pnp.gripperPosition())
-    print('GRIPPA POSITION+++')
-    print()
+    gripper_state = left_pnp.gripperPosition()
+
+    if gripper_state < 10:
+        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n (C)ontinue, (A)bort, (O)pen gripper\n >_ ')
+        if command == 'C':
+            continue
+        elif command == 'c':
+            continue
+        elif command == 'O':
+            open_and_wait()
+        elif command == 'o':
+            open_and_wait()
+        else:
+            exit(0)
 
     time.sleep(0.5)
     left_pnp.send(ta.V_approach)
 
+
+def open_and_wait():
+    left_pnp.gripper_open()
+    x = raw_input('Close?')
+    left_pnp.gripper_close()
+    time.sleep(0.5)
 
 
 def H_Routine():
@@ -232,10 +248,20 @@ def H_Routine():
     if x == 'n':exit(0)
     left_pnp.gripper_close()
 
-    print('GRIPPA POSITION+++')
-    print(left_pnp.gripperPosition())
-    print('GRIPPA POSITION+++')
-    print()
+    gripper_state = left_pnp.gripperPosition()
+
+    if gripper_state < 10:
+        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n (C)ontinue, (A)bort, (O)pen gripper\n >_ ')
+        if command == 'C':
+            continue
+        elif command == 'c':
+            continue
+        elif command == 'O':
+            open_and_wait()
+        elif command == 'o':
+            open_and_wait()
+        else:
+            exit(0)
 
     time.sleep(0.5)
     left_pnp.send(ta.H_approach)
