@@ -195,10 +195,6 @@ left_pnp = PickAndPlace('left', hover_distance)
 
 
 left_pnp.gripper_open()
-print('GRIPPA POSITION+++')
-print(left_pnp.gripperPosition())
-print('GRIPPA POSITION+++')
-print()
 
 def V_Routine():
     if simulation:
