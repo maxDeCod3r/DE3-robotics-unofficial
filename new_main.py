@@ -193,10 +193,6 @@ hover_distance = 0.2
 left_pnp = PickAndPlace('left', hover_distance)
 
 
-print('GRIPPA POSITION+++')
-print(left_pnp.gripperPosition())
-print('GRIPPA POSITION+++')
-print()
 left_pnp.gripper_open()
 print('GRIPPA POSITION+++')
 print(left_pnp.gripperPosition())
@@ -214,6 +210,12 @@ def V_Routine():
     x = raw_input('Close?')
     if x == 'n':exit(0)
     left_pnp.gripper_close()
+
+    print('GRIPPA POSITION+++')
+    print(left_pnp.gripperPosition())
+    print('GRIPPA POSITION+++')
+    print()
+
     time.sleep(0.5)
     left_pnp.send(ta.V_approach)
 
@@ -229,6 +231,12 @@ def H_Routine():
     x = raw_input('Close?')
     if x == 'n':exit(0)
     left_pnp.gripper_close()
+
+    print('GRIPPA POSITION+++')
+    print(left_pnp.gripperPosition())
+    print('GRIPPA POSITION+++')
+    print()
+
     time.sleep(0.5)
     left_pnp.send(ta.H_approach)
 
@@ -242,6 +250,12 @@ x = raw_input('Continue?: ')
 left_pnp.send(ta.B_1_P)
 x = raw_input('Continue?: ')
 left_pnp.gripper_open()
+
+print('GRIPPA POSITION+++')
+print(left_pnp.gripperPosition())
+print('GRIPPA POSITION+++')
+print()
+
 left_pnp.send(ta.B_1_A)
 
 V_Routine()
