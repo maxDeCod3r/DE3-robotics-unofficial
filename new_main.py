@@ -103,7 +103,7 @@ class PickAndPlace(object):
          return limb_joints
 
     def gripperPosition(self):
-        print(self._gripper.position)
+        return self._gripper.position()
 
 if simulation:
     brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
@@ -194,12 +194,12 @@ left_pnp = PickAndPlace('left', hover_distance)
 
 
 print('GRIPPA POSITION+++')
-left_pnp.gripperPosition()
+print(left_pnp.gripperPosition())
 print('GRIPPA POSITION+++')
 print()
 left_pnp.gripper_open()
 print('GRIPPA POSITION+++')
-left_pnp.gripperPosition()
+print(left_pnp.gripperPosition())
 print('GRIPPA POSITION+++')
 print()
 
