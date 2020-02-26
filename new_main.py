@@ -25,6 +25,7 @@ brickstuff = tps.brick_directions_notf
 global sumulation
 
 simulation = True
+debug = True
 
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
