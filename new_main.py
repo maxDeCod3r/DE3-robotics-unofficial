@@ -379,13 +379,14 @@ left_pnp.send(ta.B_9_za)
 x = raw_input('Ready???')
 brick9after2 = Pose()
 brick9after2.position.x = 0.635
-brick9after2.position.y = 0.45
-brick9after2.position.z = 0.506
+brick9after2.position.y = 0.4
+brick9after2.position.z = 0.5
 brick9after2.orientation.x = -0.7071067811865476
 brick9after2.orientation.y = -0.7071067811865475
 brick9after2.orientation.z = 4.329780281177466e-17
 brick9after2.orientation.w = 4.329780281177467e-17
 newest = left_pnp.ik_request(brick9after2)
+print(newest)
 left_pnp.send(newest)
 
 
