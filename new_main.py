@@ -217,7 +217,7 @@ def V_Routine():
         spawn_v_brick()
 
     left_pnp.send(ta.V_approach)
-    if simulation:
+    if debug:
         x = raw_input('Ready?')
     left_pnp.send(ta.V_pickup)
 
@@ -241,14 +241,14 @@ def V_Routine():
 
 def open_and_wait():
     left_pnp.gripper_open()
-    if simulation:
+    if debug:
         x = raw_input('Close?')
     left_pnp.gripper_close()
     time.sleep(0.5)
 
 
 def H_Routine():
-    if simulation:
+    if debug:
         spawn_h_brick()
     left_pnp.send(ta.H_approach)
     if simulation:
