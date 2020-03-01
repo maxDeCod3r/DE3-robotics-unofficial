@@ -25,7 +25,7 @@ brickstuff = tps.brick_directions_notf
 global sumulation
 
 simulation = True
-debug = True
+debug = False
 
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
@@ -217,8 +217,8 @@ def V_Routine():
         spawn_v_brick()
 
     left_pnp.send(ta.V_approach)
-    x = raw_input('Ready?')
-    if x == 'n':exit(0)
+    if simulation:
+        x = raw_input('Ready?')
     left_pnp.send(ta.V_pickup)
 
 
@@ -241,7 +241,8 @@ def V_Routine():
 
 def open_and_wait():
     left_pnp.gripper_open()
-    x = raw_input('Close?')
+    if simulation:
+        x = raw_input('Close?')
     left_pnp.gripper_close()
     time.sleep(0.5)
 
@@ -250,8 +251,8 @@ def H_Routine():
     if simulation:
         spawn_h_brick()
     left_pnp.send(ta.H_approach)
-    x = raw_input('Ready?')
-    if x == 'n':exit(0)
+    if simulation:
+        x = raw_input('Ready?')
     left_pnp.send(ta.H_pickup)
     left_pnp.gripper_close()
 
@@ -276,92 +277,92 @@ def H_Routine():
 
 left_pnp.gripper_open()
 
-# V_Routine()
+V_Routine()
 
-# left_pnp.send(ta.B_1_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_1_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
+left_pnp.send(ta.B_1_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_1_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
 
-# left_pnp.send(ta.B_1_A)
+left_pnp.send(ta.B_1_A)
 
-# V_Routine()
+V_Routine()
 
-# left_pnp.send(ta.B_2_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_2_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_2_A)
+left_pnp.send(ta.B_2_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_2_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_2_A)
 
-# V_Routine()
+V_Routine()
 
-# left_pnp.send(ta.B_3_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_3_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_3_A)
-
-
-# H_Routine()
-# left_pnp.send(ta.B_4_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_4_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_4_A)
-
-# H_Routine()
-# left_pnp.send(ta.B_5_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_5_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_5_A)
+left_pnp.send(ta.B_3_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_3_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_3_A)
 
 
-# V_Routine()
-# left_pnp.send(ta.B_6_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_6_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_6_A)
+H_Routine()
+left_pnp.send(ta.B_4_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_4_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_4_A)
 
-# V_Routine()
-# left_pnp.send(ta.B_7_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_7_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_7_A)
+H_Routine()
+left_pnp.send(ta.B_5_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_5_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_5_A)
 
 
-# H_Routine()
-# left_pnp.send(ta.B_8_A)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.send(ta.B_8_P)
-# if debug:
-#     x = raw_input('Continue?: ')
-# left_pnp.gripper_open()
-# left_pnp.send(ta.B_8_A)
+V_Routine()
+left_pnp.send(ta.B_6_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_6_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_6_A)
+
+V_Routine()
+left_pnp.send(ta.B_7_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_7_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_7_A)
+
+
+H_Routine()
+left_pnp.send(ta.B_8_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.send(ta.B_8_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.send(ta.B_8_A)
 
 
 V_Routine()
@@ -378,4 +379,21 @@ left_pnp.send(ta.B_9_za)
 left_pnp.send(ta.B_9_zb)
 
 left_pnp.send(ta.H_pickup)
+
+time.sleep(1)
+
+print("#################################################################################################################")
+print("#...............................................................................................................#")
+print("#...............................................................................................................#")
+print("#...............................................................................................................#")
+print("#.................. ____                 _   _         _   _            ____  _         _ _ _ _.................#")
+print("#................../ ___|  ___ _ __   __| | (_)_ __   | |_| |__   ___  | __ )(_)_ __ __| | | | |................#")
+print("#..................\\___ \\ / _ \\ '_ \\ / _` | | | '_ \\  | __| '_ \\ / _ \\ |  _ \\| | '__/ _` | | | |................#")
+print("#.................. ___) |  __/ | | | (_| | | | | | | | |_| | | |  __/ | |_) | | | | (_| |_|_|_|................#")
+print("#..................|____/ \\___|_| |_|\\__,_| |_|_| |_|  \\__|_| |_|\\___| |____/|_|_|  \\__,_(_|_|_)................#")
+print("#...............................................................................................................#")
+print("#...............................................................................................................#")
+print("#...............................................................................................................#")
+print("#################################################################################################################")
+
 
