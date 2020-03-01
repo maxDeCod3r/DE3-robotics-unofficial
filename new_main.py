@@ -248,7 +248,7 @@ def open_and_wait():
 
 
 def H_Routine():
-    if debug:
+    if simulation:
         spawn_h_brick()
     left_pnp.send(ta.H_approach)
     if debug:
