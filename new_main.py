@@ -24,7 +24,7 @@ brickstuff = tps.brick_directions_notf
 
 global sumulation
 
-simulation = True
+simulation = False
 debug = True
 
 class PickAndPlace(object):
@@ -111,6 +111,7 @@ if simulation:
 
     with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
     with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
+    with open ("brick/static-b.sdf", "r") as table_file:static_brick=table_file.read().replace('\n', '')
 
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
@@ -184,6 +185,21 @@ def spawn_tables():
 
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
+
+#####
+brick9 = Pose()
+brick9.position.x = 0.635
+brick9.position.y = 0.349
+brick9.position.z = 0.406
+brick9.orientation.x = -0.7071067811865476
+brick9.orientation.y = -0.7071067811865475
+brick9.orientation.z = 4.329780281177466e-17
+brick9.orientation.w = 4.329780281177467e-17
+brick_reference_frame = 'world'
+brick_id = 'static-9'
+spawn_sdf(brick_id, static_brick, "/", brick9, brick_reference_frame)
+#####
+
 if simulation:
     cleanup()
     spawn_tables()
@@ -204,21 +220,19 @@ def V_Routine():
     x = raw_input('Ready?')
     if x == 'n':exit(0)
     left_pnp.send(ta.V_pickup)
-    left_pnp.gripper_close()
 
+
+    left_pnp.gripper_close()
     gripper_state = left_pnp.gripperPosition()
 
     if gripper_state < 10:
-        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n (C)ontinue, (A)bort, (O)pen gripper\n >_ ')
-        if command == 'C':
+        command = raw_input('\n \nPROBLEM DETECTED!!!\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
+        if command in {'C', 'c', 'continue'}:
             pass
-        elif command == 'c':
-            pass
-        elif command == 'O':
-            open_and_wait()
-        elif command == 'o':
+        elif command in {'O', 'o', 'open'}:
             open_and_wait()
         else:
+            print('Exiting')
             exit(0)
 
     time.sleep(0.5)
@@ -244,7 +258,7 @@ def H_Routine():
     gripper_state = left_pnp.gripperPosition()
 
     if gripper_state < 10:
-        command = raw_input('\n \n PROBLEM DETECTED!!!\nGripper has nothing in it...\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
+        command = raw_input('\n \nPROBLEM DETECTED!!!\nGripper has nothing in it...\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command == 'C':
             pass
         elif command == 'c':
@@ -262,92 +276,92 @@ def H_Routine():
 
 left_pnp.gripper_open()
 
-V_Routine()
+# V_Routine()
 
-left_pnp.send(ta.B_1_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_1_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
+# left_pnp.send(ta.B_1_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_1_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
 
-left_pnp.send(ta.B_1_A)
+# left_pnp.send(ta.B_1_A)
 
-V_Routine()
+# V_Routine()
 
-left_pnp.send(ta.B_2_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_2_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_2_A)
+# left_pnp.send(ta.B_2_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_2_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_2_A)
 
-V_Routine()
+# V_Routine()
 
-left_pnp.send(ta.B_3_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_3_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_3_A)
-
-
-H_Routine()
-left_pnp.send(ta.B_4_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_4_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_4_A)
-
-H_Routine()
-left_pnp.send(ta.B_5_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_5_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_5_A)
+# left_pnp.send(ta.B_3_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_3_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_3_A)
 
 
-V_Routine()
-left_pnp.send(ta.B_6_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_6_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_6_A)
+# H_Routine()
+# left_pnp.send(ta.B_4_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_4_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_4_A)
 
-V_Routine()
-left_pnp.send(ta.B_7_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_7_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_7_A)
+# H_Routine()
+# left_pnp.send(ta.B_5_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_5_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_5_A)
 
 
-H_Routine()
-left_pnp.send(ta.B_8_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_8_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_8_A)
+# V_Routine()
+# left_pnp.send(ta.B_6_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_6_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_6_A)
+
+# V_Routine()
+# left_pnp.send(ta.B_7_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_7_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_7_A)
+
+
+# H_Routine()
+# left_pnp.send(ta.B_8_A)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.send(ta.B_8_P)
+# if debug:
+#     x = raw_input('Continue?: ')
+# left_pnp.gripper_open()
+# left_pnp.send(ta.B_8_A)
 
 
 V_Routine()
@@ -358,7 +372,19 @@ left_pnp.send(ta.B_9_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_9_Z)
+
+brick9after = Pose()
+brick9after.position.x = 0.635
+brick9after.position.y = 0.349
+brick9after.position.z = 0.506
+brick9after.orientation.x = -0.7071067811865476
+brick9after.orientation.y = -0.7071067811865475
+brick9after.orientation.z = 4.329780281177466e-17
+brick9after.orientation.w = 4.329780281177467e-17
+
+new_x = left_pnp.ik_request(brick9after)
+
+left_pnp.send(new_x)
 
 
 left_pnp.send(ta.H_pickup)
