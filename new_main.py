@@ -387,7 +387,7 @@ left_pnp.send(new_x)
 x = raw_input('Ready???')
 brick9after2 = Pose()
 brick9after2.position.x = 0.635
-brick9after2.position.y = 0.8069
+brick9after2.position.y = 0.5
 brick9after2.position.z = 0.4
 brick9after2.orientation.x = 0
 brick9after2.orientation.y = 0
