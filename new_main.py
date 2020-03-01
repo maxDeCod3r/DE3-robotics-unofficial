@@ -385,8 +385,19 @@ brick9after2.orientation.x = -0.7071067811865476
 brick9after2.orientation.y = -0.7071067811865475
 brick9after2.orientation.z = 4.329780281177466e-17
 brick9after2.orientation.w = 4.329780281177467e-17
+newest = None
 newest = left_pnp.ik_request(brick9after2)
 print(newest)
+if not newest:
+    newest = left_pnp.ik_request(brick9after2)
+if not newest:
+    newest = left_pnp.ik_request(brick9after2)
+if not newest:
+    newest = left_pnp.ik_request(brick9after2)
+if not newest:
+    newest = left_pnp.ik_request(brick9after2)
+if not newest:
+    newest = left_pnp.ik_request(brick9after2)
 left_pnp.send(newest)
 
 
