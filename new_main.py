@@ -24,7 +24,7 @@ brickstuff = tps.brick_directions_notf
 
 global sumulation
 
-simulation = False
+simulation = True
 debug = True
 
 class PickAndPlace(object):
