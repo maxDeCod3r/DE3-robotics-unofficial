@@ -373,26 +373,18 @@ if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 
-brick9after = Pose()
-brick9after.position.x = 0.635
-brick9after.position.y = 0.349
-brick9after.position.z = 0.506
-brick9after.orientation.x = -0.7071067811865476
-brick9after.orientation.y = -0.7071067811865475
-brick9after.orientation.z = 4.329780281177466e-17
-brick9after.orientation.w = 4.329780281177467e-17
 
-new_x = left_pnp.ik_request(brick9after)
-left_pnp.send(new_x)
+left_pnp.send(ta.B_9_za)
+
 x = raw_input('Ready???')
 brick9after2 = Pose()
 brick9after2.position.x = 0.635
-brick9after2.position.y = 0.5
-brick9after2.position.z = 0.4
-brick9after2.orientation.x = 0
-brick9after2.orientation.y = 0
-brick9after2.orientation.z = 0.707
-brick9after2.orientation.w = 0.707
+brick9after2.position.y = 0.45
+brick9after2.position.z = 0.506
+brick9after2.orientation.x = -0.7071067811865476
+brick9after2.orientation.y = -0.7071067811865475
+brick9after2.orientation.z = 4.329780281177466e-17
+brick9after2.orientation.w = 4.329780281177467e-17
 newest = left_pnp.ik_request(brick9after2)
 left_pnp.send(newest)
 
