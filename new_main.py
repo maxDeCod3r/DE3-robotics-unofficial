@@ -251,7 +251,7 @@ def H_Routine():
     if debug:
         spawn_h_brick()
     left_pnp.send(ta.H_approach)
-    if simulation:
+    if debug:
         x = raw_input('Ready?')
     left_pnp.send(ta.H_pickup)
     left_pnp.gripper_close()
