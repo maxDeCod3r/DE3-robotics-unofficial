@@ -386,9 +386,9 @@ new_x = left_pnp.ik_request(brick9after)
 left_pnp.send(new_x)
 x = raw_input('Ready???')
 brick9after2 = Pose()
-brick9after2.position.x = 0.4664
-brick9after2.position.y = 0.349
-brick9after2.position.z = 0.3
+brick9after2.position.x = 0.635
+brick9after2.position.y = 0.8069
+brick9after2.position.z = 0.5
 brick9after2.orientation.x = 0
 brick9after2.orientation.y = 0
 brick9after2.orientation.z = 0.707
