@@ -12,6 +12,8 @@ from std_msgs.msg import (Header, Empty)
 
 from baxter_core_msgs.srv import (SolvePositionIK, SolvePositionIKRequest)
 
+import time
+
 import baxter_interface
 
 import target_poses as tps
@@ -104,9 +106,9 @@ class PickAndPlace(object):
          return limb_joints
 
     def gripperPosition(self):
-        return self._gripper.position()
+        return self._gripper.position()#class that handles moving the robot, gripper ans IK
 
-if simulation:
+if simulation: #deals with gazebo objects, not useful in the real world
     brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
     with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
@@ -117,15 +119,14 @@ if simulation:
     spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
     delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
 
-def cleanup():
+def cleanup(): #deals with gazebo objects, not useful in the real world
     for obj in brick_ids:
         delete_model(obj)
     delete_model('t1')
     delete_model('t2')
 
-# LET THE SHITSTORM BEGIN
+# Horrible hack that deals with gazebo objects, not useful in the real world
 import numpy as np
-import time
 
 def etq(roll, pitch, yaw):
         qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
@@ -133,10 +134,10 @@ def etq(roll, pitch, yaw):
         qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         return [qx, qy, qz, qw]
-#LET THE SHITSTORM END
+# Horrible hack that deals with gazebo objects, not useful in the real world
 
 
-def spawn_v_brick():
+def spawn_v_brick():#deals with gazebo objects(spawns a vertical brick), not useful in the real world
     brick_pose = Pose()
     brick_pose.position.x = 0.475
     brick_pose.position.y = 0.759
@@ -150,7 +151,7 @@ def spawn_v_brick():
     brick_id = brick_ids.pop()
     spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
-def spawn_h_brick():
+def spawn_h_brick():#deals with gazebo objects(spawns a horizontal brick), not useful in the real world
     brick_pose = Pose()
     brick_pose.position.x = 0.4664
     brick_pose.position.y = 0.8069
@@ -163,7 +164,7 @@ def spawn_h_brick():
     brick_id = brick_ids.pop()
     spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
-def spawn_tables():
+def spawn_tables():#deals with gazebo objects(spawns tables), not useful in the real world
     table1 = Pose()
     table1.position.x = 1.160
     table1.position.y = 0.365
@@ -186,33 +187,18 @@ def spawn_tables():
 rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
 
-#####
-# b9 = Pose()
-# b9.position.x = 0.635
-# b9.position.y = 0.349
-# b9.position.z = 0.406
-# b9.orientation.x = -0.7071067811865476
-# b9.orientation.y = -0.7071067811865475
-# b9.orientation.z = 4.329780281177466e-17
-# b9.orientation.w = 4.329780281177467e-17
-# brick_reference_frame = 'world'
-# brick_id = 'static-9'
-# spawn_sdf(brick_id, static_brick, "/", b9, brick_reference_frame)
-#####
-
 if simulation:
     cleanup()
     spawn_tables()
 
-tuck_arms.init_arms()
+tuck_arms.init_arms() #Make sure the arms are where they meant to be
 
-hover_distance = 0.2 
-left_pnp = PickAndPlace('left', hover_distance)
+hover_distance = 0.2 #Used for IK, not useful to us anymore
+left_pnp = PickAndPlace('left', hover_distance) #Initializer
 
 
-left_pnp.gripper_open()
-
-def V_Routine():
+def V_Routine(): #Spawns brick (if sim), sends gripper to brick position, asks if ready (if in debug), 
+#                 picks it up and checks that the brick is acc in the grippers
     if simulation:
         spawn_v_brick()
 
@@ -239,7 +225,7 @@ def V_Routine():
     left_pnp.send(ta.V_approach)
 
 
-def open_and_wait():
+def open_and_wait(): #Self explanatory
     left_pnp.gripper_open()
     if debug:
         x = raw_input('Close?')
@@ -247,7 +233,8 @@ def open_and_wait():
     time.sleep(0.5)
 
 
-def H_Routine():
+def H_Routine():#Spawns brick (if sim), sends gripper to brick position, asks if ready (if in debug), 
+#                 picks it up and checks that the brick is acc in the grippers
     if simulation:
         spawn_h_brick()
     left_pnp.send(ta.H_approach)
@@ -275,7 +262,7 @@ def H_Routine():
     left_pnp.send(ta.H_approach)
 
 
-left_pnp.gripper_open()
+left_pnp.gripper_open() #Duh
 
 V_Routine()
 
