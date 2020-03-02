@@ -187,17 +187,17 @@ rospy.init_node("I_still_have_some_hope")  # Am I wrong??
 
 
 #####
-b9 = Pose()
-b9.position.x = 0.635
-b9.position.y = 0.349
-b9.position.z = 0.406
-b9.orientation.x = -0.7071067811865476
-b9.orientation.y = -0.7071067811865475
-b9.orientation.z = 4.329780281177466e-17
-b9.orientation.w = 4.329780281177467e-17
-brick_reference_frame = 'world'
-brick_id = 'static-9'
-spawn_sdf(brick_id, static_brick, "/", b9, brick_reference_frame)
+# b9 = Pose()
+# b9.position.x = 0.635
+# b9.position.y = 0.349
+# b9.position.z = 0.406
+# b9.orientation.x = -0.7071067811865476
+# b9.orientation.y = -0.7071067811865475
+# b9.orientation.z = 4.329780281177466e-17
+# b9.orientation.w = 4.329780281177467e-17
+# brick_reference_frame = 'world'
+# brick_id = 'static-9'
+# spawn_sdf(brick_id, static_brick, "/", b9, brick_reference_frame)
 #####
 
 if simulation:
