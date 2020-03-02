@@ -211,7 +211,7 @@ def V_Routine(): #Spawns brick (if sim), sends gripper to brick position, asks i
     left_pnp.gripper_close()
     gripper_state = left_pnp.gripperPosition()
 
-    if gripper_state < 10:
+    if gripper_state < 5:
         command = raw_input('\n \nPROBLEM DETECTED!!!\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command in {'C', 'c', 'continue'}:
             pass
@@ -245,7 +245,7 @@ def H_Routine():#Spawns brick (if sim), sends gripper to brick position, asks if
 
     gripper_state = left_pnp.gripperPosition()
 
-    if gripper_state < 10:
+    if gripper_state < 5:
         command = raw_input('\n \nPROBLEM DETECTED!!!\nGripper has nothing in it...\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command == 'C':
             pass
