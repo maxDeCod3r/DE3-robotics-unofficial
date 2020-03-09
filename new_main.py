@@ -250,6 +250,7 @@ def process(limb, step):
     limb.goto(step['place'])
     if debug:x = raw_input('Open gripper?: ')
     print('Opening gripper...')
+    time.sleep(0.5)
     limb.gripper_open()
     if not step['lastBrick']:
         print('Moving arm to hover ', step['step'], ' position...')
