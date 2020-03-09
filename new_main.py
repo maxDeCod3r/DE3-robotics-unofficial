@@ -190,51 +190,69 @@ def spawn_tables():
     spawn_sdf(table1_id, table_sdf, "/", table1, table_reference_frame)
     spawn_sdf(table2_id, table_sdf, "/", table2, table_reference_frame)
 
-def open_and_wait():
+def open_and_wait(limb):
     '''Opens gripper and waits for uer input to close'''
-    left_pnp.gripper_open()
+    limb.gripper_open()
     x = raw_input('Close?')
-    left_pnp.gripper_close()
+    limb.gripper_close()
     time.sleep(0.5)
 
-def gripperBrickChecker():
+def gripperBrickChecker(limb):
     '''Checks if brick detected in gripper, asks what to do it not'''
+    time.sleep(0.5) #Wait for gripper to finish closing before checking gripper state
+    gripper_state = limb.gripperPosition()
     if gripper_state < 5:
         command = raw_input('\n \nPROBLEM DETECTED!!!\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command in {'C', 'c', 'continue'}:
+            time.sleep(0.5)
             return
         elif command in {'O', 'o', 'open'}:
-            open_and_wait()
+            open_and_wait(limb)
         else:
             print('Exiting')
             exit(0)
 
-def V_Routine(): 
+def V_Routine(limb): 
     '''Spawns vertical brick (if sim), sends gripper to brick position, asks if ready (if in debug), picks it up and checks that the brick is in the gripper'''
     if simulation: spawn_v_brick()
-    left_pnp.goto(ta.V_approach)
+    limb.goto(ta.V_approach)
+    if debug: x = raw_input('Pick? ')
+    limb.goto(ta.V_pickup)
+    if debug: x = raw_input('Close gripper? ')
+    limb.gripper_close()
+    gripperBrickChecker(limb)
+    limb.goto(ta.V_approach)
 
-    left_pnp.goto(ta.V_pickup)
-    if debug: x = raw_input('Ready?')
-
-    left_pnp.gripper_close()
-    gripperBrickChecker()
-    gripper_state = left_pnp.gripperPosition()
-    time.sleep(0.5)
-    left_pnp.goto(ta.V_approach)
-
-def H_Routine():
+def H_Routine(limb):
     '''Spawns horizontal brick (if sim), sends gripper to brick position, asks if ready (if in debug), picks it up and checks that the brick is in the gripper'''
     if simulation: spawn_h_brick()
-    left_pnp.goto(ta.H_approach)
+    limb.goto(ta.H_approach)
+    if debug: x = raw_input('Pick? ')
+    limb.goto(ta.H_pickup)
+    if debug: x = raw_input('Close gripper? ')
+    limb.gripper_close()
+    gripperBrickChecker(limb)
+    limb.goto(ta.H_approach)
 
-    if debug: x = raw_input('Ready?')
-    left_pnp.goto(ta.H_pickup)
+def process(limb, step):
+    if step['vertical'] == True:
+        V_Routine(limb)
+    else:
+        H_Routine(limb)
 
-    left_pnp.gripper_close()
-    gripperBrickChecker()
-    time.sleep(0.5)
-    left_pnp.goto(ta.H_approach)
+    limb.goto(step['hover'])
+    if debug:x = raw_input('Place?: ')
+    limb.goto(step['place'])
+    if debug:x = raw_input('Open gripper?: ')
+    limb.gripper_open()
+    if !step['lastBrick']:
+        limb.goto(step['hover'])
+    else:
+        limb.goto(step['last1'])
+        limb.goto(step['last2'])
+        limb.goto(step['last3'])
+
+
 
 
 rospy.init_node("MOTHER_CLUCKER")  #Initializes rospy node
@@ -250,110 +268,10 @@ left_pnp = PickAndPlace('left', hover_distance) #Limb initializer
 
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
 
+tower_instructions = ta.instructions
 
-
-V_Routine()
-
-left_pnp.goto(ta.B_1_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_1_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-
-left_pnp.goto(ta.B_1_A)
-
-V_Routine()
-
-left_pnp.goto(ta.B_2_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_2_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_2_A)
-
-V_Routine()
-
-left_pnp.goto(ta.B_3_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_3_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_3_A)
-
-
-H_Routine()
-left_pnp.goto(ta.B_4_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_4_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_4_A)
-
-H_Routine()
-left_pnp.goto(ta.B_5_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_5_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_5_A)
-
-
-V_Routine()
-left_pnp.goto(ta.B_6_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_6_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_6_A)
-
-V_Routine()
-left_pnp.goto(ta.B_7_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_7_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_7_A)
-
-
-H_Routine()
-left_pnp.goto(ta.B_8_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_8_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.goto(ta.B_8_A)
-
-
-V_Routine()
-left_pnp.goto(ta.B_9_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.goto(ta.B_9_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-
-
-left_pnp.goto(ta.B_9_za)
-left_pnp.goto(ta.B_9_zb)
-
-left_pnp.goto(ta.H_pickup)
+for step in tower_instructions:
+    process(left_pnp, step)
 
 time.sleep(1)
 

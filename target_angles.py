@@ -28,54 +28,63 @@ instructions = [
 	'step':1,
 	'hover':B_1_A,
 	'pick':B_1_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':False
 	},
 	{
 	'step':2,
 	'hover':B_2_A,
 	'pick':B_2_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':False
 	},
 	{
 	'step':3,
 	'hover':B_3_A,
 	'pick':B_3_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':False
 	},
 	{
 	'step':4,
 	'hover':B_4_A,
 	'pick':B_4_P,
-	'vertical':False
+	'vertical':False,
+	'lastBrick':False
 	},
 	{
 	'step':5,
 	'hover':B_5_A,
 	'pick':B_5_P,
-	'vertical':False
+	'vertical':False,
+	'lastBrick':False
 	},
 	{
 	'step':6,
 	'hover':B_6_A,
 	'pick':B_6_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':False
 	},
 	{
 	'step':7,
 	'hover':B_7_A,
 	'pick':B_7_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':False
 	},
 	{
 	'step':8,
 	'hover':B_8_A,
 	'pick':B_8_P,
-	'vertical':False
+	'vertical':False,
+	'lastBrick':False
 	},
 	{
 	'step':9,
 	'hover':B_9_A,
 	'pick':B_9_P,
-	'vertical':True
+	'vertical':True,
+	'lastBrick':True
 	}
 ]
