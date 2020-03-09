@@ -287,7 +287,7 @@ left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
 
 tower_instructions = ta.instructions
 
-print('Loaded tower instructions, bricks: ', len(instructions))
+print('Loaded tower instructions, bricks: ', len(tower_instructions))
 
 for step in tower_instructions:
     print('Processing step: ', step['step'])
