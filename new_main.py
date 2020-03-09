@@ -69,43 +69,40 @@ class PickAndPlace(object): #class that handles moving the robot, gripper and IK
         '''Function to send limb to predefined joint angles without running IK service'''
         self._guarded_move_to_joint_position(angles)
 
-
-
-
     def ik_request(self, pose): 
         '''Function to generate joint angles from target pose, does not take into account obstacles that are not the robot'''
-         hdr = Header(stamp=rospy.Time.now(), frame_id='base')         #This function is only used wile in te simulation environment and only for generating valid joint angles, due to te random nature of te solver, it it not 'trusted' to run in real time
-         ikreq = SolvePositionIKRequest()
-         ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
-         try:
-             resp = self._iksvc(ikreq)
-         except (rospy.ServiceException, rospy.ROSException), e:
-             rospy.logerr("Service call failed: %s" % (e,))
-             return False
-         # Check if result valid, and type of seed ultimately used to get solution
-         # convert rospy's string representation of uint8[]'s to int's
-         resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
-         limb_joints = {}
-         if (resp_seeds[0] != resp.RESULT_INVALID):
-             seed_str = {
-                         ikreq.SEED_USER: 'User Provided Seed',
-                         ikreq.SEED_CURRENT: 'Current Joint Angles',
-                         ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
-                        }.get(resp_seeds[0], 'None')
-             # Format solution into Limb API-compatible dictionary
-             limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
-         else:
-             rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
-             return False
-         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-         print()
-         print()
-         print('Linb Joints:')
-         print(limb_joints)
-         print()
-         print()
-         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@') #Visual statemet to easily find and copy calculated joint angles
-         return limb_joints
+        hdr = Header(stamp=rospy.Time.now(), frame_id='base')         #This function is only used wile in te simulation environment and only for generating valid joint angles, due to te random nature of te solver, it it not 'trusted' to run in real time
+        ikreq = SolvePositionIKRequest()
+        ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
+        try:
+            resp = self._iksvc(ikreq)
+        except (rospy.ServiceException, rospy.ROSException), e:
+            rospy.logerr("Service call failed: %s" % (e,))
+            return False
+        # Check if result valid, and type of seed ultimately used to get solution
+        # convert rospy's string representation of uint8[]'s to int's
+        resp_seeds = struct.unpack('<%dB' % len(resp.result_type), resp.result_type)
+        limb_joints = {}
+        if (resp_seeds[0] != resp.RESULT_INVALID):
+            seed_str = {
+                        ikreq.SEED_USER: 'User Provided Seed',
+                        ikreq.SEED_CURRENT: 'Current Joint Angles',
+                        ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
+                       }.get(resp_seeds[0], 'None')
+            # Format solution into Limb API-compatible dictionary
+            limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
+        else:
+            rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
+            return False
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        print()
+        print()
+        print('Linb Joints:')
+        print(limb_joints)
+        print()
+        print()
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@') #Visual statemet to easily find and copy calculated joint angles
+        return limb_joints
 
 
     def gripperPosition(self):
