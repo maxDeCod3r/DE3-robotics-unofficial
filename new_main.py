@@ -239,18 +239,21 @@ def H_Routine(limb):
 
 def process(limb, step):
     print('Picking up brick ', step['step'], '...')
-    if step['vertical'] == True:
-        V_Routine(limb)
-    else:
-        H_Routine(limb)
+
+    if step['vertical'] == True: V_Routine(limb)
+    else: H_Routine(limb)
+
     print('Moving brick ', step['step'], ' to hover position...')
     limb.goto(step['hover'])
+
     if debug:x = raw_input('Place?: ')
     print('Placing brick ', step['step'], '...')
     limb.goto(step['place'])
+
     if debug:x = raw_input('Open gripper?: ')
     print('Opening gripper...')
     time.sleep(0.5)
+    
     limb.gripper_open()
     if not step['lastBrick']:
         print('Moving arm to hover ', step['step'], ' position...')
