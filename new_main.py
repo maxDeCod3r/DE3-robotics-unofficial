@@ -259,7 +259,7 @@ if simulation:
     spawn_tables()
 
 tuck_arms.init_arms() #Makes sure the arms are in known starting place
-
+tuck_arms.init_arms()
 left_pnp = PickAndPlace('left') #Limb initializer
 
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
