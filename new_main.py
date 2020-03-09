@@ -260,7 +260,7 @@ if simulation:
 
 tuck_arms.init_arms() #Makes sure the arms are in known starting place
 
-left_pnp = PickAndPlace('left', hover_distance) #Limb initializer
+left_pnp = PickAndPlace('left') #Limb initializer
 
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
 
