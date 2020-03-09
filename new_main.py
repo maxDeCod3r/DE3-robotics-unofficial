@@ -140,7 +140,7 @@ def etq(roll, pitch, yaw):
 def spawn_v_brick():#deals with gazebo objects(spawns a vertical brick), not useful in the real world
     brick_pose = Pose()
     brick_pose.position.x = 0.475
-    brick_pose.position.y = 0.759
+    brick_pose.position.y = 0.739
     brick_pose.position.z = 0.818
     QUATS = etq(0, 1.57, 1.57)
     brick_pose.orientation.x = QUATS[0]
@@ -168,14 +168,14 @@ def spawn_tables():#deals with gazebo objects(spawns tables), not useful in the 
     table1 = Pose()
     table1.position.x = 1.160
     table1.position.y = 0.365
-    table1.position.z = -0.359
+    table1.position.z = -0.379
     table1.orientation.x = 0
     table1.orientation.y = 0
     table1.orientation.z = 0
     table1.orientation.w = 0
     table2 = copy.deepcopy(table1)
     table2.position.x = 0.996
-    table2.position.y = 1.018
+    table2.position.y = 1.068
     table2.position.z = -0.003
     table_reference_frame = 'world'
     table1_id = 't1'
