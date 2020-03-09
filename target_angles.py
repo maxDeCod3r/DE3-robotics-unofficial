@@ -1,7 +1,7 @@
 V_approach = {'left_w0': 0.309347832698974, 'left_w1': 1.881132793719985, 'left_w2': 2.3018260606950194, 'left_e0': -0.6620952326288202, 'left_e1': 0.8506124094054622, 'left_s0': 0.4467327362087081, 'left_s1': -1.0924293648582206}
-V_pickup = {'left_w0': 0.4649854934058153, 'left_w1': 1.4526645466391497, 'left_w2': 2.138194707013768, 'left_e0': -0.89929386139053, 'left_e1': 1.2965189348212542, 'left_s0': 0.6436312256143302, 'left_s1': -0.9657905946725601}
+V_placeup = {'left_w0': 0.4649854934058153, 'left_w1': 1.4526645466391497, 'left_w2': 2.138194707013768, 'left_e0': -0.89929386139053, 'left_e1': 1.2965189348212542, 'left_s0': 0.6436312256143302, 'left_s1': -0.9657905946725601}
 H_approach = {'left_w0': 0.8139517749899786, 'left_w1': 1.7913332347783784, 'left_w2': 2.140253332470379, 'left_e0': -1.2881506550429311, 'left_e1': 0.9559160919794364, 'left_s0': 0.718405344706577, 'left_s1': -0.7389057972202023}
-H_pickup = {'left_w0': 0.3769936175655104, 'left_w1': 1.2305944969345881, 'left_w2': 2.2665093979599353, 'left_e0': -0.5773304857037607, 'left_e1': 1.340754726206522, 'left_s0': 0.5061440970662591, 'left_s1': -0.8921470049131158}
+H_placeup = {'left_w0': 0.3769936175655104, 'left_w1': 1.2305944969345881, 'left_w2': 2.2665093979599353, 'left_e0': -0.5773304857037607, 'left_e1': 1.340754726206522, 'left_s0': 0.5061440970662591, 'left_s1': -0.8921470049131158}
 B_1_A = {'left_w0': 0.3683595432180659, 'left_w1': 1.0073947297368873, 'left_w2': 1.4922663329618713, 'left_e0': -0.6981937871209174, 'left_e1': 1.7725718324276292, 'left_s0': -0.02681867720576004, 'left_s1': -1.0771623491525488}
 B_1_P = {'left_w0': 1.2027300003884847, 'left_w1': 0.8795510297892881, 'left_w2': 0.5632980390463863, 'left_e0': -0.8960386873043342, 'left_e1': 1.7558376775390683, 'left_s0': -0.31400273801416234, 'left_s1': -0.4013131412149057}
 B_2_A = {'left_w0': 1.0334701994763147, 'left_w1': 1.2668145176284678, 'left_w2': 0.9572318887458758, 'left_e0': -1.3409238316370244, 'left_e1': 1.7778524701894391, 'left_s0': 0.2271848446398137, 'left_s1': -0.573105088634528}
@@ -27,64 +27,67 @@ instructions = [
 	{
 	'step':1,
 	'hover':B_1_A,
-	'pick':B_1_P,
+	'place':B_1_P,
 	'vertical':True,
 	'lastBrick':False
 	},
 	{
 	'step':2,
 	'hover':B_2_A,
-	'pick':B_2_P,
+	'place':B_2_P,
 	'vertical':True,
 	'lastBrick':False
 	},
 	{
 	'step':3,
 	'hover':B_3_A,
-	'pick':B_3_P,
+	'place':B_3_P,
 	'vertical':True,
 	'lastBrick':False
 	},
 	{
 	'step':4,
 	'hover':B_4_A,
-	'pick':B_4_P,
+	'place':B_4_P,
 	'vertical':False,
 	'lastBrick':False
 	},
 	{
 	'step':5,
 	'hover':B_5_A,
-	'pick':B_5_P,
+	'place':B_5_P,
 	'vertical':False,
 	'lastBrick':False
 	},
 	{
 	'step':6,
 	'hover':B_6_A,
-	'pick':B_6_P,
+	'place':B_6_P,
 	'vertical':True,
 	'lastBrick':False
 	},
 	{
 	'step':7,
 	'hover':B_7_A,
-	'pick':B_7_P,
+	'place':B_7_P,
 	'vertical':True,
 	'lastBrick':False
 	},
 	{
 	'step':8,
 	'hover':B_8_A,
-	'pick':B_8_P,
+	'place':B_8_P,
 	'vertical':False,
 	'lastBrick':False
 	},
 	{
 	'step':9,
 	'hover':B_9_A,
-	'pick':B_9_P,
+	'place':B_9_P,
 	'vertical':True,
-	'lastBrick':True
+	'lastBrick':True,
+	'last1':B_9_za,
+	'last2':B_9_zb,
+	'last3':H_pickup
 	}
 ]

@@ -26,7 +26,7 @@ import target_angles as ta
 #^Importing essential libraries for ROS and motion planning and running for the main script^
 
 simulation = True #Flag for spawning objects in the gazebo if the script is running in a simulation
-debug = True #Flag for asking confirmation before robot performs key maneuvers
+debug = False #Flag for asking confirmation before robot performs key maneuvers
 
 class PickAndPlace(object): #class that handles moving the robot, gripper and IK
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
@@ -232,7 +232,6 @@ def H_Routine(limb):
     limb.goto(ta.H_approach)
 
 def process(limb, step):
-    print(step)
     if step['vertical'] == True:
         V_Routine(limb)
     else:
