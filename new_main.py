@@ -141,7 +141,6 @@ def etq(roll, pitch, yaw): #Euler To Quaternian
         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         return [qx, qy, qz, qw]
 
-
 def spawn_v_brick():
     '''Spawns Vertical brick in Gazebo simulation'''
     brick_pose = Pose()
@@ -191,20 +190,6 @@ def spawn_tables():
     spawn_sdf(table1_id, table_sdf, "/", table1, table_reference_frame)
     spawn_sdf(table2_id, table_sdf, "/", table2, table_reference_frame)
 
-
-rospy.init_node("MOTHER_CLUCKER")  #Initializes rospy node
-
-
-if simulation:
-    #Clean up any (known) preexisting objects in Gazebo and spawns the tables
-    cleanup()
-    spawn_tables()
-
-tuck_arms.init_arms() #Makes sure the arms are in known starting place
-
-hover_distance = 0.2 #Used for IK, not useful to us anymore
-left_pnp = PickAndPlace('left', hover_distance) #Initializer
-
 def open_and_wait():
     '''Opens gripper and waits for uer input to close'''
     left_pnp.gripper_open()
@@ -223,7 +208,6 @@ def gripperBrickChecker():
         else:
             print('Exiting')
             exit(0)
-
 
 def V_Routine(): 
     '''Spawns vertical brick (if sim), sends gripper to brick position, asks if ready (if in debug), picks it up and checks that the brick is in the gripper'''
@@ -253,7 +237,20 @@ def H_Routine():
     left_pnp.goto(ta.H_approach)
 
 
+rospy.init_node("MOTHER_CLUCKER")  #Initializes rospy node
+
+if simulation:
+    #Clean up any (known) preexisting objects in Gazebo and spawns the tables
+    cleanup()
+    spawn_tables()
+
+tuck_arms.init_arms() #Makes sure the arms are in known starting place
+
+left_pnp = PickAndPlace('left', hover_distance) #Limb initializer
+
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
+
+
 
 V_Routine()
 
