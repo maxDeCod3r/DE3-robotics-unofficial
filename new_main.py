@@ -241,7 +241,7 @@ def process(limb, step):
     limb.goto(step['place'])
     if debug:x = raw_input('Open gripper?: ')
     limb.gripper_open()
-    if ! step['lastBrick']:
+    if not step['lastBrick']:
         limb.goto(step['hover'])
     else:
         limb.goto(step['last1'])
