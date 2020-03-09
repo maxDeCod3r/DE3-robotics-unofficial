@@ -21,6 +21,8 @@ import baxter_interface
 
 import tuck_arms
 
+from __future__ import print_function
+
 import target_angles as ta
 
 #^Importing essential libraries for ROS and motion planning and running for the main script^
