@@ -263,7 +263,7 @@ def H_Routine():#Spawns brick (if sim), sends gripper to brick position, asks if
 
 
 left_pnp.gripper_open() #Duh
-
+left_pnp.gripper_open()
 V_Routine()
 
 left_pnp.send(ta.B_1_A)
