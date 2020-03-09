@@ -27,7 +27,7 @@ brickstuff = tps.brick_directions_notf
 global sumulation
 
 simulation = True
-debug = False
+debug = True
 
 class PickAndPlace(object):
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
@@ -111,7 +111,7 @@ class PickAndPlace(object):
 if simulation: #deals with gazebo objects, not useful in the real world
     brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
 
-    with open ("brick/model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
+    with open ("brick/new-model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
     with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
     with open ("brick/static-b.sdf", "r") as table_file:static_brick=table_file.read().replace('\n', '')
 
