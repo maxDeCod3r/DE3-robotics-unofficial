@@ -1,4 +1,3 @@
-clear
 #!/usr/bin/python
 import argparse
 import struct
