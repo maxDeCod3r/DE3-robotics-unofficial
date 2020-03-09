@@ -232,6 +232,7 @@ def H_Routine(limb):
     limb.goto(ta.H_approach)
 
 def process(limb, step):
+    print(step)
     if step['vertical'] == True:
         V_Routine(limb)
     else:
