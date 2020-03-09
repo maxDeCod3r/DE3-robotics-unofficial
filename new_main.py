@@ -37,6 +37,7 @@ class PickAndPlace(object): #class that handles moving the robot, gripper and IK
         self._verbose = verbose # bool
         self._limb = baxter_interface.Limb(limb)
         self._gripper = baxter_interface.Gripper(limb)
+        self._gripper.calibrate() #Calibrating gripper
         ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
         self._iksvc = rospy.ServiceProxy(ns, SolvePositionIK)
         rospy.wait_for_service(ns, 5.0)
@@ -259,7 +260,6 @@ if simulation:
     spawn_tables()
 
 tuck_arms.init_arms() #Makes sure the arms are in known starting place
-tuck_arms.init_arms()
 left_pnp = PickAndPlace('left') #Limb initializer
 
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
