@@ -37,7 +37,6 @@ class PickAndPlace(object): #class that handles moving the robot, gripper and IK
         self._verbose = verbose # bool
         self._limb = baxter_interface.Limb(limb)
         self._gripper = baxter_interface.Gripper(limb)
-        self._gripper.calibrate() #Calibrating gripper
         ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
         self._iksvc = rospy.ServiceProxy(ns, SolvePositionIK)
         rospy.wait_for_service(ns, 5.0)
@@ -47,6 +46,10 @@ class PickAndPlace(object): #class that handles moving the robot, gripper and IK
         self._init_state = self._rs.state().enabled
         print("Enabling robot... ")
         self._rs.enable()
+
+    def calibrate_gripper(self):
+        '''Calibrated gripper'''
+        self._gripper.calibrate()
 
     def _guarded_move_to_joint_position(self, joint_angles):
         '''Private class to move robot limbs'''
@@ -216,6 +219,7 @@ def V_Routine(limb):
     if debug: x = raw_input('Pick? ')
     limb.goto(ta.V_pickup)
     if debug: x = raw_input('Close gripper? ')
+    print('Closing gripper...')
     limb.gripper_close()
     gripperBrickChecker(limb)
     limb.goto(ta.V_approach)
@@ -227,24 +231,30 @@ def H_Routine(limb):
     if debug: x = raw_input('Pick? ')
     limb.goto(ta.H_pickup)
     if debug: x = raw_input('Close gripper? ')
+    print('Closing gripper...')
     limb.gripper_close()
     gripperBrickChecker(limb)
     limb.goto(ta.H_approach)
 
 def process(limb, step):
+    print('Picking up brick ', step['step'], '...')
     if step['vertical'] == True:
         V_Routine(limb)
     else:
         H_Routine(limb)
-
+    print('Moving brick ', step['step'], ' to hover position...')
     limb.goto(step['hover'])
     if debug:x = raw_input('Place?: ')
+    print('Placing brick ', step['step'], '...')
     limb.goto(step['place'])
     if debug:x = raw_input('Open gripper?: ')
+    print('Opening gripper...')
     limb.gripper_open()
     if not step['lastBrick']:
+        print('Moving arm to hover ', step['step'], ' position...')
         limb.goto(step['hover'])
     else:
+        print('Moving arm to home position...')
         limb.goto(step['last1'])
         limb.goto(step['last2'])
         limb.goto(step['last3'])
@@ -253,21 +263,34 @@ def process(limb, step):
 
 
 rospy.init_node("MOTHER_CLUCKER")  #Initializes rospy node
+print('Robot initialized')
+print('Simulation: ', simulation)
+print('Debug: ', debug)
 
 if simulation:
     #Clean up any (known) preexisting objects in Gazebo and spawns the tables
     cleanup()
     spawn_tables()
 
+print('Initializing arms...')
 tuck_arms.init_arms() #Makes sure the arms are in known starting place
+
 left_pnp = PickAndPlace('left') #Limb initializer
 
+print('Calibrating gripper...')
+left_pnp.calibrate_gripper()
+
+print('Opening gripper...')
 left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
 
 tower_instructions = ta.instructions
 
+print('Loaded tower instructions, bricks: ', len(instructions))
+
 for step in tower_instructions:
+    print('Processing step: ', step['step'])
     process(left_pnp, step)
+
 
 time.sleep(1)
 
