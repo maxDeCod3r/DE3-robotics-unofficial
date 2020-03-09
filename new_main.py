@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from __future__ import print_function
 import argparse
 import struct
 import sys
@@ -20,8 +21,6 @@ import time
 import baxter_interface
 
 import tuck_arms
-
-from __future__ import print_function
 
 import target_angles as ta
 
