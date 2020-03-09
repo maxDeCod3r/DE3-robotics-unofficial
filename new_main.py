@@ -74,8 +74,7 @@ class PickAndPlace(object): #class that handles moving the robot, gripper and IK
 
     def ik_request(self, pose): 
         '''Function to generate joint angles from target pose, does not take into account obstacles that are not the robot'''
-        #This function is only used wile in te simulation environment and only for generating valid joint angles, due to te random nature of te solver, it it not 'trusted' to run in real time
-         hdr = Header(stamp=rospy.Time.now(), frame_id='base')
+         hdr = Header(stamp=rospy.Time.now(), frame_id='base')         #This function is only used wile in te simulation environment and only for generating valid joint angles, due to te random nature of te solver, it it not 'trusted' to run in real time
          ikreq = SolvePositionIKRequest()
          ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
          try:
