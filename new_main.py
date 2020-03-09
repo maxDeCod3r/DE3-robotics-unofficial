@@ -1,3 +1,4 @@
+
 import argparse
 import struct
 import sys
@@ -5,6 +6,8 @@ import copy
 
 import rospy
 import rospkg
+
+import numpy as np
 
 from gazebo_msgs.srv import (SpawnModel, DeleteModel)
 from geometry_msgs.msg import (PoseStamped, Pose, Point, Quaternion)
@@ -16,21 +19,18 @@ import time
 
 import baxter_interface
 
-import target_poses as tps
-
 import tuck_arms
 
 import target_angles as ta
 
-brickstuff = tps.brick_directions_notf
+#^Importing essential libraries for ROS and motion planning and running for the main script^
 
-global sumulation
+simulation = True #Flag for spawning objects in the gazebo if the script is running in a simulation
+debug = True #Flag for asking confirmation before robot performs key maneuvers
 
-simulation = True
-debug = True
-
-class PickAndPlace(object):
+class PickAndPlace(object): #class that handles moving the robot, gripper and IK
     def __init__(self, limb, hover_distance = 0.10, verbose=True, speed=0.2, accuracy=baxter_interface.settings.JOINT_ANGLE_TOLERANCE):
+        '''Robot limb control class initializer'''
         self._accuracy = accuracy
         self._limb_name = limb # string
         self._hover_distance = hover_distance # in meters
@@ -48,24 +48,33 @@ class PickAndPlace(object):
         self._rs.enable()
 
     def _guarded_move_to_joint_position(self, joint_angles):
+        '''Private class to move robot limbs'''
         if joint_angles:
-            self._limb.set_joint_position_speed(0.3)
+            self._limb.set_joint_position_speed(0.3) #For safety purposes, the speed was lockes to 0.3
             self._limb.move_to_joint_positions(joint_angles, timeout=20.0, threshold=self._accuracy)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
     def gripper_open(self):
+        '''Opens Gripper'''
         self._gripper.open()
         rospy.sleep(0.2)
 
     def gripper_close(self):
+        '''Closes Gripper'''
         self._gripper.close()
         rospy.sleep(0.2)
 
-    def send(self, angles):
+    def goto(self, angles):
+        '''Function to send limb to predefined joint angles without running IK service'''
         self._guarded_move_to_joint_position(angles)
 
-    def ik_request(self, pose):
+
+
+
+    def ik_request(self, pose): 
+        '''Function to generate joint angles from target pose, does not take into account obstacles that are not the robot'''
+        #This function is only used wile in te simulation environment and only for generating valid joint angles, due to te random nature of te solver, it it not 'trusted' to run in real time
          hdr = Header(stamp=rospy.Time.now(), frame_id='base')
          ikreq = SolvePositionIKRequest()
          ikreq.pose_stamp.append(PoseStamped(header=hdr, pose=pose))
@@ -84,14 +93,8 @@ class PickAndPlace(object):
                          ikreq.SEED_CURRENT: 'Current Joint Angles',
                          ikreq.SEED_NS_MAP: 'Nullspace Setpoints',
                         }.get(resp_seeds[0], 'None')
-             if self._verbose:
-                 print("IK Solution SUCCESS - Valid Joint Solution Found from Seed Type: {0}".format(
-                          (seed_str)))
              # Format solution into Limb API-compatible dictionary
              limb_joints = dict(zip(resp.joints[0].name, resp.joints[0].position))
-             if self._verbose:
-                 # print("IK Joint Solution:\n{0}".format(limb_joints))
-                 print("------------------")
          else:
              rospy.logerr("INVALID POSE - No Valid Joint Solution Found.")
              return False
@@ -102,42 +105,45 @@ class PickAndPlace(object):
          print(limb_joints)
          print()
          print()
-         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@') #Visual statemet to easily find and copy calculated joint angles
          return limb_joints
 
-    def gripperPosition(self):
-        return self._gripper.position()#class that handles moving the robot, gripper ans IK
 
-if simulation: #deals with gazebo objects, not useful in the real world
-    brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9']
+    def gripperPosition(self):
+        '''Returns the current gripper state, 0 (Fully closed) -> 100 (Fully open)'''
+        return self._gripper.position() 
+
+if simulation: 
+    brick_ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9'] #Each brick gets known id for easy deletion
 
     with open ("brick/new-model.sdf", "r") as brick_file:brick_sdf=brick_file.read().replace('\n', '')
     with open ("L3-table/model.sdf", "r") as table_file:table_sdf=table_file.read().replace('\n', '')
     with open ("brick/static-b.sdf", "r") as table_file:static_brick=table_file.read().replace('\n', '')
+    #^Loading sdf models into RAM^
 
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     spawn_sdf = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
     delete_model = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
+    #^Initializing spawn and delete model services^
 
-def cleanup(): #deals with gazebo objects, not useful in the real world
+def cleanup():
+    '''Clears all (known) preexisting models in Gazebo'''
     for obj in brick_ids:
         delete_model(obj)
     delete_model('t1')
     delete_model('t2')
 
-# Horrible hack that deals with gazebo objects, not useful in the real world
-import numpy as np
-
-def etq(roll, pitch, yaw):
+def etq(roll, pitch, yaw): #Euler To Quaternian
+    '''calculates Quaternian from euler angles'''
         qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
         qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
         qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         return [qx, qy, qz, qw]
-# Horrible hack that deals with gazebo objects, not useful in the real world
 
 
-def spawn_v_brick():#deals with gazebo objects(spawns a vertical brick), not useful in the real world
+def spawn_v_brick():
+    '''Spawns Vertical brick in Gazebo simulation'''
     brick_pose = Pose()
     brick_pose.position.x = 0.475
     brick_pose.position.y = 0.739
@@ -151,7 +157,8 @@ def spawn_v_brick():#deals with gazebo objects(spawns a vertical brick), not use
     brick_id = brick_ids.pop()
     spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
-def spawn_h_brick():#deals with gazebo objects(spawns a horizontal brick), not useful in the real world
+def spawn_h_brick():
+    '''Spawns Horizontal brick in Gazebo simulation'''
     brick_pose = Pose()
     brick_pose.position.x = 0.4664
     brick_pose.position.y = 0.8069
@@ -164,7 +171,8 @@ def spawn_h_brick():#deals with gazebo objects(spawns a horizontal brick), not u
     brick_id = brick_ids.pop()
     spawn_sdf(brick_id, brick_sdf, "/", brick_pose, brick_reference_frame)
 
-def spawn_tables():#deals with gazebo objects(spawns tables), not useful in the real world
+def spawn_tables():
+    '''Spawns Tables in Gazebo simulation'''
     table1 = Pose()
     table1.position.x = 1.160
     table1.position.y = 0.365
@@ -184,188 +192,171 @@ def spawn_tables():#deals with gazebo objects(spawns tables), not useful in the 
     spawn_sdf(table2_id, table_sdf, "/", table2, table_reference_frame)
 
 
-rospy.init_node("I_still_have_some_hope")  # Am I wrong??
+rospy.init_node("MOTHER_CLUCKER")  #Initializes rospy node
 
 
 if simulation:
+    #Clean up any (known) preexisting objects in Gazebo and spawns the tables
     cleanup()
     spawn_tables()
 
-tuck_arms.init_arms() #Make sure the arms are where they meant to be
+tuck_arms.init_arms() #Makes sure the arms are in known starting place
 
 hover_distance = 0.2 #Used for IK, not useful to us anymore
 left_pnp = PickAndPlace('left', hover_distance) #Initializer
 
-
-def V_Routine(): #Spawns brick (if sim), sends gripper to brick position, asks if ready (if in debug), 
-#                 picks it up and checks that the brick is acc in the grippers
-    if simulation:
-        spawn_v_brick()
-
-    left_pnp.send(ta.V_approach)
-    if debug:
-        x = raw_input('Ready?')
-    left_pnp.send(ta.V_pickup)
-
-
+def open_and_wait():
+    '''Opens gripper and waits for uer input to close'''
+    left_pnp.gripper_open()
+    x = raw_input('Close?')
     left_pnp.gripper_close()
-    gripper_state = left_pnp.gripperPosition()
+    time.sleep(0.5)
 
+def gripperBrickChecker():
+    '''Checks if brick detected in gripper, asks what to do it not'''
     if gripper_state < 5:
         command = raw_input('\n \nPROBLEM DETECTED!!!\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
         if command in {'C', 'c', 'continue'}:
-            pass
+            return
         elif command in {'O', 'o', 'open'}:
             open_and_wait()
         else:
             print('Exiting')
             exit(0)
 
-    time.sleep(0.5)
-    left_pnp.send(ta.V_approach)
 
+def V_Routine(): 
+    '''Spawns vertical brick (if sim), sends gripper to brick position, asks if ready (if in debug), picks it up and checks that the brick is in the gripper'''
+    if simulation: spawn_v_brick()
+    left_pnp.goto(ta.V_approach)
 
-def open_and_wait(): #Self explanatory
-    left_pnp.gripper_open()
-    if debug:
-        x = raw_input('Close?')
+    left_pnp.goto(ta.V_pickup)
+    if debug: x = raw_input('Ready?')
+
     left_pnp.gripper_close()
-    time.sleep(0.5)
-
-
-def H_Routine():#Spawns brick (if sim), sends gripper to brick position, asks if ready (if in debug), 
-#                 picks it up and checks that the brick is acc in the grippers
-    if simulation:
-        spawn_h_brick()
-    left_pnp.send(ta.H_approach)
-    if debug:
-        x = raw_input('Ready?')
-    left_pnp.send(ta.H_pickup)
-    left_pnp.gripper_close()
-
+    gripperBrickChecker()
     gripper_state = left_pnp.gripperPosition()
-
-    if gripper_state < 5:
-        command = raw_input('\n \nPROBLEM DETECTED!!!\nGripper has nothing in it...\n(C)ontinue, (A)bort, (O)pen gripper\n>_ ')
-        if command == 'C':
-            pass
-        elif command == 'c':
-            pass
-        elif command == 'O':
-            open_and_wait()
-        elif command == 'o':
-            open_and_wait()
-        else:
-            exit(0)
-
     time.sleep(0.5)
-    left_pnp.send(ta.H_approach)
+    left_pnp.goto(ta.V_approach)
+
+def H_Routine():
+    '''Spawns horizontal brick (if sim), sends gripper to brick position, asks if ready (if in debug), picks it up and checks that the brick is in the gripper'''
+    if simulation: spawn_h_brick()
+    left_pnp.goto(ta.H_approach)
+
+    if debug: x = raw_input('Ready?')
+    left_pnp.goto(ta.H_pickup)
+
+    left_pnp.gripper_close()
+    gripperBrickChecker()
+    time.sleep(0.5)
+    left_pnp.goto(ta.H_approach)
 
 
-left_pnp.gripper_open() #Duh
-left_pnp.gripper_open()
-V_Routine()
-
-left_pnp.send(ta.B_1_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_1_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-
-left_pnp.send(ta.B_1_A)
-
-V_Routine()
-
-left_pnp.send(ta.B_2_A)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.send(ta.B_2_P)
-if debug:
-    x = raw_input('Continue?: ')
-left_pnp.gripper_open()
-left_pnp.send(ta.B_2_A)
+left_pnp.gripper_open() #Ensures gripper is open before grabbing brick
 
 V_Routine()
 
-left_pnp.send(ta.B_3_A)
+left_pnp.goto(ta.B_1_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_3_P)
+left_pnp.goto(ta.B_1_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_3_A)
+
+left_pnp.goto(ta.B_1_A)
+
+V_Routine()
+
+left_pnp.goto(ta.B_2_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.goto(ta.B_2_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.goto(ta.B_2_A)
+
+V_Routine()
+
+left_pnp.goto(ta.B_3_A)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.goto(ta.B_3_P)
+if debug:
+    x = raw_input('Continue?: ')
+left_pnp.gripper_open()
+left_pnp.goto(ta.B_3_A)
 
 
 H_Routine()
-left_pnp.send(ta.B_4_A)
+left_pnp.goto(ta.B_4_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_4_P)
+left_pnp.goto(ta.B_4_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_4_A)
+left_pnp.goto(ta.B_4_A)
 
 H_Routine()
-left_pnp.send(ta.B_5_A)
+left_pnp.goto(ta.B_5_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_5_P)
+left_pnp.goto(ta.B_5_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_5_A)
+left_pnp.goto(ta.B_5_A)
 
 
 V_Routine()
-left_pnp.send(ta.B_6_A)
+left_pnp.goto(ta.B_6_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_6_P)
+left_pnp.goto(ta.B_6_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_6_A)
+left_pnp.goto(ta.B_6_A)
 
 V_Routine()
-left_pnp.send(ta.B_7_A)
+left_pnp.goto(ta.B_7_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_7_P)
+left_pnp.goto(ta.B_7_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_7_A)
+left_pnp.goto(ta.B_7_A)
 
 
 H_Routine()
-left_pnp.send(ta.B_8_A)
+left_pnp.goto(ta.B_8_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_8_P)
+left_pnp.goto(ta.B_8_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
-left_pnp.send(ta.B_8_A)
+left_pnp.goto(ta.B_8_A)
 
 
 V_Routine()
-left_pnp.send(ta.B_9_A)
+left_pnp.goto(ta.B_9_A)
 if debug:
     x = raw_input('Continue?: ')
-left_pnp.send(ta.B_9_P)
+left_pnp.goto(ta.B_9_P)
 if debug:
     x = raw_input('Continue?: ')
 left_pnp.gripper_open()
 
 
-left_pnp.send(ta.B_9_za)
-left_pnp.send(ta.B_9_zb)
+left_pnp.goto(ta.B_9_za)
+left_pnp.goto(ta.B_9_zb)
 
-left_pnp.send(ta.H_pickup)
+left_pnp.goto(ta.H_pickup)
 
 time.sleep(1)
 
